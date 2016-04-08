@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_id": "gramvaani-1238",
+    "project_number": "731395736136",
+    "name": "gramvaani"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731395736136:android:53c1961e53044ec5",
+        "client_id": "android:com.example.surbhi.sample1",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.example.surbhi.sample1",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731395736136:android:bfbfbfaf34fb68e9",
+        "client_id": "android:governance.localgovernance",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "governance.localgovernance",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731395736136:android:652406e48e765723",
+        "client_id": "android:main.gologo",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "main.gologo",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="main.gologo.home.Userlogin">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/LOGIN"
+        android:id="@+id/textView1"
+        android:paddingTop="45dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#fcbe32"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_imageView"
+        android:src="@mipmap/ic_launcher"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView1"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:hint="@string/phoneno"
+        android:id="@+id/phone_editText"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="60dp"
+        android:background="#E0F7FA"
+        android:textColorHint="#3F51B5"
+        android:textAlignment="center" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberPassword"
+        android:ems="10"
+        android:hint="@string/pinno"
+        android:id="@+id/pin_editText"
+        android:layout_below="@+id/phone_editText"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:background="#E0F7FA"
+        android:textColorHint="#3F51B5"
+        android:textAlignment="center" />
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pinauthenticate"
+        android:id="@+id/signin_button"
+        android:ems="10"
+        android:layout_marginTop="30dp"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/pin_editText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:background="#e68652" />
+
+
+    <TextView
+        android:id="@+id/forgetpin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signin_button"
+        android:gravity="center"
+        android:text="@string/forget_your_pin_number"
+        android:textColor="#3F51B5"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:clickable="true"
+        ></TextView>
+
+</RelativeLayout>

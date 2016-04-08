@@ -1,0 +1,166 @@
+<resources>
+    <string name="app_name">Gologo</string>
+
+    <string-array name="gender">
+        <item>F</item>
+        <item> M</item>
+    </string-array>
+
+    <string-array name="district">
+        <item>Bokaro</item>
+        <item>East Singhbhum</item>
+        <item>Ranchi</item>
+        <item>Giridih</item>
+        <item>Ramgarh</item>
+        <item>Palamu</item>
+        <item>Dhanbad</item>
+        <item>Chirkunda</item>
+        <item>Deogarh</item>
+        <item>Hazaribagh</item>
+        <item>Jamshedpur</item>
+        <item> Other</item>
+    </string-array>
+
+    <string-array name="state">
+        <item>Jharkhand</item>
+        <item>Chattisgarh  </item>
+        <item>Uttar Pradesh</item>
+        <item>Madhya Pradesh</item>
+        <item> Other</item>
+    </string-array>
+
+    <string-array name="city">
+        <item>Bokaro Steel city</item>
+        <item>Dhanbad</item>
+        <item>Ranchi</item>
+        <item>Phusro</item>
+        <item>Giridih</item>
+        <item>Chirkunda</item>
+        <item>Deogarh</item>
+        <item>Hazaribagh</item>
+        <item>Ramgarh</item>
+        <item>Jamshedpur</item>
+        <item> Other</item>
+    </string-array>
+
+    <string-array name="campnames">
+
+        <item>Health Camps</item>
+        <item>Agriculture</item>
+        <item>Government Campaign</item>
+        <item>Polio Camps</item>
+        <item>Vaccination Camps</item>
+    </string-array>
+
+    <string-array name="beneficiaries">
+        <item>Women</item>
+        <item>Children</item>
+        <item>Landlords</item>
+        <item>Tenants</item>
+        <item>Farmers</item>
+        <item>Local Shopkeepers</item>
+        <item>School Teachers</item>
+        <item>All</item>
+    </string-array>
+
+    <!-- For Speech -->
+    <string name="speech_prompt">Say something&#8230;</string>
+    <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
+
+    <!-- For User Login -->
+    <string name="phoneno">Phone Number</string>
+    <string name="pinno">PIN Number</string>
+    <string name="pinauthenticate">PIN Authentication</string>
+    <string name="LOGIN">LOGIN</string>
+    <string name="forget_your_pin_number">Forget your PIN No?</string>
+    <string name="Phone_Number_cant_be_empty">Phone Number can\'t be empty</string>
+    <string name="Enter_valid_phone_number">Enter valid phone number</string>
+    <string name="PIN_Number_cant_be_empty">PIN Number can\'t be empty</string>
+    <string name="Enter_valid_PIN_Number"> Enter valid PIN Number</string>
+    <string name="Validating_credentials">Validating Credentials</string>
+    <string name="Pleasewait">Please Wait #8230</string>
+    <string name="Google_Play_Services_not_available">Google Play Services not available</string>
+    <string name="check_your_network">Check your internet connection</string>
+    <string name="check_your_details_phone">No admin registered with the given phone number</string>
+    <string name="check_your_details_pin">Invalid Credentials. Pin did not match! Forgot Pin?</string>
+
+    <!--For Pin recovery -->
+    <string name="PIN_recovery">PIN Recovery</string>
+    <string name="Enter_the_registered_Phone">Enter the registered Phone</string>
+    <string name="Receive_new_pin">RECEIVE NEW PIN</string>
+    <string name="You_will_receive_pin_shortly">You will receive pin shortly via SMS on given phone number</string>
+    <string name="no_user_registered">No user registered with the given phone number</string>
+
+
+    <!--  For menu options -->
+    <string name="Add_a_contact">Add contact</string>
+    <string name="Create_New_Contact_Group">Create Contact Group</string>
+    <string name="Record_Audio">Record Audio</string>
+    <string name="Send_Message">Send Message</string>
+    <string name="Pick_Survey">Launch Survey</string>
+
+    <!--For contact group -->
+    <string name="enter_group_name">Enter contact group name</string>
+    <string name="create_group">Create Group</string>
+    <string name="Please_enter_groupname_before_creating">Please enter groupname before creating</string>
+    <string name="Error_in_creating_Contact_Group">Error in creating Contact Group, Try Again</string>
+    <string name="Contact_Group_Created">Contact Group Created</string>
+
+    <!--Sending Text Message -->
+    <string name="announcement_of_surveys">Announcement of Surveys</string>
+    <string name="announcement_of_camps">Announcement of Camps</string>
+    <string name="announcement_of_govtschemes">Announcement of Govt. Schemes</string>
+
+    <!-- Template for survey launch Announcement -->
+    <string name="selectdate">Select Survey Date</string>
+    <string name="Please_enter_valid_date_before_sending">Please enter valid date before sending</string>
+
+
+    <!--Template for Camp Announcement -->
+    <string name="campname">Enter the Camp Name </string>
+    <string name="campstartdate">Enter the Start Date </string>
+    <string name="campenddate">Enter the End Date </string>
+    <string name="campvenue">Enter Camp Venue</string>
+    <string name="campnametoast">Camp Name can\'t be empty.</string>
+    <string name="startdatetoast">Start date can\'t be empty.</string>
+    <string name="enddatetoast"> End date can\'t be empty.</string>
+    <string name="venuenametoast">Venue name can\'t be empty.</string>
+
+    <!--Template for Govt Scheme Announcement -->
+    <string name="govtschemename"> Enter the Scheme Name  </string>
+    <string name="govtschemestartdate"> Select Start Date </string>
+    <string name="govtschemebeneficiary"> Select Beneficiaries </string>
+    <string name="govtschemenametoast"> Scheme Name can\'t be empty. </string>
+    <string name="govtschemestartdatetoast"> Start Date can\'t be empty.</string>
+    <string name="govtschemebeneficiarytoast"> Beneficiary can\'t be empty </string>
+
+
+    <!--Send Options -->
+    <string name="Phonecontacts">Phone Contacts</string>
+    <string name="GVGroups">Gramvaani Groups</string>
+    <string name="MVCallers">MobileVaali Callers</string>
+
+    <!--pick contacts -->
+    <string name="pick_contacts">Pick Contacts</string>
+
+    <!--For Audio Recording -->
+    <string name="Select_format">Select Audio Format</string>
+    <string name="audio_format">Format</string>
+    <string name="choose_format_title">Choose Audio Format</string>
+    <string name="Start_Recording">Press to Start</string>
+    <string name="Stop_Recording">Press to Stop</string>
+
+    <!-- Create New Contact -->
+    <string name="contactname">Enter the contact name</string>
+    <string name="enterphone">Enter the phone number</string>
+    <string name="gender">Select Gender</string>
+    <string name="city">Select City</string>
+    <string name="state">Select State</string>
+    <string name="enterage">Enter Age</string>
+    <string name="enterdistrict">Enter District</string>
+    <string name="enterstate">Enter State</string>
+    <string name="createcontact">Create</string>
+    <string name="cancelcontact">Cancel</string>
+
+
+</resources>

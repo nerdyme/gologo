@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="20dip"
+    android:background="#E0F7FA">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/audio"
+        android:scaleType="fitCenter"
+        android:id="@+id/audi"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Select_format"
+            android:id="@+id/btnFormat"
+            android:ems="10"
+            android:layout_marginTop="50dp"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/audi"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:background="#e68652" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Start_Recording"
+            android:id="@+id/btnStart"
+            android:ems="10"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/btnFormat"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:background="#e68652" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Stop_Recording"
+            android:id="@+id/btnStop"
+            android:ems="10"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/btnStart"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="60dp"
+            android:background="#e68652" />
+    </LinearLayout>
+</LinearLayout>
+

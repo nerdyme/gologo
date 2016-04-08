@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="70dp"
+            android:inputType="textAutoComplete"
+            android:ems="10"
+            android:hint="@string/selectdate"
+            android:id="@+id/selectdateforsurvey"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_centerHorizontal="true"
+            android:background="#E0F7FA"
+            android:textColorHint="#3F51B5"
+            android:textAlignment="center" />
+
+
+        <ImageButton
+            android:id="@+id/calendaricon"
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/calendar"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pick_contacts"
+        android:id="@+id/pick1"
+        android:ems="10"
+        android:layout_marginTop="80dp"
+        android:textColor="#ffffff"
+        android:layout_marginBottom="10dp"
+        android:background="#e68652" />
+
+</LinearLayout>
