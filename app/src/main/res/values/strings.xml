@@ -81,6 +81,7 @@
     <string name="Pleasewait">Please Wait #8230</string>
     <string name="Google_Play_Services_not_available">Google Play Services not available</string>
     <string name="check_your_network">Check your internet connection</string>
+    <string name="check_your_server">Server Error</string>
     <string name="check_your_details_phone">No admin registered with the given phone number</string>
     <string name="check_your_details_pin">Invalid Credentials. Pin did not match! Forgot Pin?</string>
 
@@ -98,6 +99,7 @@
     <string name="Record_Audio">Record Audio</string>
     <string name="Send_Message">Send Message</string>
     <string name="Pick_Survey">Launch Survey</string>
+    <string name="error_in_fetching_groups">Error in fetching groups</string>
 
     <!--For contact group -->
     <string name="enter_group_name">Enter contact group name</string>
@@ -161,6 +163,16 @@
     <string name="enterstate">Enter State</string>
     <string name="createcontact">Create</string>
     <string name="cancelcontact">Cancel</string>
+    <string name="entergroups">Enter Group Names</string>
 
+
+    <!-- Displaying Phone Contacts -->
+    <string name="Select_atleast_one_contact">Select atleast one contact</string>
+    <string name="recording_submitted">Announcement is submitted for dial outs</string>
+    <string name="recording_error">Server Uploading error</string>
+
+    <!--Displaying Group conatcts -->
+    <string name="send">Send</string>
+    <string name="Select_atleast_one_group">Select atleast one group</string>
 
 </resources>

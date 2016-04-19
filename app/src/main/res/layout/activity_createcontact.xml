@@ -69,7 +69,7 @@
         <Spinner
             android:id="@+id/gender_value"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/gender"
@@ -109,13 +109,12 @@
         android:orientation="horizontal" >
 
         <Spinner
-            android:id="@+id/district_value"
+            android:id="@+id/group_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="@string/enterdistrict"
-            android:entries="@array/district"
+            android:hint="@string/entergroups"
             android:background="#E0F7FA"
             android:textColorHint="#3F51B5"
             android:textAlignment="center"
@@ -124,6 +123,25 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Spinner
+            android:id="@+id/district_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/enterdistrict"
+            android:background="#E0F7FA"
+            android:textColorHint="#3F51B5"
+            android:textAlignment="center"
+            android:layout_marginTop="20dp"
+            />
+    </LinearLayout>
+
+ <!--   <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -141,7 +159,7 @@
             android:textAlignment="center"
             android:layout_marginTop="20dp"
             />
-    </LinearLayout>
+    </LinearLayout> -->
 
    <!-- <LinearLayout
         android:layout_width="fill_parent"
@@ -174,8 +192,6 @@
             android:ems="10"
             android:layout_marginTop="30dp"
             android:textColor="#ffffff"
-            android:layout_below="@+id/pin_editText"
-            android:layout_centerHorizontal="true"
             android:layout_marginBottom="40dp"
             android:background="#e68652" />
 
@@ -187,8 +203,6 @@
             android:ems="10"
             android:layout_marginTop="30dp"
             android:textColor="#ffffff"
-            android:layout_below="@+id/pin_editText"
-            android:layout_centerHorizontal="true"
             android:layout_marginBottom="40dp"
             android:background="#e68652" />
 

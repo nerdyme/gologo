@@ -1,5 +1,6 @@
 package main.gologo.home;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,6 +27,8 @@ public class Phoneverify extends AppCompatActivity {
     Button b1 = null;
     EditText e1 =null;
     String phoneno="";
+    ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,83 +43,88 @@ public class Phoneverify extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
 
-                b1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
 
                         phoneno = e1.getText().toString();
 
                         if (phoneno.equals("") || phoneno.equals(null)) {
-                            Toast.makeText(getBaseContext(), "Phone Number can't be empty", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), R.string.Phone_Number_cant_be_empty, Toast.LENGTH_LONG).show();
                             e1.requestFocus(0);
                         } else if (phoneno.contains("[0-9]+") == false && phoneno.length() != 10) {
-                            Toast.makeText(getBaseContext(), "Enter valid phone number", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), R.string.Enter_valid_phone_number, Toast.LENGTH_LONG).show();
 
                         } else {
                             //Do a volley request
-
-
-                            HashMap<String, String> loginparams = new HashMap<String, String>();
-                            loginparams.put("phone", phoneno);
-                            loginparams.put("gcmid", Constants.gcmRegId);
-
-                            StringRequest request1 = new StringRequest(Request.Method.POST, Constants.pinforget,
-                                    new Response.Listener<String>() {
-
-
-                                        @Override
-                                        public void onResponse(String response) {
-
-                                            try {
-
-                                                JSONObject response1 = new JSONObject(response);
-                                                String s1 = response1.get("message").toString();
-                                                if (s1.equalsIgnoreCase("Pin number is sent on the given phone number.")) {
-                                                    Toast.makeText(getBaseContext(), R.string.You_will_receive_pin_shortly, Toast.LENGTH_LONG).show();
-                                                    finish();
-                                                } else {
-                                                    Toast.makeText(getBaseContext(), R.string.Enter_valid_phone_number, Toast.LENGTH_LONG).show();
-                                                }
-                                                finish();
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-
-
-                                        }
-                                    },
-                                    new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-
-                                            if (error.toString().equalsIgnoreCase("com.android.volley.AuthFailureError"))
-                                                Toast.makeText(getApplicationContext(), R.string.no_user_registered, Toast.LENGTH_LONG).show();
-                                            else
-                                                Toast.makeText(getApplicationContext(), R.string.check_your_network, Toast.LENGTH_LONG).show();
-                                        }
-                                    }) {
+                            progress = ProgressDialog.show(Phoneverify.this, "Please Wait ... ", "You will receive message shortly", true);
+                            new Thread(new Runnable() {
                                 @Override
-                                protected Map<String, String> getParams() {
-                                    Map<String, String> params = new HashMap<String, String>();
-                                    params.put("phone", phoneno);
-                                    params.put("gcmid", Constants.gcmRegId);
-                                    return params;
+                                public void run() {
+                                    // do the thing that takes a long time
+                                    makerequest();
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                        }
+                                    });
                                 }
-
-                            };
-
-                            VolleyApplication.getInstance().getRequestQueue().add(request1);
-
+                            }).start();
 
                         }
                     }
                 });
             }
-        });
+       void makerequest()
+       {
+
+           StringRequest request1 = new StringRequest(Request.Method.POST, Constants.pinforget,
+                   new Response.Listener<String>() {
+
+
+                       @Override
+                       public void onResponse(String response) {
+                                            progress.dismiss();
+                           try {
+
+                               JSONObject response1 = new JSONObject(response);
+                               String s1 = response1.get("message").toString();
+                               if (s1.equalsIgnoreCase("Pin number is sent on the given phone number.")) {
+                                   Toast.makeText(getBaseContext(), R.string.You_will_receive_pin_shortly, Toast.LENGTH_LONG).show();
+                                   finish();
+                               } else {
+                                   Toast.makeText(getBaseContext(), R.string.Enter_valid_phone_number, Toast.LENGTH_LONG).show();
+                               }
+                               finish();
+                           } catch (JSONException e) {
+                               e.printStackTrace();
+                           }
+
+
+                       }
+                   },
+                   new Response.ErrorListener() {
+                       @Override
+                       public void onErrorResponse(VolleyError error) {
+
+                           if (error.toString().equalsIgnoreCase("com.android.volley.AuthFailureError"))
+                               Toast.makeText(getApplicationContext(), R.string.no_user_registered, Toast.LENGTH_LONG).show();
+                           else
+                               Toast.makeText(getApplicationContext(), R.string.check_your_server, Toast.LENGTH_LONG).show();
+                       }
+                   }) {
+               @Override
+               protected Map<String, String> getParams() {
+                   Map<String, String> params = new HashMap<String, String>();
+                   params.put("phone", phoneno);
+                   params.put("gcmid", Constants.gcmRegId);
+                   return params;
+               }
+
+           };
+
+           VolleyApplication.getInstance().getRequestQueue().add(request1);
+
+
+       }
 
     }
 
-
-
-}

@@ -1,4 +1,4 @@
-package  main.gologo.adapter;
+package main.gologo.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,19 +16,19 @@ import java.util.ArrayList;
 import main.gologo.R;
 
 /**
- * Created by surbhi on 1/3/16.
+ * Created by surbhi on 4/18/16.
  */
-public class Phonecontactlistadapter  extends BaseAdapter implements CompoundButton.OnCheckedChangeListener
+public class Groupcontactlistadapter extends BaseAdapter implements CompoundButton.OnCheckedChangeListener
 {
     public SparseBooleanArray mCheckStates;
     LayoutInflater mInflater;
     TextView tv1;
     CheckBox cb;
     Activity cnt;
-    ArrayList<Phonecontactdata> phonelist;
+    ArrayList<Groupcontactdata> phonelist;
 
 
-    public Phonecontactlistadapter(ArrayList<Phonecontactdata> phonelist, Activity cnt)
+    public Groupcontactlistadapter(ArrayList<Groupcontactdata> phonelist, Activity cnt)
     {
         mCheckStates = new SparseBooleanArray(phonelist.size());
         this.phonelist=phonelist;
@@ -63,7 +63,7 @@ public class Phonecontactlistadapter  extends BaseAdapter implements CompoundBut
             vi = mInflater.inflate(R.layout.phonecontactadapter, null);
         tv1= (TextView) vi.findViewById(R.id.textView1);
         cb = (CheckBox) vi.findViewById(R.id.checkBox1);
-        tv1.setText(phonelist.get(position).getname());
+        tv1.setText(phonelist.get(position).getgroupname());
 
         cb.setTag(position);
         cb.setChecked(mCheckStates.get(position, false));

@@ -2,22 +2,15 @@ package main.gologo.sendoptions;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
-import android.util.SparseBooleanArray;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,10 +24,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import main.gologo.R;
+import main.gologo.adapter.Phonecomparator;
+import main.gologo.adapter.Phonecontactdata;
+import main.gologo.adapter.Phonecontactlistadapter;
 import main.gologo.constants.Constants;
 import main.gologo.home.VolleyApplication;
 
@@ -42,16 +37,14 @@ import main.gologo.home.VolleyApplication;
 
 public class Phonecontacts extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    List<String> name1 = new ArrayList<String>();
-    List<String> phno1 = new ArrayList<String>();
-    String mymsg = "";
+    ArrayList<Phonecontactdata> phonelist=null;
+
     String contactlist="";
     Bundle bundle;
     String actname="",form_id="",audiofile="";
+    StringBuilder checkedcontacts;
 
-    ProgressDialog progressDialog = null;
-
-
+    ProgressDialog progress = null;
     Phonecontactlistadapter ma;
     Button select;
 
@@ -62,15 +55,13 @@ public class Phonecontacts extends AppCompatActivity implements AdapterView.OnIt
 
         bundle=getIntent().getExtras();
         actname=bundle.getString("ActivityName");
-
-
-        //enteredValue.setText(passedArg);
+        phonelist=new ArrayList<Phonecontactdata>();
 
         getAllContacts(this.getContentResolver());
-        Collections.sort(name1, String.CASE_INSENSITIVE_ORDER);
+        Collections.sort(phonelist, new Phonecomparator());
 
         ListView lv= (ListView) findViewById(R.id.lv1);
-        ma = new Phonecontactlistadapter(name1,phno1,getApplicationContext());
+        ma = new Phonecontactlistadapter(phonelist,Phonecontacts.this);
         lv.setAdapter(ma);
         lv.setOnItemClickListener(this);
         lv.setItemsCanFocus(false);
@@ -82,18 +73,17 @@ public class Phonecontacts extends AppCompatActivity implements AdapterView.OnIt
 
             @Override
             public void onClick(View v) {
-                StringBuilder checkedcontacts= new StringBuilder();
+                checkedcontacts= new StringBuilder();
                 int set=0;
 
-                for(int i = 0; i < name1.size(); i++)
+                for(int i = 0; i < phonelist.size(); i++)
 
                 {
                     if(ma.mCheckStates.get(i)==true)
                     {
                         set=1;
-                        checkedcontacts.append(phno1.get(i).toString());
+                        checkedcontacts.append(phonelist.get(i).getPhone());
                         checkedcontacts.append(",");
-
                     }
                     else
                     {
@@ -103,7 +93,6 @@ public class Phonecontacts extends AppCompatActivity implements AdapterView.OnIt
                 if(set==1)
                 {
                     contactlist= checkedcontacts.toString();
-
                     contactlist = contactlist.substring(0, contactlist.length()-1);
 
                     // Do Volley request
@@ -174,10 +163,24 @@ public class Phonecontacts extends AppCompatActivity implements AdapterView.OnIt
                     }
                     else if (actname.equalsIgnoreCase("Recordaudio")==true)
                     {
-                        audiofile=bundle.getString("filename");
-                        sendaudio();
-                        Toast.makeText(getApplicationContext(),"Audio is successfully delivered",Toast.LENGTH_LONG).show();
-                        finish();
+                        audiofile=bundle.getString("FileName");
+                        progress = ProgressDialog.show(Phonecontacts.this, "Please Wait ... ", "Your audio is being uploaded", true);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // do the thing that takes a long time
+                                sendaudio();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                    }
+                                });
+                            }
+                        }).start();
+
+                       // Toast.makeText(getApplicationContext(),"Audio is successfully delivered",Toast.LENGTH_LONG).show();
+                       // finish();
                     }
                     else
                     {
@@ -185,7 +188,7 @@ public class Phonecontacts extends AppCompatActivity implements AdapterView.OnIt
                     }
                 }
                 else
-                    Toast.makeText(Phonecontacts.this, "Select atleast one contact",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Phonecontacts.this, R.string.Select_atleast_one_contact,Toast.LENGTH_LONG).show();
 
             }
         });
@@ -205,87 +208,62 @@ public class Phonecontacts extends AppCompatActivity implements AdapterView.OnIt
         {
             String name=phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-            name1.add(name);
-            phno1.add(phoneNumber);
+            Phonecontactdata ob=new Phonecontactdata(name,phoneNumber);
+            phonelist.add(ob);
         }
 
         phones.close();
     }
 
-
-    class Phonecontactlistadapter  extends BaseAdapter implements CompoundButton.OnCheckedChangeListener
+    void sendaudio()
     {
-        private SparseBooleanArray mCheckStates;
-        LayoutInflater mInflater;
-        TextView tv1,tv;
-        CheckBox cb;
-        Context cnt;
-        List <String> name1;
-        List <String> phno1;
+        StringRequest request1 = new StringRequest(Request.Method.POST, Constants.recording,
+                new Response.Listener<String>() {
 
-        Phonecontactlistadapter(List<String> name1, List<String> phno1, Context cnt)
-        {
-            mCheckStates = new SparseBooleanArray(name1.size());
-            this.name1=name1;
-            this.phno1=phno1;
-            this.cnt=cnt;
-            mInflater = (LayoutInflater)cnt.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
 
-        @Override
-        public int getCount() {
-            // TODO Auto-generated method stub
-            return name1.size();
-        }
+                    @Override
+                    public void onResponse(String response) {
+                        progress.dismiss();
+                        try {
 
-        @Override
-        public Object getItem(int position) {
-            // TODO Auto-generated method stub
-            return position;
-        }
+                            JSONObject response1 = new JSONObject(response);
+                            String s1 = response1.get("message").toString();
+                            Log.d("Audioresponse",s1);
+                            if (s1.equalsIgnoreCase("Recording Schedule created sucessfully!")) {
+                                Toast.makeText(getBaseContext(), R.string.recording_submitted, Toast.LENGTH_LONG).show();
+                                finish();
+                            } else {
+                                Toast.makeText(getBaseContext(), R.string.recording_error, Toast.LENGTH_LONG).show();
+                            }
+                            finish();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-        @Override
-        public long getItemId(int position) {
-            // TODO Auto-generated method stub
 
-            return 0;
-        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(), R.string.check_your_server, Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("gcmid", Constants.gcmRegId);
+                params.put("caller_ids",contactlist);
+                params.put("filename",audiofile);
 
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            // TODO Auto-generated method stub
-            View vi=convertView;
-            if(convertView==null)
-                vi = mInflater.inflate(R.layout.phonecontactadapter, null);
-            tv= (TextView) vi.findViewById(R.id.textView1);
-            tv1= (TextView) vi.findViewById(R.id.textView2);
-            cb = (CheckBox) vi.findViewById(R.id.checkBox1);
-            tv.setText("Name :"+ name1.get(position));
-            tv1.setText("Phone No :"+ phno1.get(position));
-            cb.setTag(position);
-            cb.setChecked(mCheckStates.get(position, false));
-            cb.setOnCheckedChangeListener(this);
+                return params;
+            }
 
-            return vi;
-        }
-        public boolean isChecked(int position) {
-            return mCheckStates.get(position, false);
-        }
+        };
 
-        public void setChecked(int position, boolean isChecked) {
-            mCheckStates.put(position, isChecked);
-        }
+        VolleyApplication.getInstance().getRequestQueue().add(request1);
 
-        public void toggle(int position) {
-            setChecked(position, !isChecked(position));
-        }
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView,
-                                     boolean isChecked) {
-            // TODO Auto-generated method stub
 
-            mCheckStates.put((Integer) buttonView.getTag(), isChecked);
-        }
     }
 
     void sendmessage(JSONObject json)
@@ -355,10 +333,6 @@ public class Phonecontacts extends AppCompatActivity implements AdapterView.OnIt
         };
 
         VolleyApplication.getInstance().getRequestQueue().add(request1);
-
-    }
-    void sendaudio()
-    {
 
     }
 

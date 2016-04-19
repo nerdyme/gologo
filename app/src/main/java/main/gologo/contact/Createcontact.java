@@ -84,11 +84,39 @@ public class Createcontact extends AppCompatActivity implements AdapterView.OnIt
         gender = (Spinner) findViewById(R.id.gender_value);
         dis = (Spinner) findViewById(R.id.district_value);
         //city = (Spinner) findViewById(R.id.city_value);
-        state = (Spinner) findViewById(R.id.state_value);
+       // state = (Spinner) findViewById(R.id.state_value);
         //contactgroup = (Spinner) findViewById(R.id.contactgroup_value);
 
-       // pb.setVisibility(View.GONE);
+        ArrayList<String> locations = new ArrayList<String>();
 
+
+        int l=Constants.locationlist.size();
+        Log.d("Size of location", String.valueOf(l) + '\n');
+
+        for(int i=0;i<l;++i)
+            locations.add(Constants.locationlist.get(i).getlocation());
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item ,locations );
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dis.setAdapter(adapter);
+
+        dis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
 
         btnSpeak = (ImageButton) findViewById(R.id.mic);
 
@@ -129,9 +157,10 @@ public class Createcontact extends AppCompatActivity implements AdapterView.OnIt
 
                 gv = gender.getSelectedItem().toString();
                 dv = dis.getSelectedItem().toString();
+
                // cv = city.getSelectedItem().toString();
-                sv = state.getSelectedItem().toString();
-                cgv = contactgroup.getSelectedItem().toString();
+               // sv = state.getSelectedItem().toString();
+               // cgv = contactgroup.getSelectedItem().toString();
 		
 		/*gender.setOnItemSelectedListener(new OnItemSelectedListener(AdapterView<?> parent, View view, int pos, long id) 
 		{

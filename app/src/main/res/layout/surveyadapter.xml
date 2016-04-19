@@ -1,0 +1,95 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/tools"
+    android:id="@+id/cv"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_margin="8dp"
+    xmlns:cardView="http://schemas.android.com/apk/res-auto"
+    cardView:cardBackgroundColor="#e68652"
+    cardView:cardCornerRadius="10dp"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E0F7FA"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/surveyname"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:maxLines="3"
+            android:padding="8dp"
+            android:textColor="#e68652"
+            android:textStyle="bold"
+            android:textSize="22dp"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:background="#E0F7FA"
+            android:layout_marginLeft="110dp"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+
+                android:id="@+id/viewll"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/viewsurvey"
+                    android:layout_margin="0dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="View"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:background="#E0F7FA"
+                    android:layout_marginBottom="10dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:background="#E0F7FA"
+
+                android:id="@+id/launchll">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/launchsurvey"
+                    android:layout_margin="0dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Launch"
+                    android:textSize="20sp"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:background="#E0F7FA"
+                    android:layout_marginBottom="10dp"
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

@@ -53,7 +53,7 @@ public class Userlogin extends AppCompatActivity {
 
                     @Override
                     public void onResponse(String response) {
-
+                        progress.dismiss();
                         try {
 
                             JSONObject response1=new JSONObject(response);
@@ -92,7 +92,7 @@ public class Userlogin extends AppCompatActivity {
                         else
                         {
                             Log.d("error",error.toString());
-                            Toast.makeText(getApplicationContext(),R.string.check_your_network,Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),R.string.check_your_server,Toast.LENGTH_LONG).show();
                         }
                     }
                 }){
@@ -146,7 +146,7 @@ public class Userlogin extends AppCompatActivity {
                 } else {
 
                     // progress = ProgressDialog.show(this, R.string.Pleasewait,R.string.Validating_credentials, true);
-                    progress = ProgressDialog.show(Userlogin.this, "Please Wait ", "Validating credentials", true);
+                    progress = ProgressDialog.show(Userlogin.this, "Please Wait ... ", "Validating credentials", true);
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -155,7 +155,7 @@ public class Userlogin extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    progress.dismiss();
+
                                 }
                             });
                         }

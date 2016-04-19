@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.widget.ListView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -24,19 +21,28 @@ import main.gologo.R;
 import main.gologo.constants.Constants;
 import main.gologo.home.VolleyApplication;
 
-public class Surveys extends Activity {
+public class Viewsurveys extends Activity {
 
-    ArrayList<Surveydata> temp;
-    ListView lv;
-    Surveyadapter rvAdapter=null;
+
+    private ArrayList<Viewsurveydata> list;
+    String view_survey_url="";
+    Viewsurveyadapter rvAdapter;
     ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_surveys);
+        setContentView(R.layout.activity_viewsurveys);
 
-        RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
+        Bundle bundle = getIntent().getExtras();
+        String form_id = bundle.getString("form_id");
+
+        view_survey_url = Constants.view_survey1 + form_id;
+
+        list = new ArrayList<Viewsurveydata>();
+
+
+        RecyclerView rv = (RecyclerView) findViewById(R.id.rv1);
         rv.setHasFixedSize(true);
 
 
@@ -45,10 +51,10 @@ public class Surveys extends Activity {
         rv.setItemAnimator(new DefaultItemAnimator());
 
 
-        temp=new ArrayList<Surveydata>();
-        rvAdapter = new Surveyadapter(temp,Surveys.this);
+        rvAdapter = new Viewsurveyadapter(list, Viewsurveys.this);
         rv.setAdapter(rvAdapter);
-        progress = ProgressDialog.show(Surveys.this, "Please Wait ... ", "Fetching Surveys", true);
+
+        progress = ProgressDialog.show(Viewsurveys.this, "Please Wait ... ", "Fetching Questions", true);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -62,64 +68,50 @@ public class Surveys extends Activity {
                 });
             }
         }).start();
-
     }
 
     void volleyrequest()
     {
-        JsonObjectRequest request1 = new JsonObjectRequest(Constants.fetch_survey, null,
+        JsonObjectRequest request1 = new JsonObjectRequest(view_survey_url, null,
                 new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                                temp.clear();
-                                progress.dismiss();
-                        Log.d("response",response.toString());
+                                    progress.dismiss();
                         try {
-                            JSONObject js11=(JSONObject)response.get("message");
-                            JSONArray ar1= (JSONArray) js11.get("objects");
+                            JSONArray ar1= (JSONArray) response.get("objects");
                             int len=ar1.length();
 
                             for(int i=0;i<len;++i)
                             {
                                 JSONObject info = (JSONObject) ar1.get(i);
 
-                                String s1 = info.get("id").toString();
-                                String s2 = info.get("name").toString();
-                                JSONObject js1= (JSONObject) info.get("form");
-                                String s3= js1.get("id").toString();
-                                Log.d("Data",s2+'\n');
-                                Surveydata ob=new Surveydata(s2,s1,s3);
-                                temp.add(ob);
-                            }
-                            rvAdapter.notifyDataSetChanged();
 
+                                JSONObject js1= (JSONObject) info.get("question");
+                                String s1= js1.get("text").toString();
+
+                                Viewsurveydata ob=new Viewsurveydata(s1,i+1);
+                                list.add(ob);
+                                rvAdapter.notifyDataSetChanged();
+                            }
                         }
 
                         catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 },
 
                 new Response.ErrorListener() {
+
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
                     }
                 }
         );
+
         VolleyApplication.getInstance().getRequestQueue().add(request1);
-    }
-
-    void viewsurvey(View v)
-    {
-
-    }
-
-    void launchsurvey(View v)
-    {
 
     }
 }
