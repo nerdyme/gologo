@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.surbhi.sample1.Pinverify" >
+
+    <item
+        android:id="@+id/app_info"
+        android:orderInCategory="100"
+        android:title="@string/app_info"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/gramvaani"
+        android:orderInCategory="100"
+        android:title="@string/gramvaani"
+        app:showAsAction="never"/>
+
+
+
+    <item
+        android:id="@+id/open_windows_explorer"
+        android:orderInCategory="100"
+        android:title="@string/open_windows_explorer"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/share_app"
+        android:orderInCategory="100"
+        android:title="@string/app_share"
+        app:showAsAction="never"/>
+
+
+</menu>

@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Send"
+        android:text="@string/send"
         android:background="#e68652"/>
 
 </RelativeLayout>

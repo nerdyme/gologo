@@ -12,20 +12,31 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
 
 import main.gologo.R;
 import main.gologo.constants.Constants;
+import main.gologo.contact.Locationdata;
 
 public class Splashscreen extends Activity {
 
     ImageView img;
+    TextView tv;
     private final String TAG = "GCM Demo Activity";
     private final int ACTION_PLAY_SERVICES_DIALOG = 100;
 
@@ -40,10 +51,14 @@ public class Splashscreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
         img=(ImageView) findViewById(R.id.login_imageView);
-
+        tv=(TextView) findViewById(R.id.textView1);
 
         Animation scaleAnim = AnimationUtils.loadAnimation(this, R.anim.animation);
+        Animation animFadeIn = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.fade_in);
         img.startAnimation(scaleAnim);
+        tv.startAnimation(animFadeIn);
+
         Thread timerThread = new Thread(){
             public void run(){
                 try{
@@ -87,6 +102,12 @@ public class Splashscreen extends Activity {
             }
         };
         timerThread.start();
+
+        if(Constants.locationlist==null) {
+            Constants.locationlist = new ArrayList<Locationdata>();
+
+            volleyrequest();
+        }
     }
 
     @Override
@@ -192,5 +213,50 @@ public class Splashscreen extends Activity {
             return prefs;
         }
 
+    void volleyrequest()
+    {
+        JsonObjectRequest request1 = new JsonObjectRequest(Constants.location, null,
+                new Response.Listener<JSONObject>() {
 
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Constants.locationlist.clear();
+
+                        Log.d("locationresponse",response.toString());
+                        try {
+                            JSONObject js1 = (JSONObject) response.get("message");
+                            JSONArray ar1 = js1.getJSONArray("objects");
+                            Locationdata ob1=new Locationdata(" Choose Location :: ","");
+                            Constants.locationlist.add(ob1);
+                            int len=ar1.length();
+
+                            for(int i=0;i<len;++i)
+                            {
+                                JSONObject info = (JSONObject) ar1.get(i);
+                                String s1 = info.get("desc").toString();
+                                String s2 = info.get("resource_uri").toString();
+
+                                Log.d("Data", s2 + '\n');
+                                Locationdata ob=new Locationdata(s1,s2);
+                                Constants.locationlist.add(ob);
+                            }
+
+                        }
+
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        VolleyApplication.getInstance().getRequestQueue().add(request1);
+    }
     }

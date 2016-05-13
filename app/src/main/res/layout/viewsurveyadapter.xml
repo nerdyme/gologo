@@ -21,7 +21,7 @@
             android:id="@+id/surveyquestionno"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.2"
+            android:layout_weight="0.4"
             android:padding="8dp"
             android:textColor="#e68652"
             android:textSize="22dp"
@@ -34,7 +34,7 @@
             android:layout_weight="1"
             android:padding="8dp"
             android:textColor="#e68652"
-            android:textSize="22dp"
+            android:textSize="17dp"
             />
     </LinearLayout>
 </android.support.v7.widget.CardView>

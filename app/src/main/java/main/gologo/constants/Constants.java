@@ -21,8 +21,13 @@ public class Constants {
     //Gramvaani GUI password : surbhi, surbhi@123 -- URL - http://internal.gramvaani.org:8080/vapp/ang/#/
     //API key preeti :: username=preeti & api_key=38dc9ea2dc8878b8ac674b3baef02d1973de5362
     //public static String baseurl="http://10.207.165.68/";
+    // Admin login phone : 9718658816,,,pin :982545
+    //phone :: 8826533273  pin :239644
+    //ictd username ictdlab--password
+    //Amazon credentials :: Ip address : http://52.25.169.219/ username: myvoice password : surbhi
 
-    public static String baseurl="http://52.25.169.219:3000/";
+    public static String baseurl="http://10.237.27.182:3000/";
+    //public static String baseurl="http://52.25.169.219:3000/";
 
     public static String login=baseurl+"login";
     public static String pinforget=baseurl+"getpin";
@@ -32,6 +37,9 @@ public class Constants {
     public static String createcontact=baseurl+"contact";
     public static String launchmessage=baseurl+"message";
     public static String recording=baseurl+"recording";
+    public static String get_survey=baseurl+"getsurveys";
+    public static String location=baseurl+"getlocations";
+    public static String get_survey_questions=baseurl+"getquestions";
 
 
     public static String view_survey1="http://internal.gramvaani.org:8080/vapp/api/v1/form_question/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json&form_id=";
@@ -40,6 +48,8 @@ public class Constants {
 
     public static ArrayList<Locationdata> locationlist=null;
     public static ArrayList<Groupcontactdata> grouplist=null;
+
+
 }
 
 

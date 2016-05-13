@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -16,11 +15,10 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 import main.gologo.R;
+import main.gologo.home.BaseActionbar;
 import main.gologo.sendoptions.ContactOptions;
 
-public class TemplateAnnouncementCamp extends AppCompatActivity  implements View.OnClickListener {
-
-
+public class TemplateAnnouncementCamp extends BaseActionbar {
 
     Spinner sp;
     EditText et1,et2,et3;
@@ -28,9 +26,13 @@ public class TemplateAnnouncementCamp extends AppCompatActivity  implements View
     String start,end,campname,venuename;
     ImageButton img1,img2;
     private Calendar cal;
-    private int day;
-    private int month;
-    private int year;
+    private int day,day1;
+    private int month,month1;
+    private int year,year1;
+
+    static final int DATE_DIALOG_ID = 1;
+    static final int DATE_DIALOG_ID2 = 2;
+    int cur = 0;
 
     String date;
 
@@ -41,21 +43,24 @@ public class TemplateAnnouncementCamp extends AppCompatActivity  implements View
 
 
         img1= (ImageButton) findViewById(R.id.calendaricon);
-        img2=   (ImageButton) findViewById(R.id.calendaricon1);
+        img2=  (ImageButton) findViewById(R.id.calendaricon1);
         cal = Calendar.getInstance();
         day = cal.get(Calendar.DAY_OF_MONTH);
         month = cal.get(Calendar.MONTH);
         year = cal.get(Calendar.YEAR);
 
-        img1.setOnClickListener(this);
-        img2.setOnClickListener(this);
+       // img1.setOnClickListener(this);
+       // img2.setOnClickListener(this);
 
+        addListenerOnButton();
         b1= (Button) findViewById(R.id.pick10);
         sp=(Spinner) findViewById(R.id.camp_value);
         et1 = (EditText) findViewById(R.id.selectstartdateforcamp);
         et2=(EditText) findViewById(R.id.selectenddateforcamp);
         et3=(EditText) findViewById(R.id.campvenue_value);
 
+       // setCurrentDateOnView();
+        //addListenerOnButton();
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,28 +101,97 @@ public class TemplateAnnouncementCamp extends AppCompatActivity  implements View
 
     }
 
-    @Override
-    public void onClick(View v) {
-        showDialog(0);
+   public void addListenerOnButton() {
+
+
+
+        img1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                showDialog(DATE_DIALOG_ID);
+
+            }
+
+        });
+
+
+        img2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                showDialog(DATE_DIALOG_ID2);
+
+            }
+
+        });
+
     }
 
+    /*@Override
+    public void onClick(View view) {
+        switch(view.getId()) {
+            case R.id.calendaricon:
+                showDialog(DATE_DIALOG_ID);
+                break;
+
+            case R.id.calendaricon1:
+                showDialog(DATE_DIALOG_ID2);
+                break;
+
+            default:
+                break;
+        }
+    }*/
+
     @Override
-    @Deprecated
     protected Dialog onCreateDialog(int id) {
-        return new DatePickerDialog(this, datePickerListener, year, month, day);
+        switch (id) {
+
+            case DATE_DIALOG_ID:
+                System.out.println("onCreateDialog  : " + id);
+                cur = DATE_DIALOG_ID;
+                // set date picker as current date
+                return new DatePickerDialog(this, datePickerListener, year, month,
+                        day);
+
+            case DATE_DIALOG_ID2:
+                cur = DATE_DIALOG_ID2;
+                System.out.println("onCreateDialog2  : " + id);
+                // set date picker as current date
+                return new DatePickerDialog(this, datePickerListener, year, month,
+                        day);
+            default: break;
+
+        }
+        return null;
     }
 
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
-            et1.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
-                    + selectedYear);
 
-            et2.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
-                    + selectedYear);
+            year = selectedYear;
+            month = selectedMonth;
+            day = selectedDay;
+
+            if(cur == DATE_DIALOG_ID){
+                // set selected date into edittext
+                et1.setText(new StringBuilder().append(day)
+                        .append("-").append(month+1).append("-").append(year)
+                        .append(" "));
+            }
+            else if(cur==DATE_DIALOG_ID2){
+                et2.setText(new StringBuilder().append(day)
+                        .append("-").append(month+1).append("-").append(year)
+                        .append(" "));
+            }
+
         }
     };
-
-
 }
 

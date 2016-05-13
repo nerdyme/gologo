@@ -2,7 +2,6 @@ package main.gologo.home;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +21,7 @@ import java.util.Map;
 import main.gologo.R;
 import main.gologo.constants.Constants;
 
-public class Phoneverify extends AppCompatActivity {
+public class Phoneverify extends BaseActionbar {
 
     Button b1 = null;
     EditText e1 =null;
@@ -104,7 +103,7 @@ public class Phoneverify extends AppCompatActivity {
                    new Response.ErrorListener() {
                        @Override
                        public void onErrorResponse(VolleyError error) {
-
+                                            progress.dismiss();
                            if (error.toString().equalsIgnoreCase("com.android.volley.AuthFailureError"))
                                Toast.makeText(getApplicationContext(), R.string.no_user_registered, Toast.LENGTH_LONG).show();
                            else

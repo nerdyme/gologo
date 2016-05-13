@@ -4,8 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,25 +28,25 @@ import java.util.Map;
 import main.gologo.R;
 import main.gologo.constants.Constants;
 
-public class Userlogin extends AppCompatActivity {
+public class Userlogin extends BaseActionbar {
 
     EditText e1, e2;
     TextView tv1;
     Button b1;
     String pinno = "",phoneno="";
     ProgressDialog progress;
-    String gcmRegId=Constants.gcmRegId;
+   // String gcmRegId=Constants.gcmRegId;
     private SharedPreferences prefs;
 
     void makerequest()
     {
-        String req = pinno+"  "+phoneno+ "  " + gcmRegId;
-        Log.d("TAG", "Register Response: " + req);
+        String req = pinno+"  "+phoneno+ "  " + Constants.gcmRegId;
+        Log.d("TAG", "Register Request: " + req);
 
         HashMap<String, String> loginparams = new HashMap<String, String>();
         loginparams.put("pin", pinno);
         loginparams.put("phone",phoneno);
-        loginparams.put("gcmid",gcmRegId);
+        loginparams.put("gcmid",Constants.gcmRegId);
 
         StringRequest request1 = new StringRequest(Request.Method.POST, Constants.login,
                 new Response.Listener<String>() {
@@ -64,14 +65,19 @@ public class Userlogin extends AppCompatActivity {
                                 SharedPreferences.Editor editor = getSharedPreferences().edit();
                                 editor.putString("phoneno", Constants.phone);
                                 editor.apply();
-                                Log.d("pin register",response);
+                                Log.d("pin register", response);
+                                Snackbar.make(findViewById(android.R.id.content), R.string.Successfully_logged_in, Snackbar.LENGTH_LONG)
+                                        .setActionTextColor(Color.RED)
+                                        .show();
                                 Intent i= new Intent(getApplicationContext(),MenuOptions.class);
                                 finish();
 
                                 startActivity(i);
                             }
                             else
-                                Toast.makeText(getApplicationContext(),s1,Toast.LENGTH_LONG).show();
+                                Snackbar.make(findViewById(android.R.id.content), s1, Snackbar.LENGTH_LONG)
+                                        .setActionTextColor(Color.RED)
+                                        .show();
                             }
 
                         catch (JSONException e) {
@@ -84,7 +90,7 @@ public class Userlogin extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                            progress.dismiss();
                         if(error.toString().equalsIgnoreCase("com.android.volley.AuthFailureError"))
                             Toast.makeText(getApplicationContext(),R.string.check_your_details_phone,Toast.LENGTH_LONG).show();
                         else if (error.toString().equalsIgnoreCase("com.android.volley.ServerError"))
@@ -101,7 +107,7 @@ public class Userlogin extends AppCompatActivity {
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("pin",pinno);
                 params.put("phone",phoneno);
-                params.put("gcmid",gcmRegId);
+                params.put("gcmid",Constants.gcmRegId);
                 return params;
             }
 

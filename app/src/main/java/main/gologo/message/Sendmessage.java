@@ -2,12 +2,12 @@ package main.gologo.message;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import main.gologo.R;
+import main.gologo.home.BaseActionbar;
 
-public class Sendmessage extends AppCompatActivity
+public class Sendmessage extends BaseActionbar
 {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

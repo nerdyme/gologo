@@ -1,13 +1,13 @@
 package main.gologo.survey;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -22,9 +22,10 @@ import java.util.ArrayList;
 
 import main.gologo.R;
 import main.gologo.constants.Constants;
+import main.gologo.home.BaseActionbar;
 import main.gologo.home.VolleyApplication;
 
-public class Surveys extends Activity {
+public class Surveys extends BaseActionbar {
 
     ArrayList<Surveydata> temp;
     ListView lv;
@@ -67,7 +68,7 @@ public class Surveys extends Activity {
 
     void volleyrequest()
     {
-        JsonObjectRequest request1 = new JsonObjectRequest(Constants.fetch_survey, null,
+        JsonObjectRequest request1 = new JsonObjectRequest(Constants.get_survey, null,
                 new Response.Listener<JSONObject>() {
 
                     @Override
@@ -106,20 +107,15 @@ public class Surveys extends Activity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        progress.dismiss();
+                        Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
+                                .setActionTextColor(Color.RED)
+                                .show();
                     }
                 }
         );
         VolleyApplication.getInstance().getRequestQueue().add(request1);
     }
 
-    void viewsurvey(View v)
-    {
 
-    }
-
-    void launchsurvey(View v)
-    {
-
-    }
 }

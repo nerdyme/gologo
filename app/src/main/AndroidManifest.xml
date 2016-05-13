@@ -64,7 +64,9 @@
         <activity android:name=".audio.Recordaudio" />
         <activity android:name=".contact.Createcontact" />
         <activity android:name=".survey.Surveys" />
-        <activity android:name=".survey.Viewsurveys"></activity>
+        <activity android:name=".survey.Viewsurveys" />
+        <activity android:name=".home.BaseActionbar" />
+        <activity android:name=".home.AppInfo"></activity>
     </application>
 
 </manifest>

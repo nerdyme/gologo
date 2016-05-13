@@ -7,13 +7,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
 
         <Spinner
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="70dp"
+            android:layout_height="match_parent"
             android:inputType="textAutoComplete"
             android:ems="10"
             android:hint="@string/campname"
@@ -29,15 +30,16 @@
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
         <EditText
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="70dp"
+            android:layout_height="match_parent"
             android:inputType="textAutoComplete"
             android:ems="10"
             android:hint="@string/campstartdate"
@@ -55,8 +57,10 @@
             android:id="@+id/calendaricon"
             android:layout_width="0dp"
             android:layout_weight="0.25"
-            android:layout_height="70dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:src="@drawable/calendar"
             android:scaleType="fitXY"
             android:layout_gravity="center"/>
@@ -64,13 +68,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
 
         <EditText
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="70dp"
+            android:layout_height="match_parent"
             android:inputType="textAutoComplete"
             android:ems="10"
             android:hint="@string/campenddate"
@@ -88,7 +93,7 @@
             android:id="@+id/calendaricon1"
             android:layout_width="0dp"
             android:layout_weight="0.25"
-            android:layout_height="70dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             android:src="@drawable/calendar"
             android:scaleType="fitXY"
@@ -97,13 +102,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
 
         <EditText
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="70dp"
+            android:layout_height="match_parent"
             android:inputType="textAutoComplete"
             android:ems="10"
             android:hint="@string/campvenue"

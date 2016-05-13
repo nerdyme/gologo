@@ -50,7 +50,28 @@
         <item>Government Campaign</item>
         <item>Polio Camps</item>
         <item>Vaccination Camps</item>
+        <item>Education Camps</item>
+        <item>Political Campaign</item>
+        <item>Awareness Camp</item>
+        <item>Social campaign</item>
+
     </string-array>
+
+    <!-- Action bar Menu -->
+    <string name="gramvaani"> Gramvaani Website</string>
+    <string name="open_windows_explorer">Listen Recordings</string>
+    <string name="app_info">App Info</string>
+    <string name="app_share">App Share</string>
+    <string name="appinfo"> Application \'Gologo\' is used for the broadcasting of the news in the community. Any registered user
+    can login into the application and can perform various functions. He can broadcast any news, can launch recent survey and can send broadcasting news through text message.
+    Admin can update his list of target people. Below are the use cases :</string>
+
+    <string name="audioinfo">Tapping on this icon starts the recording where the admin can record an annoucement and broadcast it.</string>
+    <string name="messageinfo">Tapping on this icon will open message templates where the admin can select a template, fill in parameters and can broadcast to the specified users.</string>
+    <string name="creategroupinfo">Tapping on this icon will ask for the new group name to create in Gram Vaani groups.</string>
+    <string name="createcontactinfo">Tapping on this icon will ask for all the details of the user to be added on the server.</string>
+    <string name="surveyinfo">Tapping on this icon will display a list of recent surveys where the admin can select, view and launch a survey to a specified set of users. </string>
+    <string name="gramvaaniinfo">Contact at www.gramvaani.org</string>
 
     <string-array name="beneficiaries">
         <item>Women</item>
@@ -84,6 +105,7 @@
     <string name="check_your_server">Server Error</string>
     <string name="check_your_details_phone">No admin registered with the given phone number</string>
     <string name="check_your_details_pin">Invalid Credentials. Pin did not match! Forgot Pin?</string>
+    <string name="Successfully_logged_in">Successfully logged in</string>
 
     <!--For Pin recovery -->
     <string name="PIN_recovery">PIN Recovery</string>
@@ -151,6 +173,9 @@
     <string name="choose_format_title">Choose Audio Format</string>
     <string name="Start_Recording">Press to Start</string>
     <string name="Stop_Recording">Press to Stop</string>
+    <string name="StartRecording">Start Recording</string>
+    <string name="StopRecording">Stop Recording</string>
+    <string name="Error_in_Loading_Recorder">Error in Loading Recorder</string>
 
     <!-- Create New Contact -->
     <string name="contactname">Enter the contact name</string>
@@ -163,13 +188,23 @@
     <string name="enterstate">Enter State</string>
     <string name="createcontact">Create</string>
     <string name="cancelcontact">Cancel</string>
-    <string name="entergroups">Enter Group Names</string>
+    <string name="entergroups">Select Group Names</string>
+    <string name="Select_Contact_Groups">Select Contact Groups</string>
+    <string name="Press_Confirm">Press Confirm to send, Press edit to change</string>
+    <string name="Add_Contact_Details">Add Contact Details"</string>
+    <!--Toast-->
+    <string name="Name_cant_be_empty">Name can\'t be empty</string>
+    <string name="Name_must_have_atleast_4_characters">Name must have atleast 4 characters</string>
+    <string name="Enter_valid_phone_number1">Enter valid phone number</string>
+    <string name="Enter_valid_age">Enter valid age(0-150)</string>
+    <string name="Contact_created_successfully"> New Contact added successfully</string>
 
 
     <!-- Displaying Phone Contacts -->
     <string name="Select_atleast_one_contact">Select atleast one contact</string>
     <string name="recording_submitted">Announcement is submitted for dial outs</string>
     <string name="recording_error">Server Uploading error</string>
+
 
     <!--Displaying Group conatcts -->
     <string name="send">Send</string>

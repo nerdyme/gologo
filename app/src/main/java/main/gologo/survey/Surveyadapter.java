@@ -52,6 +52,7 @@ public class Surveyadapter extends RecyclerView.Adapter<Surveyadapter.PersonView
                 Bundle bundle=new Bundle();
                 bundle.putString("ActivityName","ViewSurvey");
                 bundle.putString("form_id",al.get(position).getformid());
+
                 i.putExtras(bundle);
                 ct.startActivity(i);
                 //Toast.makeText(this,al.get(position).getformid(), Toast.LENGTH_LONG).show();
@@ -65,6 +66,7 @@ public class Surveyadapter extends RecyclerView.Adapter<Surveyadapter.PersonView
                 Bundle bundle=new Bundle();
                 bundle.putString("ActivityName","LaunchSurvey");
                 bundle.putString("form_id",al.get(position).getformid());
+                bundle.putString("survey_name",al.get(position).getname());
                 i.putExtras(bundle);
                 ct.startActivity(i);
                 //Toast.makeText(this,al.get(position).getformid(), Toast.LENGTH_LONG).show();

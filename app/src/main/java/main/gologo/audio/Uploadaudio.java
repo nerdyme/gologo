@@ -22,6 +22,11 @@ import main.gologo.constants.Constants;
  */
 public class Uploadaudio extends AsyncTask<String, Integer, String> {
 
+    private final String twoHyphens = "--";
+    private final String lineEnd = "\r\n";
+    private final String boundary = "apiclient-" + System.currentTimeMillis();
+
+
     @Override
     protected String doInBackground(String... params) {
         // TODO Auto-generated method stub
@@ -83,7 +88,7 @@ public class Uploadaudio extends AsyncTask<String, Integer, String> {
             Log.d("yay", "able to open  connection3");
             conn.setRequestProperty("Connection", "Keep-Alive");
             conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-            Log.d("yay","able to open  connection4");
+            Log.d("yay", "able to open  connection4");
             dos = new DataOutputStream(conn.getOutputStream());
             Log.d("yay", "able to open  connection5");
             dos.writeBytes(twoHyphens + boundary + lineEnd);
@@ -92,7 +97,7 @@ public class Uploadaudio extends AsyncTask<String, Integer, String> {
             dos .writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + fname + "\"" + lineEnd);
             //
             dos.writeBytes(lineEnd);
-            Log.d("yay","able to open  connection6");
+            Log.d("yay", "able to open  connection6");
             // create a buffer of maximum size
             bytesAvailable = fileInputStream.available();
             bufferSize = Math.min(bytesAvailable, maxBufferSize);
@@ -100,7 +105,7 @@ public class Uploadaudio extends AsyncTask<String, Integer, String> {
             // read file and write it into form...
             bytesRead = fileInputStream.read(buffer, 0, bufferSize);
 
-            Log.d("yay","able to open  connection7");
+            Log.d("yay", "able to open  connection7");
             while (bytesRead > 0) {
 
                 dos.write(buffer, 0, bufferSize);
@@ -115,6 +120,17 @@ public class Uploadaudio extends AsyncTask<String, Integer, String> {
             dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
             // close streams
             dos.writeBytes("Content-Disposition: form-data; name=\"filename\";filename=\"" + existingFileName + "\"" + lineEnd);
+            buildTextPart(dos,"gcmid", Constants.gcmRegId);
+            //buildTextPart(dos,"",);
+            //buildTextPart(dos,"gcmid", Constants.gcmRegId);
+
+            /*params.put("gcmid", Constants.gcmRegId);
+
+            params.put("caller_ids","");
+
+            params.put("filename",audiofile);
+
+            params.put("group_ids",contactlist);*/
             Log.e("Debug", "File is written");
             fileInputStream.close();
             dos.flush();
@@ -166,5 +182,13 @@ public class Uploadaudio extends AsyncTask<String, Integer, String> {
         }
         // Return full string
         return total;
+    }
+
+    private void buildTextPart(DataOutputStream dataOutputStream, String parameterName, String parameterValue) throws IOException {
+        dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
+        dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"" + parameterName + "\"" + lineEnd);
+        dataOutputStream.writeBytes("Content-Type: text/plain; charset=UTF-8" + lineEnd);
+        dataOutputStream.writeBytes(lineEnd);
+        dataOutputStream.writeBytes(parameterValue + lineEnd);
     }
 }

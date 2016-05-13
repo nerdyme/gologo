@@ -1,0 +1,232 @@
+<resources>
+    <string name="app_name">गोलोगो</string>
+
+    <string-array name="gender">
+        <item>महिला</item>
+        <item>नर</item>
+    </string-array>
+    
+    <string-array name="state">
+	<item>झारखंड</item>
+        <item>छत्तीसगढ़</item>
+        <item>उत्तर प्रदेश</item>
+        <item>मध्य प्रदेश</item>
+        <item>अन्य</item>
+    </string-array>
+
+    <string-array name="city">
+        <item>बोकारो स्टील सिटी</item>
+        <item>धनबाद</item>
+        <item>रांची</item>
+        <item>फुसरो</item>
+        <item>गिरिडीह</item>
+        <item>चिरकुंडा</item>
+        <item>देओगढ़</item>
+        <item>हजारीबाग जिले</item>
+        <item>रामगढ़</item>
+        <item>जमशेदपुर</item>
+        <item>अन्य</item>
+    </string-array>
+
+    <string-array name="district">
+        <item>बोकारो</item>
+        <item>पूर्वी सिंहभूम</item>
+        <item>रांची</item>
+        <item>गिरिडीह</item>
+        <item>रामगढ़</item>
+        <item>पलामू</item>
+        <item>धनबाद</item>
+        <item>देवगढ़</item>
+        <item>हजारीबाग</item>
+        <item>जमशेदपुरr</item>
+        <item> अन्य</item>
+    </string-array>
+
+   <!-- Action bar Menu -->
+    <string name="gramvaani">ग्राम वाणी वेबसाइट</string>
+    <string name="open_windows_explorer"> विन्डो एक्सप्लोरर खोलें </string>
+    <string name="app_info">ऐप जानकारी</string>
+    <string name="app_share">शेयर ऐप</string>
+    <string name="appinfo">अनुप्रयोग \'Gologo\' समुदाय में खबर के प्रसारण के लिए इस्तेमाल किया जाता है।
+        कोई भी पंजीकृत उपयोगकर्ता\'Gologo\' का उपयोग कर सकताे हैं और विभिन्न कार्य कर सकताेहैं।
+        कोई भी खबर प्रसारित कर सकते हैं, सर्वेक्षण शुरू कर सकते हैं और
+        संदेश के माध्यम से प्रसारण भेज सकते हैं। व्यवस्थापक लोगों की सूची को अद्यतन कर सकते हैं।
+        नीचे सभी उपयोगों के विवरण हैं :</string>
+
+    <string name="audioinfo">इस आइकन पर क्लिक करके, व्यवस्थापक एक घोषणा रिकॉर्ड करके इसे प्रसारित कर सकता हैं।</string>
+    <string name="messageinfo">इस आइकन पर क्लिक करके, व्यवस्थापक एक  संदेश टेम्पलेट का चयन कर सकते हैं और निर्दिष्ट उपयोगकर्ताओं को प्रसारित कर सकता हैं।</string>
+    <string name="creategroupinfo">इस आइकन पर क्लिक करके, व्यवस्थापक नया संपर्क समूह बना सकते हैं।</string>
+    <string name="createcontactinfo">इस आइकन पर क्लिक करके,व्यवस्थापक अनुप्रयोग में सभी विवरण भर कर  ग्राम वाणी सर्वर पर एक नया संपर्क जोड़ सकते हैं।</string>
+    <string name="surveyinfo">इस आइकन पर क्लिक करके, एप्लिकेशन नवीन सर्वेक्षण की एक सूची प्रदर्शित करता ह जहाँ व्यवस्था का चयन करें, देखें और उन का एक निर्धारित सेट के लिए एक सर्वेक्षण शुरू कर सकते हैं।ै </string>
+    <string name="gramvaaniinfo">Contact at www.gramvaani.org</string>
+
+    <string-array name="campnames">
+
+        <item>स्वास्थ्य शिविर</item>
+        <item>कृषि शिविर</item>
+        <item>सरकार शिविर</item>
+        <item>पोलियो कैम्प</item>
+        <item>टीकाकरण शिविर</item>
+        <item>शिक्षा कैम्प</item>
+        <item>राजनीतिक शिविर</item>
+        <item>जागरूकता शिविर</item>
+        <item>सामाजिक शिविर</item>
+
+    </string-array>
+
+
+        <string-array name="beneficiaries">
+            <item>महिलाएं</item>
+            <item>बच्चे</item>
+            <item>जमींदार</item>
+            <item>किरायेदार</item>
+            <item>किसान</item>
+            <item>स्थानीय दुकानदार</item>
+            <item>स्कूल शिक्षक</item>
+            <item>सभी</item>
+        </string-array>
+
+        <!-- For Speech -->
+    <string name="speech_prompt">कुछ कहें&#8230;</string>
+    <string name="speech_not_supported">माफ़ कीजिये! आपकी डिवाइस वाक् इनपुट का समर्थन नहीं करता</string>
+
+
+        <!-- For User Login -->
+        <string name="Pin_Authentication">पिन प्रमाणीकरण</string>
+        <string name="GramVaani_Sochna">ग्राम वाणी सूचना</string>
+        <string name="Enter_the_registered_number">पंजीकृत फोन नंबर दर्ज करें</string>
+        <string name="Enter_the_received_PIN">प्राप्त पिन दर्ज करें</string>
+        <string name="Authenticate_PIN">प्रमाणीकरण पिन</string>
+        <string name="Forget_your_PIN_No">आप अपना पिन भूल गए हैं?</string>
+        <string name="Powered">www.gramvaani.org द्वारा संचालित</string>
+        <string name="Successfully_logged_in">सफलतापूर्वक लॉग इन किया</string>
+
+        <string name="phoneno">फ़ोन नंबर</string>
+        <string name="pinno">पिन नम्बर</string>
+        <string name="pinauthenticate">पिन प्रमाणीकरण</string>
+        <string name="LOGIN">लॉगिन</string>
+        <string name="forget_your_pin_number">आप अपना पिन कोई भूल गए हैं?</string>
+
+        <string name="Phone_Number_cant_be_empty">फोन नंबर खाली नहीं हो सकता</string>
+        <string name="Enter_valid_phone_number">वैध फोन नंबर दर्ज करें</string>
+        <string name="PIN_Number_cant_be_empty">पिन नंबर खाली नहीं हो सकता</string>
+        <string name="Enter_valid_PIN_Number"> वैध पिन नंबर दर्ज करें</string>
+        <string name="check_your_details">अवैध प्रतिक्रिया</string>
+        <string name="check_your_details_phone">व्यवस्थापक दिए गए फोन नंबर के साथ पंजीकृत नहीं है</string>
+        <string name="check_your_details_pin">अमान्य। पिन से मेल नहीं खाती! आप पिन भूल गए हैं?</string>
+        <string name="Validating_credentials">साख का परीक्षण चल रहा है</string>
+        <string name="Pleasewait">कृपया प्रतीक्षा करें #8230</string>
+        <string name="Google_Play_Services_not_available">गूगल प्ले सेवा उपलब्ध नहीं है</string>
+        <string name="check_your_network">अपना इंटरनेट संपर्क जांचे</string>
+        <string name="check_your_server">सर्वर पर गलती</string>
+
+
+        <!--For Pin recovery -->
+        <string name="PIN_recovery">पिन प्राप्त</string>
+        <string name="Enter_the_registered_Phone">पंजीकृत फोन दर्ज करें</string>
+        <string name="Receive_new_pin">नया पिन प्राप्त करने के लिए क्लिक करें</string>
+        <string name="You_will_receive_pin_shortly">आप एसएमएस के माध्यम से दिए गए फोन नंबर पर जल्द ही पिन प्राप्त करेंगे </string>
+        <string name="no_user_registered">उपयोगकर्ता दिए गए फोन नंबर के साथ पंजीकृत नहीं है</string>
+
+
+        <!--  For menu options -->
+        <string name="error_in_fetching_groups"> संपर्क समूह प्राप्त करने में त्रुटि! </string>
+        <string name="Add_a_contact">संपर्क जोड़ें</string>
+        <string name ="Create_New_Contact_Group">नया संपर्क समूह बनाएँ</string>
+        <string name="Record_Audio">रिकार्ड ऑडियो</string>
+        <string name="Send_Message">मेसेज भेजें</string>
+        <string name="Pick_Survey">सर्वे चुनें</string>
+
+        <!--For contact group -->
+        <string name="enter_group_name">संपर्क समूह का नाम दर्ज</string>
+        <string name="create_group">समूह बनाएँ</string>
+        <string name="Please_enter_groupname_before_creating">बनाने से पहले समूह का नाम दर्ज करें</string>
+        <string name="Error_in_creating_Contact_Group">संपर्क समूह बनाने में गलती, फिर कोशिश करें</string>
+        <string name="Contact_Group_Created">संपर्क समूह निर्मित</string>
+
+        <!--Sending Text Message -->
+        <string name="announcement_of_surveys">सर्वेक्षण की घोषणा</string>
+        <string name="announcement_of_camps">शिविर की घोषणा</string>
+        <string name="announcement_of_govtschemes">सरकारी योजनाओं की घोषणा</string>
+
+        <!-- Template for survey launch Announcement -->
+        <string name="selectdate">सर्वेक्षण दिनांक चुनें </string>
+        <string name="Please_enter_valid_date_before_sending">भेजने से पहले मान्य दिनांक दर्ज करें</string>
+
+
+        <!--Template for Camp Announcement -->
+        <string name="campname">कैम्प का नाम दर्ज</string>
+        <string name="campstartdate">प्रारंभ दिनांक दर्ज </string>
+        <string name="campenddate">अंतिम दिनांक दर्ज </string>
+        <string name="campvenue">कैम्प आयोजन स्थल दर्ज</string>
+        <string name="campnametoast">कैम्प का नाम खाली नहीं हो सकता</string>
+        <string name="startdatetoast">प्रारंभ तिथि खाली नहीं हो सकती</string>
+        <string name="enddatetoast"> अंतिम तिथि खाली नहीं हो सकती।</string>
+        <string name="venuenametoast">स्थान का नाम ख़ाली नहीं हो सकता।</string>
+
+        <!--Template for Govt Scheme Announcement -->
+        <string name="govtschemename"> योजना का नाम दर्ज करें  </string>
+        <string name="govtschemestartdate">प्रारंभ तिथि को चुनें </string>
+        <string name="govtschemebeneficiary">लाभार्थियों का चयन करें  </string>
+        <string name="govtschemenametoast"> योजना का नाम ख़ाली नहीं हो सकता। </string>
+        <string name="govtschemestartdatetoast"> प्रारंभ तिथि खाली नहीं हो सकती।</string>
+        <string name="govtschemebeneficiarytoast"> लाभार्थी ख़ाली नहीं हो सकता।</string>
+
+
+        <!--Send Options -->
+        <string name="Phonecontacts">फ़ोन संपर्क</string>
+        <string name="GVGroups">ग्राम वाणी समूह</string>
+        <string name="MVCallers">मोबाइल वाणी कॉलर्स</string>
+
+        <!--pick contacts -->
+        <string name="pick_contacts">संपर्क चुनें</string>
+
+        <!--For Audio Recording -->
+
+        <string name="tap_on_mic">बात करने के लिए माइक को टेप करें</string>
+        <string name="choose_format_title">ऑडियो प्रारूप चुनें</string>
+        <string name="start_recording">अभिलेख</string>
+        <string name="stop_recording">रुकें</string>
+        <string name="audio_format">प्रारूप</string>
+        <string name="Select_format">ऑडियो प्रारूप चुनें </string>
+        <string name="Start_Recording"> रिकॉर्डिंग शुरू करने के लिए प्रेस करें </string>
+        <string name="Stop_Recording"> रिकॉर्डिंग बंद करने के लिए प्रेस  करें </string>
+        <string name="StartRecording"> रिकॉर्डिंग प्रारंभ हो गई है</string>
+        <string name="StopRecording">रिकॉर्डिंग बंद हो गई है</string>
+        <string name="Error_in_Loading_Recorder">रिकॉर्डर लोड करने में त्रुटि</string>
+
+        <!-- Create New Contact -->
+        <string name="contactname">संपर्क नाम दर्ज करें</string>
+        <string name="enterphone">फोन नंबर दर्ज करें</string>
+        <string name="gender">लिंग चुनें</string>
+        <string name="city">शहर चुनें</string>
+        <string name="state">राज्य चुनें</string>
+        <string name="enterage">आयु डालें</string>
+        <string name="enterdistrict">जिला दर्ज करें</string>
+        <string name="enterstate">राज्य प्रविष्ट</string>
+        <string name="createcontact">बनाएं</string>
+        <string name="cancelcontact">रद्द करें</string>
+        <string name="entergroups">समूह का चयन करें</string>
+        <string name="Select_Contact_Groups">संपर्क समूह का चयन करें </string>
+        <string name="Press_Confirm"> पुष्टि के लिए बनाएं प्रेस करें,संपादित करने के लिए रद प्रेस करें </string>
+        <string name="Add_Contact_Details">सम्पर्क करने का विवरण जोड़े</string>
+        <!--Toast-->
+        <string name="Name_cant_be_empty">नाम ख़ाली नहीं हो सकता</string>
+        <string name="Name_must_have_atleast_4_characters">नाम में कम से कम 4 वर्ण होने चाहिए</string>
+        <string name="Enter_valid_phone_number1">वैध फोन नंबर दर्ज करें</string>
+        <string name="Enter_valid_age">वैध उम्र (0-150) दर्ज करें</string>
+        <string name="Contact_created_successfully">नया संपर्क सफलता पूर्वक जोड़ दिया गया है</string>
+
+
+        <!-- Displaying Phone Contacts -->
+        <string name="Select_atleast_one_contact">कम से कम एक संपर्क का चयन करें</string>
+        <string name="recording_submitted">घोषणा डायल आउट के लिए प्रस्तुत किया जाता है</string>
+        <string name="recording_error">सर्वर अपलोड करने में त्रुटि</string>
+
+
+        <!--Displaying Group conatcts -->
+        <string name="send">भेजें</string>
+        <string name="Select_atleast_one_group">कम से कम एक समूह का चयन करें</string>
+
+</resources>
+

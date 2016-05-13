@@ -1,12 +1,13 @@
 package main.gologo.audio;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,9 +17,10 @@ import java.io.File;
 import java.io.IOException;
 
 import main.gologo.R;
+import main.gologo.home.BaseActionbar;
 import main.gologo.sendoptions.ContactOptions;
 
-public class Recordaudio extends Activity {
+public class Recordaudio extends BaseActionbar {
 
     private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3gp";
     private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
@@ -27,7 +29,7 @@ public class Recordaudio extends Activity {
     private int currentFormat = 0;
     private int output_formats[] = { MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.OutputFormat.THREE_GPP };
     private String file_exts[] = { AUDIO_RECORDER_FILE_EXT_MP4, AUDIO_RECORDER_FILE_EXT_3GP };
-    private String myfile=null;
+    private String myfile="";
 
 
     @Override
@@ -114,7 +116,9 @@ public class Recordaudio extends Activity {
         }
         else
         {
-            Toast.makeText(getApplicationContext(), "Error in Loading Recorder",Toast.LENGTH_SHORT ).show();
+            Snackbar.make(findViewById(android.R.id.content), R.string.Error_in_Loading_Recorder, Snackbar.LENGTH_LONG)
+                    .setActionTextColor(Color.RED)
+                    .show();
         }
 
     }
@@ -152,13 +156,17 @@ public class Recordaudio extends Activity {
 
             switch (v.getId()) {
                 case R.id.btnStart: {
-                    Toast.makeText(Recordaudio.this, "Start Recording", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.StartRecording, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
                     enableButtons(true);
                     startRecording();
                     break;
                 }
                 case R.id.btnStop: {
-                    Toast.makeText(Recordaudio.this, "Stop Recording", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.StopRecording, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
                     enableButtons(false);
                     stopRecording();
                     break;

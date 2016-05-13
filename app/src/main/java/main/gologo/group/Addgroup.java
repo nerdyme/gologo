@@ -1,12 +1,12 @@
 package main.gologo.group;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,10 +30,11 @@ import java.util.Map;
 
 import main.gologo.R;
 import main.gologo.constants.Constants;
+import main.gologo.home.BaseActionbar;
 import main.gologo.home.VolleyApplication;
 
 
-public class Addgroup extends AppCompatActivity {
+public class Addgroup extends BaseActionbar {
 
     public EditText msgvalue=null;
     private ImageButton btnSpeak;
@@ -41,7 +42,7 @@ public class Addgroup extends AppCompatActivity {
 
     Button b1 =null;
     String contactgroupname=null;
-
+    ProgressDialog progress=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class Addgroup extends AppCompatActivity {
                 }
                 else
                 {
+                    progress = ProgressDialog.show(Addgroup.this, "Please Wait ... ", "Adding new group", true);
                     createvolleyrequest();
 
                 }
@@ -90,7 +92,7 @@ public class Addgroup extends AppCompatActivity {
         StringRequest sr = new StringRequest(Request.Method.POST,Constants.creategroup, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                    progress.dismiss();
                 Log.d("TAG", "Create Group Response: " + response.toString());
                 try {
                     JSONObject js=new JSONObject(response.toString());
@@ -136,6 +138,7 @@ public class Addgroup extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progress.dismiss();
                 AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(Addgroup.this);
                 dlgAlert.setMessage(R.string.Error_in_creating_Contact_Group);
                 //dlgAlert.setTitle("App Title");
