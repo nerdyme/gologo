@@ -29,6 +29,7 @@ public class Constants {
     public static String baseurl="http://10.237.27.182:3000/";
     //public static String baseurl="http://52.25.169.219:3000/";
 
+    //path to create audio file : /storage/emulated/0/AudioRecorder/1463512098402.mp3
     public static String login=baseurl+"login";
     public static String pinforget=baseurl+"getpin";
     public static String creategroup=baseurl+"contactlist";

@@ -1,11 +1,12 @@
 package main.gologo.sendoptions;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -101,7 +102,10 @@ public class ContactOptions extends BaseActionbar {
             public void onErrorResponse(VolleyError error) {
 
                 VolleyLog.d("Tag", "Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(), R.string.error_in_fetching_groups, Toast.LENGTH_LONG).show();
+                Snackbar.make(findViewById(android.R.id.content), R.string.error_in_fetching_groups, Snackbar.LENGTH_LONG)
+                        .setActionTextColor(Color.RED)
+                        .show();
+                //Toast.makeText(getApplicationContext(), R.string.error_in_fetching_groups, Toast.LENGTH_LONG).show();
             }
         });
         VolleyApplication.getInstance().getRequestQueue().add(jsonObjReq);

@@ -62,9 +62,11 @@
     <string name="open_windows_explorer">Listen Recordings</string>
     <string name="app_info">App Info</string>
     <string name="app_share">App Share</string>
-    <string name="appinfo"> Application \'Gologo\' is used for the broadcasting of the news in the community. Any registered user
-    can login into the application and can perform various functions. He can broadcast any news, can launch recent survey and can send broadcasting news through text message.
-    Admin can update his list of target people. Below are the use cases :</string>
+    <string name="appinfo"> \'Gologo\' is used to broadcast the news in the community. A registered volunteer
+         performs one time login for the authentication. He can broadcast any recorded announcements, can launch ongoing surveys
+        and can circulate information through text messages. The volunteer can address the information either to all or to the relevant audience
+        by managing contacts groups. He can create new user contact of the community into the GramVaani Database.
+        The working of use cases is explained below :</string>
 
     <string name="audioinfo">Tapping on this icon starts the recording where the admin can record an annoucement and broadcast it.</string>
     <string name="messageinfo">Tapping on this icon will open message templates where the admin can select a template, fill in parameters and can broadcast to the specified users.</string>
@@ -118,7 +120,7 @@
     <!--  For menu options -->
     <string name="Add_a_contact">Add contact</string>
     <string name="Create_New_Contact_Group">Create Contact Group</string>
-    <string name="Record_Audio">Record Audio</string>
+    <string name="Record_Audio">Launch Audio</string>
     <string name="Send_Message">Send Message</string>
     <string name="Pick_Survey">Launch Survey</string>
     <string name="error_in_fetching_groups">Error in fetching groups</string>

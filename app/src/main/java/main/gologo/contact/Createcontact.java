@@ -186,17 +186,33 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                  cgv = contactgroup.toString();
 
                 if (nv.equals("") || nv.equals(null)) {
-                    Toast.makeText(getBaseContext(), R.string.Name_cant_be_empty, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Name_cant_be_empty, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
+                    //Toast.makeText(getBaseContext(), R.string.Name_cant_be_empty, Toast.LENGTH_LONG).show();
                 } else if (nv.length() < 4) {
-                    Toast.makeText(getBaseContext(), R.string.Name_must_have_atleast_4_characters, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Name_must_have_atleast_4_characters, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
+                    //Toast.makeText(getBaseContext(), R.string.Name_must_have_atleast_4_characters, Toast.LENGTH_LONG).show();
                 } else if (pv.equals("") || pv.equals(null)) {
-                    Toast.makeText(getBaseContext(), R.string.Phone_Number_cant_be_empty, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Phone_Number_cant_be_empty, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
+
+                   // Toast.makeText(getBaseContext(), R.string.Phone_Number_cant_be_empty, Toast.LENGTH_LONG).show();
 
                 } else if (pv.contains("[0-9]+") == false && pv.length() != 10) {
-                    Toast.makeText(getBaseContext(), R.string.Enter_valid_phone_number1, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Enter_valid_phone_number1, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
+                    //Toast.makeText(getBaseContext(), R.string.Enter_valid_phone_number1, Toast.LENGTH_LONG).show();
 
                 } else if (Integer.parseInt(av) < 0 || Integer.parseInt(av) > 150) {
-                    Toast.makeText(getBaseContext(), R.string.Enter_valid_age, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Enter_valid_age, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
+                   // Toast.makeText(getBaseContext(), R.string.Enter_valid_age, Toast.LENGTH_LONG).show();
                 } else
                 {
 

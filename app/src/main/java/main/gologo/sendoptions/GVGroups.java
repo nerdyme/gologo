@@ -25,17 +25,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import main.gologo.R;
 import main.gologo.adapter.Groupcomparator;
 import main.gologo.adapter.Groupcontactlistadapter;
+import main.gologo.audio.MultipartUtility;
 import main.gologo.constants.Constants;
 import main.gologo.home.BaseActionbar;
 import main.gologo.home.VolleyApplication;
@@ -324,7 +327,41 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
     }
 
     void sendaudio() {
-        photoUpload(Constants.recording, filepath);
+        String charset = "UTF-8";
+        File uploadFile1 = new File(filepath);
+        String requestURL = Constants.recording;
+
+        try {
+            MultipartUtility multipart = new MultipartUtility(requestURL, charset);
+
+            multipart.addHeaderField("User-Agent", "CodeJava");
+            multipart.addHeaderField("Test-Header", "Header-Value");
+            multipart.addFormField("gcmid", Constants.gcmRegId);
+            multipart.addFormField("group_ids",contactlist);
+            multipart.addFormField("mv_caller", "false");
+            multipart.addFormField("caller_ids", "");
+            multipart.addFormField("filename", audiofile);
+            multipart.addFilePart("uploadedfile", uploadFile1);
+
+            List<String> response = multipart.finish();
+
+            System.out.println("SERVER REPLIED:");
+
+            for (String line : response) {
+                progress.dismiss();
+                System.out.println(line);
+            }
+        } catch (IOException ex) {
+            Log.d("Error", "Inside Audio upload" + ex.toString());
+            System.err.println(ex);
+            progress.dismiss();
+            finish();
+        } catch(Exception e)
+        {
+            Log.d("Error",e.toString());
+            progress.dismiss();
+            finish();
+        }
 
     }
 

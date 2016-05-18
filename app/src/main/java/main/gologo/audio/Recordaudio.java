@@ -23,7 +23,7 @@ import main.gologo.sendoptions.ContactOptions;
 public class Recordaudio extends BaseActionbar {
 
     private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3gp";
-    private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
+    private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp3";
     private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
     private MediaRecorder recorder = null;
     private int currentFormat = 0;
@@ -125,7 +125,7 @@ public class Recordaudio extends BaseActionbar {
 
     private void displayFormatDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        String formats[] = { "MPEG 4", "3GP" };
+        String formats[] = { ".MP3", ".3GP" };
         builder.setTitle(getString(R.string.choose_format_title)).setSingleChoiceItems(formats, currentFormat, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

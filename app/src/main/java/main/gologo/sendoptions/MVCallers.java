@@ -2,8 +2,11 @@ package main.gologo.sendoptions;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +34,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -42,21 +46,17 @@ import main.gologo.constants.Constants;
 import main.gologo.home.BaseActionbar;
 import main.gologo.home.VolleyApplication;
 
-public class MVCallers extends BaseActionbar {
+public class MVCallers extends BaseActionbar implements  View.OnClickListener{
 
 
     //********************
-    EditText et1,et2;
+    static EditText et1,et2;
     Button b1;
     String start,end;
     ImageButton img1,img2;
     private Calendar cal;
-    private int day,day1;
-    private int month,month1;
-    private int year,year1;
 
-    static final int DATE_DIALOG_ID = 1;
-    static final int DATE_DIALOG_ID2 = 2;
+    private DatePickerDialogFragment mDatePickerDialogFragment;
     int cur = 0;
     //************************
 
@@ -80,21 +80,16 @@ public class MVCallers extends BaseActionbar {
         img1= (ImageButton) findViewById(R.id.calendaricon);
         img2=  (ImageButton) findViewById(R.id.calendaricon1);
         cal = Calendar.getInstance();
-        day = cal.get(Calendar.DAY_OF_MONTH);
-        month = cal.get(Calendar.MONTH);
-        year = cal.get(Calendar.YEAR);
-
+        mDatePickerDialogFragment = new DatePickerDialogFragment();
         // img1.setOnClickListener(this);
         // img2.setOnClickListener(this);
 
-        addListenerOnButton();
+        //addListenerOnButton();
         b1= (Button) findViewById(R.id.pick20);
         et1 = (EditText) findViewById(R.id.selectstartdateformv);
         et2=(EditText) findViewById(R.id.selectenddateformv);
-
-
-        // setCurrentDateOnView();
-        //addListenerOnButton();
+        img1.setOnClickListener(this);
+        img2.setOnClickListener(this);
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,29 +239,6 @@ public class MVCallers extends BaseActionbar {
 
         }
 
-
-    public void addListenerOnButton() {
-        img1.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                showDialog(DATE_DIALOG_ID);
-
-            }
-
-        });
-        img2.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                showDialog(DATE_DIALOG_ID2);
-
-            }   });
-
-    }
-
     public String photoUpload(String url, String imageFilePath) {
         if (url == null) {
             return null;
@@ -341,37 +313,44 @@ public class MVCallers extends BaseActionbar {
     }
 
     void sendaudio() {
-       // photoUpload(Constants.recording,filepath);
+        String charset = "UTF-8";
+        File uploadFile1 = new File(filepath);
+        String requestURL = Constants.recording;
 
-                String charset = "UTF-8";
-                File uploadFile1 = new File(filepath);
-                //File uploadFile2 = new File("e:/Test/PIC2.JPG");
-                String requestURL = Constants.recording;
+        try {
+            MultipartUtility multipart = new MultipartUtility(requestURL, charset);
 
-                try {
-                    MultipartUtility multipart = new MultipartUtility(requestURL, charset);
+            multipart.addHeaderField("User-Agent", "CodeJava");
+            multipart.addHeaderField("Test-Header", "Header-Value");
+            multipart.addFormField("gcmid", Constants.gcmRegId);
+            multipart.addFormField("group_ids", "");
+            multipart.addFormField("mv_caller", "true");
+            multipart.addFormField("caller_ids", "");
+            multipart.addFormField("filename", audiofile);
+            multipart.addFormField("start_date", start);
+            multipart.addFormField("end_date", end);
+            multipart.addFormField("ai", "10");
+            multipart.addFilePart("uploadedfile", uploadFile1);
 
-                    multipart.addHeaderField("User-Agent", "CodeJava");
-                    multipart.addHeaderField("Test-Header", "Header-Value");
+            List<String> response = multipart.finish();
 
-                    multipart.addFormField("description", "Cool Pictures");
-                    multipart.addFormField("keywords", "Java,upload,Spring");
+            System.out.println("SERVER REPLIED:");
 
-                    multipart.addFilePart("fileUpload", uploadFile1);
-                    //multipart.addFilePart("fileUpload", uploadFile2);
-
-                    List<String> response = multipart.finish();
-
-                    System.out.println("SERVER REPLIED:");
-
-                    for (String line : response) {
-                        System.out.println(line);
-                    }
-                } catch (IOException ex) {
-                    System.err.println(ex);
-                }
-
-
+            for (String line : response) {
+                progress.dismiss();
+                System.out.println(line);
+            }
+        } catch (IOException ex) {
+            Log.d("Error", "Inside Audio upload" + ex.toString());
+            System.err.println(ex);
+            progress.dismiss();
+            finish();
+        } catch(Exception e)
+        {
+            Log.d("Error",e.toString());
+            progress.dismiss();
+            finish();
+        }
     }
 
     void sendmessage(final JSONObject json)
@@ -388,7 +367,9 @@ public class MVCallers extends BaseActionbar {
                         try {
 
                             JSONObject response1=new JSONObject(response);
-                            Toast.makeText(getBaseContext(), response1.toString(), Toast.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(android.R.id.content),  response1.toString(), Snackbar.LENGTH_LONG)
+                                    .setActionTextColor(Color.RED)
+                                    .show();
                         }
 
                         catch (JSONException e) {
@@ -401,7 +382,9 @@ public class MVCallers extends BaseActionbar {
                     public void onErrorResponse(VolleyError error) {
                         progress.dismiss();
                         Log.d("Launch Survey Error",error.toString());
-                        Toast.makeText(getApplicationContext(),R.string.check_your_server,Toast.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(android.R.id.content),  R.string.check_your_server, Snackbar.LENGTH_LONG)
+                                .setActionTextColor(Color.RED)
+                                .show();;
                     }
                 }){
             @Override
@@ -428,7 +411,9 @@ public class MVCallers extends BaseActionbar {
 
                 } catch(Exception e)
                 {
-                    Toast.makeText(getApplicationContext(),R.string.check_your_server,Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content),  R.string.check_your_server, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
                 }
 
                 return params;
@@ -454,10 +439,14 @@ public class MVCallers extends BaseActionbar {
                             String s1 = response1.get("message").toString();
                             Log.d("Surveyresponse",s1);
                             if (s1.equalsIgnoreCase("Recording Schedule created sucessfully!")) {
-                                Toast.makeText(getBaseContext(), R.string.recording_submitted, Toast.LENGTH_LONG).show();
+                                Snackbar.make(findViewById(android.R.id.content), R.string.recording_submitted, Snackbar.LENGTH_LONG)
+                                        .setActionTextColor(Color.RED)
+                                        .show();
                                 finish();
                             } else {
-                                Toast.makeText(getBaseContext(), R.string.recording_error, Toast.LENGTH_LONG).show();
+                                Snackbar.make(findViewById(android.R.id.content), R.string.recording_error, Snackbar.LENGTH_LONG)
+                                        .setActionTextColor(Color.RED)
+                                        .show();
                             }
                             finish();
                         } catch (JSONException e) {
@@ -470,8 +459,10 @@ public class MVCallers extends BaseActionbar {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progress.dismiss();
-                        Log.d("TAG",error.toString());
-                        Toast.makeText(getApplicationContext(), R.string.check_your_server, Toast.LENGTH_LONG).show();
+                        Log.d("Inside MV caller survey", error.toString());
+                        Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
+                                .setActionTextColor(Color.RED)
+                                .show();
                     }
                 }) {
             @Override
@@ -502,52 +493,50 @@ public class MVCallers extends BaseActionbar {
         progress = null;
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
+    static public class DatePickerDialogFragment extends DialogFragment implements
+            DatePickerDialog.OnDateSetListener {
+        public static final int FLAG_START_DATE = 0;
+        public static final int FLAG_END_DATE = 1;
 
-            case DATE_DIALOG_ID:
-                System.out.println("onCreateDialog  : " + id);
-                cur = DATE_DIALOG_ID;
-                // set date picker as current date
-                return new DatePickerDialog(this, datePickerListener, year, month,
-                        day);
+        private int flag = 0;
 
-            case DATE_DIALOG_ID2:
-                cur = DATE_DIALOG_ID2;
-                System.out.println("onCreateDialog2  : " + id);
-                // set date picker as current date
-                return new DatePickerDialog(this, datePickerListener, year, month,
-                        day);
-            default: break;
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+            return new DatePickerDialog(getActivity(), this, year, month, day);
         }
-        return null;
+
+        public void setFlag(int i) {
+            flag = i;
+        }
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, monthOfYear, dayOfMonth);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            if (flag == FLAG_START_DATE) {
+                et1.setText(format.format(calendar.getTime()));
+            } else if (flag == FLAG_END_DATE) {
+                et2.setText(format.format(calendar.getTime()));
+            }
+        }
     }
 
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-
-        // when dialog box is closed, below method will be called.
-        public void onDateSet(DatePicker view, int selectedYear,
-                              int selectedMonth, int selectedDay) {
-
-            year = selectedYear;
-            month = selectedMonth;
-            day = selectedDay;
-
-            if(cur == DATE_DIALOG_ID){
-                // set selected date into edittext
-                et1.setText(new StringBuilder().append(year)
-                        .append("-").append(month+1).append("-").append(day)
-                        .append(" "));
-            }
-            else if(cur==DATE_DIALOG_ID2){
-                et2.setText(new StringBuilder().append(year)
-                        .append("-").append(month+1).append("-").append(day)
-                        .append(" "));
-            }
-
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.calendaricon) {
+            mDatePickerDialogFragment.setFlag(DatePickerDialogFragment.FLAG_START_DATE);
+            mDatePickerDialogFragment.show(this.getFragmentManager(), "datePicker");
+        } else if (id == R.id.calendaricon1) {
+            mDatePickerDialogFragment.setFlag(DatePickerDialogFragment.FLAG_END_DATE);
+            mDatePickerDialogFragment.show(this.getFragmentManager(), "datePicker");
         }
-    };
+    }
 }
 

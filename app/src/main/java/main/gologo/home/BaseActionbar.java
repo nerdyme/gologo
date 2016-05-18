@@ -50,7 +50,7 @@ public class BaseActionbar extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath()
                     + "/AudioRecorder/");
-            intent.setDataAndType(uri, "text/csv");
+            intent.setDataAndType(uri, "*/*");
             startActivity(Intent.createChooser(intent, "Open folder"));
 
         	/*Uri selectedUri = Uri.parse(Environment.getExternalStorageDirectory() + "/AudioRecorder/");

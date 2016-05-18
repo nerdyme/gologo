@@ -20,28 +20,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import main.gologo.R;
 import main.gologo.adapter.Phonecomparator;
 import main.gologo.adapter.Phonecontactdata;
 import main.gologo.adapter.Phonecontactlistadapter;
+import main.gologo.audio.MultipartUtility;
 import main.gologo.constants.Constants;
 import main.gologo.home.BaseActionbar;
 import main.gologo.home.VolleyApplication;
@@ -244,78 +238,46 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
 
     }
 
-    public String photoUpload(String url, String imageFilePath) {
-        if (url == null) {
-            return null;
-        }
 
-        String response = "";
-        //return NetworkUtils.syncPOSTFile(url, "picture", imageFilePath, null);
-
-        try {
-            MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
-            entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-            File imageFile = new File(imageFilePath);
-            audiofile = imageFile.getName();
-
-            FileBody fileBody = new FileBody(imageFile);
-            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-            builder.addPart("gcmid", new StringBody(Constants.gcmRegId));
-            builder.addPart("mv_caller", new StringBody("false"));
-            builder.addPart("group_ids", new StringBody(""));
-            builder.addPart("caller_ids", new StringBody(contactlist));
-            builder.addPart("filename", new StringBody(audiofile));
-            builder.addPart("uploadedfile", fileBody);
-
-            HttpEntity entity = builder.build();
-            response = multiPost(url, entity);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        return response;
-    }
-
-    private String multiPost(String urlString, HttpEntity reqEntity) {
-        try {
-
-            URL url = new URL(urlString);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            // conn.setConnectTimeout(getTimeOut(UniversalHttpClient.RequestTimePreferences.Minimal, 1));
-            //conn.setReadTimeout(getTimeOut(UniversalHttpClient.RequestTimePreferences.Minimal, 0));
-            conn.setRequestMethod("POST");
-            conn.setUseCaches(false);
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Accept-Encoding", "gzip");
-            conn.setRequestProperty("Connection", "Keep-Alive");
-            //conn.addRequestProperty("Content-length", reqEntity.getContentLength() + "");
-            conn.addRequestProperty(reqEntity.getContentType().getName(), reqEntity.getContentType().getValue());
-
-            OutputStream os = conn.getOutputStream();
-            InputStream is = conn.getInputStream();
-
-            reqEntity.writeTo(os);
-            os.close();
-            conn.connect();
-
-            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                return conn.toString();
-            } else if (conn.getResponseCode() == HttpURLConnection.HTTP_ENTITY_TOO_LARGE) {
-                JSONObject response = new JSONObject();
-                return response.put("gsc", "600").put("message", "File too large to upload, Try smaller file.").toString();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     void sendaudio() {
-        photoUpload(Constants.recording,filepath);
+        //photoUpload(Constants.recording,filepath);
+        String charset = "UTF-8";
+        File uploadFile1 = new File(filepath);
+        String requestURL = Constants.recording;
+
+        try {
+            MultipartUtility multipart = new MultipartUtility(requestURL, charset);
+
+            multipart.addHeaderField("User-Agent", "CodeJava");
+            multipart.addHeaderField("Test-Header", "Header-Value");
+            multipart.addFormField("gcmid",Constants.gcmRegId);
+            multipart.addFormField("group_ids","");
+            multipart.addFormField("mv_caller", "false");
+            multipart.addFormField("caller_ids", contactlist);
+            multipart.addFormField("filename", audiofile);
+            multipart.addFilePart("uploadedfile", uploadFile1);
+
+            List<String> response = multipart.finish();
+
+            System.out.println("SERVER REPLIED:");
+
+            for (String line : response) {
+                progress.dismiss();
+                System.out.println(line);
+            }
+        } catch (IOException ex) {
+            Log.d("Error", "Inside Audio upload" + ex.toString());
+            System.err.println(ex);
+            progress.dismiss();
+            finish();
+        } catch(Exception e)
+        {
+            Log.d("Error",e.toString());
+            progress.dismiss();
+            finish();
+        }
+
 
     }
 
@@ -348,11 +310,13 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                         NetworkResponse networkResponse = error.networkResponse;
                         Log.d("Launch Survey Error", error.toString());
 
-                        if(networkResponse.statusCode == 500)
+                       /* if(networkResponse.statusCode == 500)
                             Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
                                     .setActionTextColor(Color.RED)
                                     .show();
-                        else Toast.makeText(getApplicationContext(),R.string.check_your_server,Toast.LENGTH_LONG).show();
+                        else */Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
+                                .setActionTextColor(Color.RED)
+                                .show();
                     }
                 }){
             @Override
@@ -417,7 +381,7 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        progress.dismiss();
+                       // progress.dismiss();
                         Log.d("TAG", error.toString());
                         NetworkResponse networkResponse = error.networkResponse;
                         if(networkResponse.statusCode == 500)

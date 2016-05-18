@@ -2,6 +2,7 @@ package main.gologo.message;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,29 +13,22 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import main.gologo.R;
 import main.gologo.home.BaseActionbar;
 import main.gologo.sendoptions.ContactOptions;
 
-public class TemplateAnnouncementCamp extends BaseActionbar {
+public class TemplateAnnouncementCamp extends BaseActionbar implements View.OnClickListener{
 
     Spinner sp;
-    EditText et1,et2,et3;
+    static EditText et1,et2,et3;
     Button b1;
     String start,end,campname,venuename;
     ImageButton img1,img2;
     private Calendar cal;
-    private int day,day1;
-    private int month,month1;
-    private int year,year1;
-
-    static final int DATE_DIALOG_ID = 1;
-    static final int DATE_DIALOG_ID2 = 2;
-    int cur = 0;
-
-    String date;
+    private DatePickerDialogFragment mDatePickerDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,20 +39,17 @@ public class TemplateAnnouncementCamp extends BaseActionbar {
         img1= (ImageButton) findViewById(R.id.calendaricon);
         img2=  (ImageButton) findViewById(R.id.calendaricon1);
         cal = Calendar.getInstance();
-        day = cal.get(Calendar.DAY_OF_MONTH);
-        month = cal.get(Calendar.MONTH);
-        year = cal.get(Calendar.YEAR);
 
-       // img1.setOnClickListener(this);
-       // img2.setOnClickListener(this);
-
-        addListenerOnButton();
         b1= (Button) findViewById(R.id.pick10);
         sp=(Spinner) findViewById(R.id.camp_value);
         et1 = (EditText) findViewById(R.id.selectstartdateforcamp);
         et2=(EditText) findViewById(R.id.selectenddateforcamp);
         et3=(EditText) findViewById(R.id.campvenue_value);
 
+        mDatePickerDialogFragment = new DatePickerDialogFragment();
+
+        img1.setOnClickListener(this);
+        img2.setOnClickListener(this);
        // setCurrentDateOnView();
         //addListenerOnButton();
 
@@ -101,7 +92,52 @@ public class TemplateAnnouncementCamp extends BaseActionbar {
 
     }
 
-   public void addListenerOnButton() {
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.calendaricon) {
+            mDatePickerDialogFragment.setFlag(DatePickerDialogFragment.FLAG_START_DATE);
+            mDatePickerDialogFragment.show(this.getFragmentManager(), "datePicker");
+        } else if (id == R.id.calendaricon1) {
+            mDatePickerDialogFragment.setFlag(DatePickerDialogFragment.FLAG_END_DATE);
+            mDatePickerDialogFragment.show(this.getFragmentManager(), "datePicker");
+        }
+    }
+
+     static public class DatePickerDialogFragment extends DialogFragment implements
+            DatePickerDialog.OnDateSetListener {
+        public static final int FLAG_START_DATE = 0;
+        public static final int FLAG_END_DATE = 1;
+
+        private int flag = 0;
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void setFlag(int i) {
+            flag = i;
+        }
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, monthOfYear, dayOfMonth);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            if (flag == FLAG_START_DATE) {
+                et1.setText(format.format(calendar.getTime()));
+            } else if (flag == FLAG_END_DATE) {
+                et2.setText(format.format(calendar.getTime()));
+            }
+        }
+    }
+  /* public void addListenerOnButton() {
 
 
 
@@ -130,7 +166,7 @@ public class TemplateAnnouncementCamp extends BaseActionbar {
 
     }
 
-    /*@Override
+    @Override
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.calendaricon:
@@ -144,7 +180,7 @@ public class TemplateAnnouncementCamp extends BaseActionbar {
             default:
                 break;
         }
-    }*/
+    }
 
     @Override
     protected Dialog onCreateDialog(int id) {
@@ -192,6 +228,6 @@ public class TemplateAnnouncementCamp extends BaseActionbar {
             }
 
         }
-    };
+    };*/
 }
 
