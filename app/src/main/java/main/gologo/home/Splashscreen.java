@@ -106,7 +106,7 @@ public class Splashscreen extends Activity {
         if(Constants.locationlist==null) {
             Constants.locationlist = new ArrayList<Locationdata>();
 
-            volleyrequest();
+            //volleyrequest();
         }
     }
 

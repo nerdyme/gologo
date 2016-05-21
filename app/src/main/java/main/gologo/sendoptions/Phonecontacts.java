@@ -1,16 +1,21 @@
 package main.gologo.sendoptions;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -50,6 +55,8 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
     Bundle bundle;
     String actname = "", form_id = "", filepath = "", audiofile = "";
     StringBuilder checkedcontacts;
+    EditText searchbar;
+
 
     ProgressDialog progress = null;
     Phonecontactlistadapter ma;
@@ -71,6 +78,7 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
         Collections.sort(phonelist, new Phonecomparator());
 
         ListView lv = (ListView) findViewById(R.id.lv1);
+        searchbar = (EditText) findViewById(R.id.search_editText);
         ma = new Phonecontactlistadapter(phonelist, Phonecontacts.this);
         lv.setAdapter(ma);
         lv.setOnItemClickListener(this);
@@ -78,6 +86,29 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
         lv.setTextFilterEnabled(true);
 
         select = (Button) findViewById(R.id.button1);
+
+        searchbar.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                Log.d("error","Text changed called");
+                Phonecontacts.this.ma.getFilter().filter(cs.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
         select.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -188,7 +219,7 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                         form_id = bundle.getString("form_id");
                         survey_name = bundle.getString("survey_name");
                         Log.d("Data to survey", "Form id :: " + form_id + "  Survey name :::  " + survey_name + "  ");
-                        //progress = ProgressDialog.show(Phonecontacts.this, "Please Wait ... ", "Launching Survey", true);
+                        progress = ProgressDialog.show(Phonecontacts.this, "Please Wait ... ", "Launching Survey", true);
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -238,8 +269,6 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
 
     }
 
-
-
     void sendaudio() {
         //photoUpload(Constants.recording,filepath);
         String charset = "UTF-8";
@@ -270,36 +299,60 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
             Log.d("Error", "Inside Audio upload" + ex.toString());
             System.err.println(ex);
             progress.dismiss();
+            if (ex.toString().contains("403"))
+                Snackbar.make(findViewById(android.R.id.content), R.string.mvcallers_not_present, Snackbar.LENGTH_LONG)
+                        .setActionTextColor(Color.RED)
+                        .show();
+            else
+                Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
+                        .setActionTextColor(Color.RED)
+                        .show();
             finish();
         } catch(Exception e)
         {
+
             Log.d("Error",e.toString());
             progress.dismiss();
+            Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
+                    .setActionTextColor(Color.RED)
+                    .show();
             finish();
         }
-
-
     }
 
     void sendmessage(final JSONObject json)
     {
         StringRequest request1 = new StringRequest(Request.Method.POST, Constants.launchmessage,
                 new Response.Listener<String>() {
-
-
                     @Override
                     public void onResponse(String response) {
                             progress.dismiss();
                             Log.d("TAG", response.toString());
-                            finish();
+
                         try {
 
                             JSONObject response1=new JSONObject(response);
-                            Toast.makeText(getBaseContext(), response1.toString(), Toast.LENGTH_LONG).show();
+                            Log.d("Launch Message Error", response1.toString());
+                            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(Phonecontacts.this);
+                            dlgAlert.setMessage(R.string.message_success);
+                            //dlgAlert.setTitle("App Title");
+                            dlgAlert.setPositiveButton("Ok",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //dismiss the dialog
+                                            finish();
+                                        }
+                                    });
+                            dlgAlert.setCancelable(true);
+                            dlgAlert.create().show();
+                            Snackbar.make(findViewById(android.R.id.content), response1.toString(), Snackbar.LENGTH_LONG)
+                                    .setActionTextColor(Color.RED)
+                                    .show();
                         }
 
                         catch (JSONException e) {
                             e.printStackTrace();
+                            finish();
                         }
                     }
                 },
@@ -308,7 +361,19 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                     public void onErrorResponse(VolleyError error) {
                         progress.dismiss();
                         NetworkResponse networkResponse = error.networkResponse;
-                        Log.d("Launch Survey Error", error.toString());
+                        Log.d("Launch Message Error", error.toString());
+                        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(Phonecontacts.this);
+                        dlgAlert.setMessage(R.string.error_in_sending_message);
+                        //dlgAlert.setTitle("App Title");
+                        dlgAlert.setPositiveButton("Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //dismiss the dialog
+                                        finish();
+                                    }
+                                });
+                        dlgAlert.setCancelable(true);
+                        dlgAlert.create().show();
 
                        /* if(networkResponse.statusCode == 500)
                             Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
@@ -353,7 +418,7 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
 
     void sendsurvey()
     {
-        Log.d("Calling","*****Inside Send Survey *****");
+        Log.d("Calling", "*****Inside Send Survey *****");
         StringRequest request1 = new StringRequest(Request.Method.POST, Constants.launch_survey,
                 new Response.Listener<String>() {
 
@@ -361,20 +426,21 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                     public void onResponse(String response) {
                         progress.dismiss();
                         try {
-                            Log.d("Calling","*****Inside Send Survey 1 *****");
+                            Log.d("Calling", "*****Inside Send Survey 1 *****");
                             JSONObject response1 = new JSONObject(response);
                             String s1 = response1.get("message").toString();
-                            Log.d("Surveyresponse",s1);
-                            if (s1.equalsIgnoreCase("Recording Schedule created sucessfully!")) {
+                            Log.d("Surveyresponse", s1);
+                            Toast.makeText(getBaseContext(), R.string.recording_submitted, Toast.LENGTH_LONG).show();
+                            /*if (s1.equalsIgnoreCase("Recording Schedule created sucessfully!")) {
                                 Toast.makeText(getBaseContext(), R.string.recording_submitted, Toast.LENGTH_LONG).show();
                                 finish();
                             } else {
                                 Toast.makeText(getBaseContext(), R.string.recording_error, Toast.LENGTH_LONG).show();
-                            }
+                            }*/
                             finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.d("Error",e.toString());
+                            Log.d("Error", e.toString());
                         }
                     }
                 },
@@ -389,6 +455,7 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                                     .setActionTextColor(Color.RED)
                                     .show();
                         else Toast.makeText(getApplicationContext(),R.string.check_your_server,Toast.LENGTH_LONG).show();
+                        finish();
 
                     }
                 }) {
@@ -435,6 +502,7 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
 
         phones.close();
     }
+
 }
 
 

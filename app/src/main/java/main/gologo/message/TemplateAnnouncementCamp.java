@@ -4,7 +4,9 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -13,8 +15,10 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import main.gologo.R;
 import main.gologo.home.BaseActionbar;
@@ -62,19 +66,38 @@ public class TemplateAnnouncementCamp extends BaseActionbar implements View.OnCl
                 end = et2.getText().toString();
                 venuename = et3.getText().toString();
 
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date date1=new Date();
+                Date date2=new Date();
+
+                try {
+                    date1 = sdf.parse(start);
+                    date2 = sdf.parse(end);
+                }
+                catch (ParseException p) {
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
+                }
+
+
+
                 if (campname.equals("") || campname.equals(null))
                     Toast.makeText(getBaseContext(), R.string.campnametoast, Toast.LENGTH_LONG).show();
                 else if (start.equals("") || start.equals(null))
                     Toast.makeText(getBaseContext(), R.string.startdatetoast, Toast.LENGTH_LONG).show();
                 else if (end.equals("") || end.equals(null))
                     Toast.makeText(getBaseContext(), R.string.enddatetoast, Toast.LENGTH_LONG).show();
+                else if(date1.before(date2)){ //then false
+                    Snackbar.make(findViewById(android.R.id.content), R.string.date_less_current, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
+                }
                 else if (venuename.equals("") || venuename.equals(null))
                     Toast.makeText(getBaseContext(), R.string.venuenametoast, Toast.LENGTH_LONG).show();
                 else {
                     Intent i = new Intent(getApplicationContext(), ContactOptions.class);
                     Bundle bundle = new Bundle();
-
-
                     bundle.putString("campname", campname);
                     bundle.putString("start", start);
                     bundle.putString("end", end);

@@ -151,7 +151,8 @@
 
         <!-- Template for survey launch Announcement -->
         <string name="selectdate">सर्वेक्षण दिनांक चुनें </string>
-        <string name="Please_enter_valid_date_before_sending">भेजने से पहले मान्य दिनांक दर्ज करें</string>
+        <string name="Please_enter_valid_date_before_sending">भेजने से पहले मान्य दिनांक(YYYY-MM-DD) दर्ज करें</string>
+        <string name="date_less_current">Date entered is less than current date.</string>
 
 
         <!--Template for Camp Announcement -->
@@ -222,11 +223,20 @@
         <string name="Select_atleast_one_contact">कम से कम एक संपर्क का चयन करें</string>
         <string name="recording_submitted">घोषणा डायल आउट के लिए प्रस्तुत किया जाता है</string>
         <string name="recording_error">सर्वर अपलोड करने में त्रुटि</string>
+        <string name="enter_phonecontact_name">संपर्क नाम दर्ज करें !</string>
 
 
-        <!--Displaying Group conatcts -->
+    <!--Displaying Group conatcts -->
         <string name="send">भेजें</string>
-        <string name="Select_atleast_one_group">कम से कम एक समूह का चयन करें</string>
+        <string name="Select_atleast_one_group">कम से कम एक समूह का चयन करें !</string>
+
+        <!-- For MV callers -->
+        <string name="mvcallers_not_present">कोई फोन करने वाले निश्चित समय अवधि में मौजूद नहीं है !</string>
+
+        <!-- For sending message -->
+        <string name="error_in_sending_message">संदेश भेजने में त्रुटि, फिर कोशिश करें !</string>
+        <string name="message_success">संदेश सफलतापूर्वक भेजा जा चुका है!</string>
 
 </resources>
+
 

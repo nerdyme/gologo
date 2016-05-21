@@ -58,6 +58,7 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
     ProgressDialog progress;
 
     String clist_ids="";
+    ArrayList<String> locations = new ArrayList<String>();
 
     protected CharSequence[] groups ;
     protected ArrayList<CharSequence> selectedGroups = new ArrayList<CharSequence>();
@@ -109,38 +110,9 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
        // state = (Spinner) findViewById(R.id.state_value);
         //contactgroup = (Spinner) findViewById(R.id.contactgroup_value);
 
-        ArrayList<String> locations = new ArrayList<String>();
 
-        int l=0;
-        if(Constants.locationlist!=null)
-        l=Constants.locationlist.size();
+        volleyrequest2();
 
-        Log.d("Size of location", String.valueOf(l) + '\n');
-
-        for(int i=0;i<l;++i)
-            locations.add(Constants.locationlist.get(i).getlocation());
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item ,locations);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dis.setAdapter(adapter);
-
-        dis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-
-            }
-        });
 
         btnSpeak.setOnClickListener(new View.OnClickListener() {
 
@@ -341,7 +313,7 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("name", nv);
+                params.put("name", Constants.capitalizeString(nv));
                 params.put("number", pv);
                 params.put("gender", gv);
                 params.put("gcmid", Constants.gcmRegId);
@@ -351,7 +323,6 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                 params.put("district",disvalue);
                 params.put("block",bv);
                 params.put("state",sv);
-
                 return params;
             }
         };
@@ -435,6 +406,85 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
             }
         });
         VolleyApplication.getInstance().getRequestQueue().add(jsonObjReq);
+    }
+
+    void init_locations()
+    {
+        int l=0;
+        if(Constants.locationlist!=null)
+            l=Constants.locationlist.size();
+
+        Log.d("Size of location", String.valueOf(l) + '\n');
+
+        for(int i=0;i<l;++i)
+            locations.add(Constants.locationlist.get(i).getlocation());
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item ,locations);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dis.setAdapter(adapter);
+
+        dis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+    }
+    void volleyrequest2()
+    {
+        JsonObjectRequest request1 = new JsonObjectRequest(Constants.location, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Constants.locationlist.clear();
+
+                        Log.d("locationresponse",response.toString());
+                        try {
+                            JSONObject js1 = (JSONObject) response.get("message");
+                            JSONArray ar1 = js1.getJSONArray("objects");
+
+                            int len=ar1.length();
+
+                            for(int i=0;i<len;++i)
+                            {
+                                JSONObject info = (JSONObject) ar1.get(i);
+                                String s1 = info.get("desc").toString();
+                                String s2 = info.get("resource_uri").toString();
+
+                                Log.d("Data", s2 + '\n');
+                                Locationdata ob=new Locationdata(s1,s2);
+                                Constants.locationlist.add(ob);
+                            }
+                                    init_locations();
+                        }
+
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        VolleyApplication.getInstance().getRequestQueue().add(request1);
     }
 
 }

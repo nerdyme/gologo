@@ -1,9 +1,11 @@
 package main.gologo.sendoptions;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -20,22 +22,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,11 +93,29 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                 start = et1.getText().toString();
                 end = et2.getText().toString();
 
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date date1=new Date();
+                Date date2=new Date();
+
+                try {
+                    date1 = sdf.parse(start);
+                    date2 = sdf.parse(end);
+                }
+                catch (ParseException p) {
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
+                }
 
                 if (start.equals("") || start.equals(null))
                     Toast.makeText(getBaseContext(), R.string.startdatetoast, Toast.LENGTH_LONG).show();
                 else if (end.equals("") || end.equals(null))
                     Toast.makeText(getBaseContext(), R.string.enddatetoast, Toast.LENGTH_LONG).show();
+                else if(date1.before(date2)){ //then false
+                    Snackbar.make(findViewById(android.R.id.content), R.string.date_less_current, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
+                }
                 else {
                     bundle = getIntent().getExtras();
                     actname = bundle.getString("ActivityName");
@@ -239,79 +252,6 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
 
         }
 
-    public String photoUpload(String url, String imageFilePath) {
-        if (url == null) {
-            return null;
-        }
-
-        String response = "";
-
-
-        try {
-            MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
-            entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-            File imageFile = new File(imageFilePath);
-            audiofile = imageFile.getName();
-
-            FileBody fileBody = new FileBody(imageFile);
-            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-            builder.addPart("gcmid", new StringBody(Constants.gcmRegId));
-            builder.addPart("mv_caller", new StringBody("true"));
-            builder.addPart("group_ids", new StringBody(""));
-            builder.addPart("caller_ids", new StringBody(""));
-            builder.addPart("filename", new StringBody(audiofile));
-            builder.addPart("start_date", new StringBody(start));
-            builder.addPart("end_date", new StringBody(end));
-            builder.addPart("ai", new StringBody("10"));
-            builder.addPart("uploadedfile", fileBody);
-
-            HttpEntity entity = builder.build();
-            response = multiPost(url, entity);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        return response;
-    }
-
-    private String multiPost(String urlString, HttpEntity reqEntity) {
-        try {
-
-            URL url = new URL(urlString);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            // conn.setConnectTimeout(getTimeOut(UniversalHttpClient.RequestTimePreferences.Minimal, 1));
-            //conn.setReadTimeout(getTimeOut(UniversalHttpClient.RequestTimePreferences.Minimal, 0));
-            conn.setRequestMethod("POST");
-            conn.setUseCaches(false);
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Accept-Encoding", "gzip");
-            conn.setRequestProperty("Connection", "Keep-Alive");
-            //conn.addRequestProperty("Content-length", reqEntity.getContentLength() + "");
-            conn.addRequestProperty(reqEntity.getContentType().getName(), reqEntity.getContentType().getValue());
-
-            OutputStream os = conn.getOutputStream();
-            InputStream is = conn.getInputStream();
-
-            reqEntity.writeTo(os);
-            os.close();
-            conn.connect();
-
-            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                return conn.toString();
-            } else if (conn.getResponseCode() == HttpURLConnection.HTTP_ENTITY_TOO_LARGE) {
-                JSONObject response = new JSONObject();
-                return response.put("gsc", "600").put("message", "File too large to upload, Try smaller file.").toString();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     void sendaudio() {
         String charset = "UTF-8";
         File uploadFile1 = new File(filepath);
@@ -340,15 +280,35 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                 progress.dismiss();
                 System.out.println(line);
             }
+           /* JSONObject response1 = new JSONObject(response.);
+            String s1 = response1.get("message").toString();*/
+
+          //  if (s1.equalsIgnoreCase("Recording Schedule created sucessfully!")) {
+                Snackbar.make(findViewById(android.R.id.content), R.string.recording_submitted, Snackbar.LENGTH_LONG)
+                        .setActionTextColor(Color.RED)
+                        .show();
+                finish();
+            //}
         } catch (IOException ex) {
             Log.d("Error", "Inside Audio upload" + ex.toString());
             System.err.println(ex);
             progress.dismiss();
+            if (ex.toString().contains("403"))
+                Snackbar.make(findViewById(android.R.id.content), R.string.mvcallers_not_present, Snackbar.LENGTH_LONG)
+                        .setActionTextColor(Color.RED)
+                        .show();
+            else
+            Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
+                    .setActionTextColor(Color.RED)
+                    .show();
             finish();
         } catch(Exception e)
         {
             Log.d("Error",e.toString());
             progress.dismiss();
+            Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
+                    .setActionTextColor(Color.RED)
+                    .show();
             finish();
         }
     }
@@ -363,10 +323,39 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                     public void onResponse(String response) {
                         progress.dismiss();
                         Log.d("TAG", response.toString());
-                        finish();
                         try {
 
                             JSONObject response1=new JSONObject(response);
+                            Log.d("Launch Message", response.toString());
+
+                            String msg=(String)response1.get("message");
+                            if(msg.equalsIgnoreCase("People have not called Mobile Vaani in this duration!"))
+                            {  AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(MVCallers.this);
+                            dlgAlert.setMessage(R.string.mvcallers_not_present);
+                            //dlgAlert.setTitle("App Title");
+                            dlgAlert.setPositiveButton("Ok",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //dismiss the dialog
+                                            finish();
+                                        }
+                                    });
+                            dlgAlert.setCancelable(true);
+                            dlgAlert.create().show();}
+                            else {
+                                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(MVCallers.this);
+                                dlgAlert.setMessage(R.string.message_success);
+                                //dlgAlert.setTitle("App Title");
+                                dlgAlert.setPositiveButton("Ok",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                //dismiss the dialog
+                                                finish();
+                                            }
+                                        });
+                                dlgAlert.setCancelable(true);
+                                dlgAlert.create().show();
+                            }
                             Snackbar.make(findViewById(android.R.id.content),  response1.toString(), Snackbar.LENGTH_LONG)
                                     .setActionTextColor(Color.RED)
                                     .show();
@@ -391,7 +380,6 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
                 try {
-
                     params.put("gcmid", Constants.gcmRegId);
                     params.put("message_id", Integer.toString(msg_id));
                     params.put("caller_ids", "");
@@ -438,7 +426,10 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                             JSONObject response1 = new JSONObject(response);
                             String s1 = response1.get("message").toString();
                             Log.d("Surveyresponse",s1);
-                            if (s1.equalsIgnoreCase("Recording Schedule created sucessfully!")) {
+                            Snackbar.make(findViewById(android.R.id.content), R.string.recording_submitted, Snackbar.LENGTH_LONG)
+                                    .setActionTextColor(Color.RED)
+                                    .show();
+                            /*if (s1.equalsIgnoreCase("Recording Schedule created sucessfully!")) {
                                 Snackbar.make(findViewById(android.R.id.content), R.string.recording_submitted, Snackbar.LENGTH_LONG)
                                         .setActionTextColor(Color.RED)
                                         .show();
@@ -447,7 +438,7 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                                 Snackbar.make(findViewById(android.R.id.content), R.string.recording_error, Snackbar.LENGTH_LONG)
                                         .setActionTextColor(Color.RED)
                                         .show();
-                            }
+                            }*/
                             finish();
                         } catch (JSONException e) {
                             e.printStackTrace();

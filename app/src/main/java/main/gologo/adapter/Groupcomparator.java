@@ -9,6 +9,6 @@ public class Groupcomparator  implements Comparator<Groupcontactdata> {
 
     @Override
     public int compare(Groupcontactdata emp1, Groupcontactdata emp2) {
-        return emp1.getgroupname().compareTo(emp2.getgroupname());
+        return emp1.getgroupname().compareToIgnoreCase(emp2.getgroupname());
     }
 }

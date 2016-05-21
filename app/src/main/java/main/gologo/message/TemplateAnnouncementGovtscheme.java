@@ -3,7 +3,9 @@ package main.gologo.message;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -12,7 +14,10 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import main.gologo.R;
 import main.gologo.home.BaseActionbar;
@@ -58,6 +63,34 @@ public class TemplateAnnouncementGovtscheme extends BaseActionbar implements Vie
                 ben=sp1.getSelectedItem().toString();
                 scheme=et.getText().toString();
 
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String format = sdf.format(date);
+
+
+                Date dNow = new Date();
+                String cur_date=sdf.format(dNow);
+
+                Date date1=new Date();
+                Date date2=new Date();
+
+                try {
+                    date1 = sdf.parse(format);
+                    date2 = sdf.parse(cur_date);
+
+
+                } catch (ParseException p) {
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
+                }
+
+                if(date1.before(date2)){ //then false
+                    Snackbar.make(findViewById(android.R.id.content), R.string.date_less_current, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
+                }
+
                 if(ben.equals("") || ben.equals(null))
                 {
                     Toast.makeText(getApplicationContext(), R.string.govtschemebeneficiarytoast, Toast.LENGTH_LONG).show();
@@ -69,6 +102,11 @@ public class TemplateAnnouncementGovtscheme extends BaseActionbar implements Vie
                 else if (date.equals(null) || date.trim().equals("") || date.equals("") || date.equalsIgnoreCase(" "))
                 {
                     Toast.makeText(getApplicationContext(), R.string.govtschemestartdatetoast, Toast.LENGTH_LONG).show();
+                }
+                else if(date1.before(date2)){ //then false
+                    Snackbar.make(findViewById(android.R.id.content), R.string.date_less_current, Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
                 }
                 else {
                     Intent i = new Intent(getApplicationContext(), ContactOptions.class);

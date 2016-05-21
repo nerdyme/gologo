@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
@@ -38,7 +39,6 @@ public class ContactOptions extends BaseActionbar {
 
         if (Constants.grouplist == null) {
             Constants.grouplist = new ArrayList<Groupcontactdata>();
-
             volleyrequest1();
         }
     }
@@ -108,6 +108,11 @@ public class ContactOptions extends BaseActionbar {
                 //Toast.makeText(getApplicationContext(), R.string.error_in_fetching_groups, Toast.LENGTH_LONG).show();
             }
         });
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyApplication.getInstance().getRequestQueue().add(jsonObjReq);
+
     }
 }

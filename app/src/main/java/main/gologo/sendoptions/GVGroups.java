@@ -1,6 +1,8 @@
 package main.gologo.sendoptions;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -115,7 +117,7 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                             jsonObject.put("camp_name", bundle.getString("campname"));
                             jsonObject.put("start_date",bundle.getString("start"));
                             jsonObject.put("end_date",bundle.getString("end"));
-                            jsonObject.put("location",bundle.getString("venuename"));
+                            jsonObject.put("location",Constants.capitalizeString(bundle.getString("venuename")));
                         }
                         catch(JSONException e)
                         {
@@ -146,7 +148,7 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                         i.putExtra("beneficiary",ben);
                         i.putExtra("date", date);*/
                         try {
-                            jsonObject.put("scheme_name",bundle.getString("scheme"));
+                            jsonObject.put("scheme_name",Constants.capitalizeString(bundle.getString("scheme")));
                             jsonObject.put("beneficiaries",bundle.getString("beneficiary"));
                             jsonObject.put("scheme_date", bundle.getString("date"));
                         }
@@ -355,6 +357,14 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
             Log.d("Error", "Inside Audio upload" + ex.toString());
             System.err.println(ex);
             progress.dismiss();
+            if (ex.toString().contains("403"))
+                Snackbar.make(findViewById(android.R.id.content), R.string.mvcallers_not_present, Snackbar.LENGTH_LONG)
+                        .setActionTextColor(Color.RED)
+                        .show();
+            else
+                Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
+                        .setActionTextColor(Color.RED)
+                        .show();
             finish();
         } catch(Exception e)
         {
@@ -375,10 +385,23 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                     public void onResponse(String response) {
                         progress.dismiss();
                         Log.d("TAG", response.toString());
-                        finish();
+
                         try {
 
                             JSONObject response1=new JSONObject(response);
+                            Log.d("Launch Message Error", response.toString());
+                            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(GVGroups.this);
+                            dlgAlert.setMessage(R.string.message_success);
+                            //dlgAlert.setTitle("App Title");
+                            dlgAlert.setPositiveButton("Ok",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //dismiss the dialog
+                                            finish();
+                                        }
+                                    });
+                            dlgAlert.setCancelable(true);
+                            dlgAlert.create().show();
                             Toast.makeText(getBaseContext(), response1.toString(), Toast.LENGTH_LONG).show();
                         }
 
@@ -399,7 +422,6 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
                 try {
-
                     params.put("gcmid", Constants.gcmRegId);
                     params.put("message_id", Integer.toString(msg_id));
                     params.put("caller_ids", "");
@@ -439,12 +461,13 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                             JSONObject response1 = new JSONObject(response);
                             String s1 = response1.get("message").toString();
                             Log.d("Surveyresponse",s1);
-                            if (s1.equalsIgnoreCase("Recording Schedule created sucessfully!")) {
+                            Toast.makeText(getBaseContext(), R.string.recording_submitted, Toast.LENGTH_LONG).show();
+                           /* if (s1.equalsIgnoreCase("Recording Schedule created sucessfully!")) {
                                 Toast.makeText(getBaseContext(), R.string.recording_submitted, Toast.LENGTH_LONG).show();
                                 finish();
                             } else {
                                 Toast.makeText(getBaseContext(), R.string.recording_error, Toast.LENGTH_LONG).show();
-                            }
+                            }*/
                             finish();
                         } catch (JSONException e) {
                             e.printStackTrace();

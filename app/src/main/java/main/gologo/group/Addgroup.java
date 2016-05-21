@@ -65,19 +65,15 @@ public class Addgroup extends BaseActionbar {
 
 
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 // TODO Auto-generated method stub
                 contactgroupname = msgvalue.getText().toString();
 
                 System.out.println("value of message" + contactgroupname);
 
-                if(contactgroupname.equals(null) || contactgroupname.trim().equalsIgnoreCase(""))
-                {
+                if (contactgroupname.equals(null) || contactgroupname.trim().equalsIgnoreCase("")) {
                     Toast.makeText(getApplicationContext(), R.string.Please_enter_groupname_before_creating, Toast.LENGTH_LONG).show();
-                }
-                else
-                {
+                } else {
                     progress = ProgressDialog.show(Addgroup.this, "Please Wait ... ", "Adding new group", true);
                     createvolleyrequest();
 
@@ -111,8 +107,6 @@ public class Addgroup extends BaseActionbar {
                                 });
                         dlgAlert.setCancelable(true);
                         dlgAlert.create().show();
-                        //Toast.makeText(getApplicationContext(),R.string.Contact_Group_Created,Toast.LENGTH_LONG).show();
-                        //finish();
 
                     }
                     else
@@ -139,6 +133,7 @@ public class Addgroup extends BaseActionbar {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progress.dismiss();
+                Log.d("Error","Inside error in create group");
                 AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(Addgroup.this);
                 dlgAlert.setMessage(R.string.Error_in_creating_Contact_Group);
                 //dlgAlert.setTitle("App Title");
@@ -157,12 +152,11 @@ public class Addgroup extends BaseActionbar {
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("name",contactgroupname);
+                params.put("name", Constants.capitalizeString(contactgroupname));
                 params.put("gcmid", Constants.gcmRegId);
                 return params;
             }
         };
-
         VolleyApplication.getInstance().getRequestQueue().add(sr);
 
     }
@@ -207,6 +201,7 @@ public class Addgroup extends BaseActionbar {
 
         }
     }
+
 }
 
 

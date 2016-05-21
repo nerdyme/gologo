@@ -139,7 +139,8 @@
 
     <!-- Template for survey launch Announcement -->
     <string name="selectdate">Select Survey Date</string>
-    <string name="Please_enter_valid_date_before_sending">Please enter valid date before sending</string>
+    <string name="Please_enter_valid_date_before_sending">Please enter valid date (YYYY-MM-DD) before sending</string>
+    <string name="date_less_current">Date entered is less than current date.</string>
 
 
     <!--Template for Camp Announcement -->
@@ -206,10 +207,19 @@
     <string name="Select_atleast_one_contact">Select atleast one contact</string>
     <string name="recording_submitted">Announcement is submitted for dial outs</string>
     <string name="recording_error">Server Uploading error</string>
+    <string name="enter_phonecontact_name">Enter contact name</string>
 
 
     <!--Displaying Group conatcts -->
     <string name="send">Send</string>
     <string name="Select_atleast_one_group">Select atleast one group</string>
+
+
+    <!-- For MV callers -->
+    <string name="mvcallers_not_present">No caller found in the given time duration</string>
+
+    <!-- For sending message -->
+    <string name="error_in_sending_message">Error in sending message, Try Again</string>
+    <string name="message_success">Message sent successfully!</string>
 
 </resources>

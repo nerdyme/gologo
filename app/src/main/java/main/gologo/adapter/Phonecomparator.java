@@ -9,6 +9,6 @@ public class Phonecomparator  implements Comparator<Phonecontactdata> {
 
     @Override
     public int compare(Phonecontactdata emp1, Phonecontactdata emp2) {
-        return emp1.getname().compareTo(emp2.getname());
+        return emp1.getname().compareToIgnoreCase(emp2.getname());
     }
 }

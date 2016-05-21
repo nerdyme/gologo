@@ -26,9 +26,12 @@ public class Constants {
     //ictd username ictdlab--password
     //Amazon credentials :: Ip address : http://52.25.169.219/ username: myvoice password : surbhi
 
+    //To run logs on the rails :: tail -f log/development.log
+
     public static String baseurl="http://10.237.27.182:3000/";
     //public static String baseurl="http://52.25.169.219:3000/";
-
+   // public static String baseurl="http://10.192.15.52:3000/";
+    //public static String baseurl="http://10.192.50.143:3000/";
     //path to create audio file : /storage/emulated/0/AudioRecorder/1463512098402.mp3
     public static String login=baseurl+"login";
     public static String pinforget=baseurl+"getpin";
@@ -49,6 +52,20 @@ public class Constants {
 
     public static ArrayList<Locationdata> locationlist=null;
     public static ArrayList<Groupcontactdata> grouplist=null;
+
+    public static String capitalizeString(String string) {
+        char[] chars = string.toLowerCase().toCharArray();
+        boolean found = false;
+        for (int i = 0; i < chars.length; i++) {
+            if (!found && Character.isLetter(chars[i])) {
+                chars[i] = Character.toUpperCase(chars[i]);
+                found = true;
+            } else if (Character.isWhitespace(chars[i]) || chars[i]=='.' || chars[i]=='\'') { // You can add other chars here
+                found = false;
+            }
+        }
+        return String.valueOf(chars).trim();
+    }
 
 
 }

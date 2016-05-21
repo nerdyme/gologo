@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.RECORD_VIDEO" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
@@ -58,8 +59,13 @@
         <activity android:name=".sendoptions.ContactOptions" />
         <activity android:name=".message.TemplateAnnouncementCamp" />
         <activity android:name=".message.TemplateAnnouncementGovtscheme" />
-        <activity android:name=".sendoptions.Phonecontacts" />
-        <activity android:name=".sendoptions.GVGroups" />
+
+        <activity android:name=".sendoptions.Phonecontacts"
+                  android:windowSoftInputMode="stateHidden"></activity>
+
+        <activity android:name=".sendoptions.GVGroups"
+            android:windowSoftInputMode="stateHidden"></activity>
+
         <activity android:name=".sendoptions.MVCallers" />
         <activity android:name=".audio.Recordaudio" />
         <activity android:name=".contact.Createcontact" />

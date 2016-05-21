@@ -54,6 +54,7 @@ public class Phoneverify extends BaseActionbar {
                         } else {
                             //Do a volley request
                             progress = ProgressDialog.show(Phoneverify.this, "Please Wait ... ", "You will receive message shortly", true);
+                            progress.setCancelable(true);
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
