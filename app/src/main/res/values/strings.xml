@@ -62,6 +62,7 @@
     <string name="open_windows_explorer">Listen Recordings</string>
     <string name="app_info">App Info</string>
     <string name="app_share">App Share</string>
+    <string name="my_profile">My Profile</string>
     <string name="appinfo"> \'Gologo\' is used to broadcast the news in the community. A registered volunteer
          performs one time login for the authentication. He can broadcast any recorded announcements, can launch ongoing surveys
         and can circulate information through text messages. The volunteer can address the information either to all or to the relevant audience
@@ -201,6 +202,7 @@
     <string name="Enter_valid_phone_number1">Enter valid phone number</string>
     <string name="Enter_valid_age">Enter valid age(0-150)</string>
     <string name="Contact_created_successfully"> New Contact added successfully</string>
+    <string name="error_in_fetching_locatiosn">Error in fetching locations from GV Server</string>
 
 
     <!-- Displaying Phone Contacts -->
@@ -217,9 +219,24 @@
 
     <!-- For MV callers -->
     <string name="mvcallers_not_present">No caller found in the given time duration</string>
+    <string name="end_date_less_then_current_date">End Date is less than start date.</string>
 
     <!-- For sending message -->
     <string name="error_in_sending_message">Error in sending message, Try Again</string>
     <string name="message_success">Message sent successfully!</string>
+
+
+    <!--My profile-->
+    <string name="name_text">Name :</string>
+    <string name="user_type_value">Admin</string>
+    <string name="number_text">Registered Number :</string>
+    <string name="age_text">Age :</string>
+    <string name="location_text">District :</string>
+    <string name="Gender_text">Gender :</string>
+    <string name="User_type_text">User Type :</string>
+    <string name="mainmenu">Go to Menu</string>
+    <string name="state_text">State :</string>
+    <string name="loading">Loading...</string>
+    <string name="details_displayed">All Details displayed successfully</string>
 
 </resources>

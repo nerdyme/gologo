@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,8 +52,10 @@ public class TemplateAnnouncementCamp extends BaseActionbar implements View.OnCl
 
         img1.setOnClickListener(this);
         img2.setOnClickListener(this);
-       // setCurrentDateOnView();
-        //addListenerOnButton();
+        et1.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        et2.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        et3.setText("Block-2, Munirka, Delhi");
+
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,34 +67,28 @@ public class TemplateAnnouncementCamp extends BaseActionbar implements View.OnCl
                 venuename = et3.getText().toString();
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date date1=new Date();
-                Date date2=new Date();
-
+                Date date1 = new Date();
+                Date date2 = new Date();
+                int invalid=0;
                 try {
                     date1 = sdf.parse(start);
                     date2 = sdf.parse(end);
+                } catch (ParseException p) {
+                    invalid=1;
                 }
-                catch (ParseException p) {
-                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG)
-                            .setActionTextColor(Color.RED)
-                            .show();
-                }
-
-
 
                 if (campname.equals("") || campname.equals(null))
-                    Toast.makeText(getBaseContext(), R.string.campnametoast, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.campnametoast, Snackbar.LENGTH_LONG).show();
                 else if (start.equals("") || start.equals(null))
-                    Toast.makeText(getBaseContext(), R.string.startdatetoast, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.startdatetoast, Snackbar.LENGTH_LONG).show();
                 else if (end.equals("") || end.equals(null))
-                    Toast.makeText(getBaseContext(), R.string.enddatetoast, Toast.LENGTH_LONG).show();
-                else if(date1.before(date2)){ //then false
-                    Snackbar.make(findViewById(android.R.id.content), R.string.date_less_current, Snackbar.LENGTH_LONG)
-                            .setActionTextColor(Color.RED)
-                            .show();
-                }
-                else if (venuename.equals("") || venuename.equals(null))
-                    Toast.makeText(getBaseContext(), R.string.venuenametoast, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.enddatetoast, Snackbar.LENGTH_LONG).show();
+                else if (invalid==1)
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG).show();
+                else if (date2.before(date1)) { //then false
+                    Snackbar.make(findViewById(android.R.id.content), R.string.end_date_less_then_current_date, Snackbar.LENGTH_LONG).show();
+                } else if (venuename.equals("") || venuename.equals(null))
+                    Snackbar.make(findViewById(android.R.id.content), R.string.venuenametoast, Snackbar.LENGTH_LONG).show();
                 else {
                     Intent i = new Intent(getApplicationContext(), ContactOptions.class);
                     Bundle bundle = new Bundle();
@@ -108,11 +102,8 @@ public class TemplateAnnouncementCamp extends BaseActionbar implements View.OnCl
                     i.putExtras(bundle);
                     startActivity(i);
                 }
-
-
             }
         });
-
     }
 
     @Override
@@ -160,97 +151,5 @@ public class TemplateAnnouncementCamp extends BaseActionbar implements View.OnCl
             }
         }
     }
-  /* public void addListenerOnButton() {
-
-
-
-        img1.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                showDialog(DATE_DIALOG_ID);
-
-            }
-
-        });
-
-
-        img2.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                showDialog(DATE_DIALOG_ID2);
-
-            }
-
-        });
-
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()) {
-            case R.id.calendaricon:
-                showDialog(DATE_DIALOG_ID);
-                break;
-
-            case R.id.calendaricon1:
-                showDialog(DATE_DIALOG_ID2);
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-
-            case DATE_DIALOG_ID:
-                System.out.println("onCreateDialog  : " + id);
-                cur = DATE_DIALOG_ID;
-                // set date picker as current date
-                return new DatePickerDialog(this, datePickerListener, year, month,
-                        day);
-
-            case DATE_DIALOG_ID2:
-                cur = DATE_DIALOG_ID2;
-                System.out.println("onCreateDialog2  : " + id);
-                // set date picker as current date
-                return new DatePickerDialog(this, datePickerListener, year, month,
-                        day);
-            default: break;
-
-        }
-        return null;
-    }
-
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-
-        // when dialog box is closed, below method will be called.
-        public void onDateSet(DatePicker view, int selectedYear,
-                              int selectedMonth, int selectedDay) {
-
-            year = selectedYear;
-            month = selectedMonth;
-            day = selectedDay;
-
-            if(cur == DATE_DIALOG_ID){
-                // set selected date into edittext
-                et1.setText(new StringBuilder().append(day)
-                        .append("-").append(month+1).append("-").append(year)
-                        .append(" "));
-            }
-            else if(cur==DATE_DIALOG_ID2){
-                et2.setText(new StringBuilder().append(day)
-                        .append("-").append(month+1).append("-").append(year)
-                        .append(" "));
-            }
-
-        }
-    };*/
 }
 

@@ -3,7 +3,6 @@ package main.gologo.message;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -43,6 +42,7 @@ public class TemplateAnnouncementSurvey extends BaseActionbar implements View.On
         month = cal.get(Calendar.MONTH);
         year = cal.get(Calendar.YEAR);
         et = (EditText) findViewById(R.id.selectdateforsurvey);
+        et.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         ib.setOnClickListener(this);
         b1=(Button)findViewById(R.id.pick1);
 
@@ -54,37 +54,29 @@ public class TemplateAnnouncementSurvey extends BaseActionbar implements View.On
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 date = et.getText().toString();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-                String format = sdf.format(date);
-
-
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date dNow = new Date();
-                SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
-                String cur_date=ft.format(dNow);
-                Date date1=new Date();
-                Date date2=new Date();
+                String cur_date=sdf.format(dNow);
+
+                Date st=new Date();
+                Date end=new Date();
+                int invalid=0;
 
                 try {
-                     date1 = sdf.parse(format);
-                     date2 = sdf.parse(cur_date);
-
-
+                    end = sdf.parse(date);
+                    st = sdf.parse(cur_date);
                 } catch (ParseException p) {
-                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG)
-                            .setActionTextColor(Color.RED)
-                            .show();
+                    invalid=1;
                 }
 
-                if(date1.before(date2)){ //then false
-                    Snackbar.make(findViewById(android.R.id.content), R.string.date_less_current, Snackbar.LENGTH_LONG)
-                            .setActionTextColor(Color.RED)
-                            .show();
+                if (date.equals(null) || date.trim().equals("") || date.equals("") || date.equalsIgnoreCase(" "))
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG).show();
+                else if (invalid==1)
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG).show();
+                else if(st.after(end)){ //then false
+                    Snackbar.make(findViewById(android.R.id.content), R.string.date_less_current, Snackbar.LENGTH_LONG).show();
                 }
-                else if (date.equals(null) || date.trim().equals("") || date.equals("") || date.equalsIgnoreCase(" ")) {
-                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG)
-                            .setActionTextColor(Color.RED)
-                            .show();
-                } else {
+                else {
                     Intent i = new Intent(getApplicationContext(), ContactOptions.class);
                     i.putExtra("ActivityName", "TemplateAnnouncementSurvey");
                     i.putExtra("date", date);

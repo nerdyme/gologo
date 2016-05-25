@@ -56,7 +56,7 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
     String actname = "", form_id = "", filepath = "", audiofile = "";
     StringBuilder checkedcontacts;
     EditText searchbar;
-
+    int contentlen;
 
     ProgressDialog progress = null;
     Phonecontactlistadapter ma;
@@ -64,6 +64,10 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
     String survey_name = "";
     Button select;
     int msg_id = 24;
+    // Progress Dialog
+    private ProgressDialog pDialog;
+    // Progress dialog type (0 - for Horizontal progress bar)
+    public static final int progress_bar_type = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,7 +244,8 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
 
                         filepath = bundle.getString("FileName"); //complete file path is fetched./*/storage/emulated/0/AudioRecorder/1462830570992.mp4*/
                         Log.d("filepath", "Inside send audio function" + filepath);
-                        progress = ProgressDialog.show(Phonecontacts.this, "Please Wait ... ", "Your audio is being uploaded", true);
+
+                       progress = ProgressDialog.show(Phonecontacts.this, "Please Wait ... ", "Your audio is being uploaded", true);
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -277,6 +282,13 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
 
         try {
             MultipartUtility multipart = new MultipartUtility(requestURL, charset);
+            /*new MultipartUtility.ProgressListener() {
+
+                @Override
+                public void transferred(long num) {
+                    publishProgress((int) ((num / (float) totalSize) * 100));
+                }
+            }));*/
 
             multipart.addHeaderField("User-Agent", "CodeJava");
             multipart.addHeaderField("Test-Header", "Header-Value");
@@ -502,6 +514,7 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
 
         phones.close();
     }
+
 
 }
 

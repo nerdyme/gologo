@@ -66,7 +66,7 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
 
         bundle=getIntent().getExtras();
         actname=bundle.getString("ActivityName");
-        //grouplist=new ArrayList<Groupcontactdata>();
+
 
         Collections.sort(Constants.grouplist, new Groupcomparator());
 
@@ -282,6 +282,7 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
             builder.addPart("group_ids",new StringBody(contactlist));
             builder.addPart("caller_ids", new StringBody(""));
             builder.addPart("filename", new StringBody(audiofile));
+            builder.addPart("mv_caller", new StringBody("false"));
             HttpEntity entity = builder.build();
             response = multiPost(url, entity);
         } catch (Exception e) {
@@ -490,7 +491,8 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                 params.put("caller_ids","");
                 params.put("group_ids",contactlist);
                 params.put("form_id",form_id);
-                params.put("schedule_name",survey_name);
+                params.put("survey_name",survey_name);
+                params.put("mv_caller","false");
                 return params;
             }
 

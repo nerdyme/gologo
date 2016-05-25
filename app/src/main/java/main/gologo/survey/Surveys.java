@@ -111,6 +111,7 @@ public class Surveys extends BaseActionbar {
                         Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
                                 .setActionTextColor(Color.RED)
                                 .show();
+                        finish();
                     }
                 }
         );

@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -71,18 +70,16 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mvcallers);
 
-
         img1= (ImageButton) findViewById(R.id.calendaricon);
         img2=  (ImageButton) findViewById(R.id.calendaricon1);
         cal = Calendar.getInstance();
         mDatePickerDialogFragment = new DatePickerDialogFragment();
-        // img1.setOnClickListener(this);
-        // img2.setOnClickListener(this);
 
-        //addListenerOnButton();
         b1= (Button) findViewById(R.id.pick20);
         et1 = (EditText) findViewById(R.id.selectstartdateformv);
         et2=(EditText) findViewById(R.id.selectenddateformv);
+        et1.setText("2016-01-01");
+        et2.setText((new SimpleDateFormat("yyyy-MM-dd").format(new Date())));
         img1.setOnClickListener(this);
         img2.setOnClickListener(this);
 
@@ -92,6 +89,7 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
 
                 start = et1.getText().toString();
                 end = et2.getText().toString();
+                int invalid=0;
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date date1=new Date();
@@ -102,20 +100,17 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                     date2 = sdf.parse(end);
                 }
                 catch (ParseException p) {
-                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG)
-                            .setActionTextColor(Color.RED)
-                            .show();
+                    invalid=1;
                 }
 
                 if (start.equals("") || start.equals(null))
-                    Toast.makeText(getBaseContext(), R.string.startdatetoast, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.startdatetoast, Snackbar.LENGTH_LONG).show();
                 else if (end.equals("") || end.equals(null))
-                    Toast.makeText(getBaseContext(), R.string.enddatetoast, Toast.LENGTH_LONG).show();
-                else if(date1.before(date2)){ //then false
-                    Snackbar.make(findViewById(android.R.id.content), R.string.date_less_current, Snackbar.LENGTH_LONG)
-                            .setActionTextColor(Color.RED)
-                            .show();
-                }
+                    Snackbar.make(findViewById(android.R.id.content), R.string.enddatetoast, Snackbar.LENGTH_LONG).show();
+                else if(invalid==1)
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG).show();
+                else if(date2.before(date1)) //then false
+                    Snackbar.make(findViewById(android.R.id.content), R.string.end_date_less_then_current_date, Snackbar.LENGTH_LONG).show();
                 else {
                     bundle = getIntent().getExtras();
                     actname = bundle.getString("ActivityName");
@@ -124,17 +119,15 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                                 if (actname.equalsIgnoreCase("TemplateAnnouncementCamp") == true) {
                                     msg_id = 41; ///Set as gramvaani gives
                                     jsonObject = new JSONObject();
-
                                     try {
-
                                         jsonObject.put("camp_name", bundle.getString("campname"));
                                         jsonObject.put("start_date", bundle.getString("start"));
                                         jsonObject.put("end_date", bundle.getString("end"));
                                         jsonObject.put("location", bundle.getString("venuename"));
-                                    } catch (JSONException e) {
-
                                     }
-                                    progress = ProgressDialog.show(MVCallers.this, "Please Wait ... ", "Sending message", true);
+                                    catch (JSONException e) {
+                                    }
+
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -143,7 +136,7 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                                             runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
-
+                                                    progress = ProgressDialog.show(MVCallers.this, "Please Wait ... ", "Sending message", true);
                                                 }
                                             });
                                         }
@@ -152,10 +145,6 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                                 } else if (actname.equalsIgnoreCase("TemplateAnnouncementGovtscheme") == true) {
                                     msg_id = 42; ///Set as gramvaani gives
                                     jsonObject = new JSONObject();
-                        /*i.putExtra("ActivityName", "TemplateAnnouncementGovtscheme");
-                        i.putExtra("scheme",scheme);
-                        i.putExtra("beneficiary",ben);
-                        i.putExtra("date", date);*/
                                     try {
                                         jsonObject.put("scheme_name", bundle.getString("scheme"));
                                         jsonObject.put("beneficiaries", bundle.getString("beneficiary"));
@@ -163,7 +152,7 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                                     } catch (JSONException e) {
 
                                     }
-                                    progress = ProgressDialog.show(MVCallers.this, "Please Wait ... ", "Sending message", true);
+
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -172,13 +161,12 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                                             runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
-
+                                                    progress = ProgressDialog.show(MVCallers.this, "Please Wait ... ", "Sending message", true);
                                                 }
                                             });
                                         }
                                     }).start();
-                                    //Toast.makeText(getApplicationContext(),"Message is successfully delivered",Toast.LENGTH_LONG).show();
-                                    //finish();
+
                                 } else if (actname.equalsIgnoreCase("TemplateAnnouncementSurvey") == true) {
                                     msg_id = 40; ///Set as gramvaani gives
                                     jsonObject = new JSONObject();
@@ -187,8 +175,6 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                                     } catch (JSONException e) {
 
                                     }
-
-                                    progress = ProgressDialog.show(MVCallers.this, "Please Wait ... ", "Sending message", true);
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -197,18 +183,17 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                                             runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
-
+                                                    progress = ProgressDialog.show(MVCallers.this, "Please Wait ... ", "Sending message", true);
                                                 }
                                             });
                                         }
                                     }).start();
-                                    //Toast.makeText(getApplicationContext(),"Message is successfully delivered",Toast.LENGTH_LONG).show();
-                                    //finish();
+
                                 } else if (actname.equalsIgnoreCase("LaunchSurvey") == true) {
                                     form_id = bundle.getString("form_id");
                                     survey_name = bundle.getString("survey_name");
                                     Log.d("Data to survey", "Form id :: " + form_id + "  Survey name :::  " + survey_name + "  ");
-                                    progress = ProgressDialog.show(MVCallers.this, "Please Wait ... ", "Launching Survey", true);
+
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -218,18 +203,17 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                                             runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
-
+                                                    progress = ProgressDialog.show(MVCallers.this, "Please Wait ... ", "Launching Survey", true);
                                                 }
                                             });
                                         }
                                     }).start();
-                                    //Toast.makeText(getApplicationContext(),"Survey is successfully launched",Toast.LENGTH_LONG).show();
-                                    //finish();
-                                } else if (actname.equalsIgnoreCase("Recordaudio") == true) {
+                                }
+                                else if (actname.equalsIgnoreCase("Recordaudio") == true) {
 
                                     filepath = bundle.getString("FileName"); //complete file path is fetched./*/storage/emulated/0/AudioRecorder/1462830570992.mp4*/
                                     Log.d("filepath", "Inside send audio function" + filepath);
-                                    progress = ProgressDialog.show(MVCallers.this, "Please Wait ... ", "Your audio is being uploaded", true);
+
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -238,13 +222,11 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                                             runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
-
+                                                    progress = ProgressDialog.show(MVCallers.this, "Please Wait ... ", "Your audio is being uploaded", true);
                                                 }
                                             });
                                         }
                                     }).start();
-                                    // Toast.makeText(getApplicationContext(),"Audio is successfully delivered",Toast.LENGTH_LONG).show();
-                                    // finish();
                                 }
                 }
             }
@@ -284,23 +266,17 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
             String s1 = response1.get("message").toString();*/
 
           //  if (s1.equalsIgnoreCase("Recording Schedule created sucessfully!")) {
-                Snackbar.make(findViewById(android.R.id.content), R.string.recording_submitted, Snackbar.LENGTH_LONG)
-                        .setActionTextColor(Color.RED)
-                        .show();
-                finish();
+                Snackbar.make(findViewById(android.R.id.content), R.string.recording_submitted, Snackbar.LENGTH_LONG).show();
+            finish();
             //}
         } catch (IOException ex) {
             Log.d("Error", "Inside Audio upload" + ex.toString());
             System.err.println(ex);
             progress.dismiss();
             if (ex.toString().contains("403"))
-                Snackbar.make(findViewById(android.R.id.content), R.string.mvcallers_not_present, Snackbar.LENGTH_LONG)
-                        .setActionTextColor(Color.RED)
-                        .show();
+                Snackbar.make(findViewById(android.R.id.content), R.string.mvcallers_not_present, Snackbar.LENGTH_LONG).show();
             else
-            Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
-                    .setActionTextColor(Color.RED)
-                    .show();
+            Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG).show();
             finish();
         } catch(Exception e)
         {
@@ -318,21 +294,17 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
         StringRequest request1 = new StringRequest(Request.Method.POST, Constants.launchmessage,
                 new Response.Listener<String>() {
 
-
                     @Override
                     public void onResponse(String response) {
                         progress.dismiss();
-                        Log.d("TAG", response.toString());
+                        Log.d("Inside Launch Message", response.toString());
                         try {
-
                             JSONObject response1=new JSONObject(response);
-                            Log.d("Launch Message", response.toString());
-
                             String msg=(String)response1.get("message");
+
                             if(msg.equalsIgnoreCase("People have not called Mobile Vaani in this duration!"))
                             {  AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(MVCallers.this);
                             dlgAlert.setMessage(R.string.mvcallers_not_present);
-                            //dlgAlert.setTitle("App Title");
                             dlgAlert.setPositiveButton("Ok",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
@@ -342,10 +314,10 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                                     });
                             dlgAlert.setCancelable(true);
                             dlgAlert.create().show();}
+
                             else {
                                 AlertDialog.Builder dlgAlert = new AlertDialog.Builder(MVCallers.this);
                                 dlgAlert.setMessage(R.string.message_success);
-                                //dlgAlert.setTitle("App Title");
                                 dlgAlert.setPositiveButton("Ok",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
@@ -356,11 +328,8 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                                 dlgAlert.setCancelable(true);
                                 dlgAlert.create().show();
                             }
-                            Snackbar.make(findViewById(android.R.id.content),  response1.toString(), Snackbar.LENGTH_LONG)
-                                    .setActionTextColor(Color.RED)
-                                    .show();
+                            Snackbar.make(findViewById(android.R.id.content),response1.toString(), Snackbar.LENGTH_LONG).show();
                         }
-
                         catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -371,15 +340,12 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                     public void onErrorResponse(VolleyError error) {
                         progress.dismiss();
                         Log.d("Launch Survey Error",error.toString());
-                        Snackbar.make(findViewById(android.R.id.content),  R.string.check_your_server, Snackbar.LENGTH_LONG)
-                                .setActionTextColor(Color.RED)
-                                .show();;
+                        Snackbar.make(findViewById(android.R.id.content),  R.string.check_your_server + "\n" + error.toString(), Snackbar.LENGTH_LONG).show();
                     }
                 }){
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                try {
                     params.put("gcmid", Constants.gcmRegId);
                     params.put("message_id", Integer.toString(msg_id));
                     params.put("caller_ids", "");
@@ -388,27 +354,15 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                     params.put("start_date",start);
                     params.put("end_date",end);
                     params.put("ai","10");
-
+                    params.put("message_args", json.toString());
                     /*JSONObject jsonObject = new JSONObject();
                     jsonObject.put("club", "Hello all");
                     jsonObject.put("date", "15.07.2015");
                     jsonObject.put("callback_calls", 20);
                     jsonObject.put("club_contribs", 40);*/
-
-                    params.put("message_args", json.toString());
-
-                } catch(Exception e)
-                {
-                    Snackbar.make(findViewById(android.R.id.content),  R.string.check_your_server, Snackbar.LENGTH_LONG)
-                            .setActionTextColor(Color.RED)
-                            .show();
-                }
-
                 return params;
             }
-
         };
-
         VolleyApplication.getInstance().getRequestQueue().add(request1);
     }
 
@@ -426,20 +380,8 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                             JSONObject response1 = new JSONObject(response);
                             String s1 = response1.get("message").toString();
                             Log.d("Surveyresponse",s1);
-                            Snackbar.make(findViewById(android.R.id.content), R.string.recording_submitted, Snackbar.LENGTH_LONG)
-                                    .setActionTextColor(Color.RED)
-                                    .show();
-                            /*if (s1.equalsIgnoreCase("Recording Schedule created sucessfully!")) {
-                                Snackbar.make(findViewById(android.R.id.content), R.string.recording_submitted, Snackbar.LENGTH_LONG)
-                                        .setActionTextColor(Color.RED)
-                                        .show();
-                                finish();
-                            } else {
-                                Snackbar.make(findViewById(android.R.id.content), R.string.recording_error, Snackbar.LENGTH_LONG)
-                                        .setActionTextColor(Color.RED)
-                                        .show();
-                            }*/
-                            finish();
+                            Snackbar.make(findViewById(android.R.id.content), R.string.recording_submitted + "\n" + s1, Snackbar.LENGTH_LONG).show();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.d("Error",e.toString());
@@ -451,9 +393,7 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                     public void onErrorResponse(VolleyError error) {
                         progress.dismiss();
                         Log.d("Inside MV caller survey", error.toString());
-                        Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
-                                .setActionTextColor(Color.RED)
-                                .show();
+                        Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server + "\n" + error.toString(), Snackbar.LENGTH_LONG).show();
                     }
                 }) {
             @Override
@@ -463,7 +403,7 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                 params.put("caller_ids",contactlist);
                 params.put("group_ids","");
                 params.put("form_id",form_id);
-                params.put("schedule_name",survey_name);
+                params.put("survey_name",survey_name);
                 params.put("start_date",start);
                 params.put("end_date",end);
                 params.put("ai","10");
@@ -471,9 +411,7 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                 return params;
             }
         };
-
         VolleyApplication.getInstance().getRequestQueue().add(request1);
-
     }
 
     @Override

@@ -28,22 +28,25 @@ public class Constants {
 
     //To run logs on the rails :: tail -f log/development.log
 
-    public static String baseurl="http://10.237.27.182:3000/";
-    //public static String baseurl="http://52.25.169.219:3000/";
+    //public static String baseurl="http://10.237.27.182:3000/";
+    //public static String baseurl="http://10.237.27.166:3000/";
+    public static String baseurl="http://52.25.169.219:3000/";
    // public static String baseurl="http://10.192.15.52:3000/";
     //public static String baseurl="http://10.192.50.143:3000/";
     //path to create audio file : /storage/emulated/0/AudioRecorder/1463512098402.mp3
-    public static String login=baseurl+"login";
-    public static String pinforget=baseurl+"getpin";
-    public static String creategroup=baseurl+"contactlist";
-    public static String fetch_survey= baseurl +"surveys";
-    public static String launch_survey=baseurl+"launchsurvey";
-    public static String createcontact=baseurl+"contact";
-    public static String launchmessage=baseurl+"message";
-    public static String recording=baseurl+"recording";
-    public static String get_survey=baseurl+"getsurveys";
+
+
+    public static String login=baseurl+"login"; //done
+    public static String pinforget=baseurl+"getpin"; //done
+    public static String creategroup=baseurl+"contactlist"; //done
+    public static String launch_survey=baseurl+"launchsurvey"; //done
+    public static String createcontact=baseurl+"contact";//done
+    public static String launchmessage=baseurl+"message";//done partial
+    public static String recording=baseurl+"recording"; //done
+    public static String get_survey=baseurl+"getsurveys"; //done
     public static String location=baseurl+"getlocations";
-    public static String get_survey_questions=baseurl+"getquestions";
+    public static String get_survey_questions=baseurl+"getquestions"; //done
+    public static String getadmininfo=baseurl+"getadmininfo";
 
 
     public static String view_survey1="http://internal.gramvaani.org:8080/vapp/api/v1/form_question/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json&form_id=";

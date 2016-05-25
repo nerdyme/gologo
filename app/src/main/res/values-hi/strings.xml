@@ -47,6 +47,7 @@
     <string name="open_windows_explorer"> विन्डो एक्सप्लोरर खोलें </string>
     <string name="app_info">ऐप जानकारी</string>
     <string name="app_share">शेयर ऐप</string>
+    <string name="my_profile">मेरी प्रोफाइल</string>
     <string name="appinfo">Gologo समुदाय में खबर प्रसारित करने के लिए प्रयोग किया जाता है। एक पंजीकृत स्वयंसेवक
           प्रमाणीकरण के लिए एक बार लॉग इन करता है और विभिन्न कार्य कर सकता हैं! स्वयंसेवक या तो सभी के लिए या प्रासंगिक दर्शकों को जानकारीर सकते
         हैं ! कोई भी खबर प्रसारित कर सकते हैं, सर्वेक्षण शुरू कर सकते हैं और
@@ -217,6 +218,7 @@
         <string name="Enter_valid_phone_number1">वैध फोन नंबर दर्ज करें</string>
         <string name="Enter_valid_age">वैध उम्र (0-150) दर्ज करें</string>
         <string name="Contact_created_successfully">नया संपर्क सफलता पूर्वक जोड़ दिया गया है</string>
+        <string name="error_in_fetching_locatiosn">ग्राम वाणी सर्वर से स्थानं प्राप्त करने में त्रुटि ।</string>
 
 
         <!-- Displaying Phone Contacts -->
@@ -232,11 +234,25 @@
 
         <!-- For MV callers -->
         <string name="mvcallers_not_present">कोई फोन करने वाले निश्चित समय अवधि में मौजूद नहीं है !</string>
+        <string name="end_date_less_then_current_date">अंतिम तिथि प्रारंभ तिथि से कम है।</string>
 
         <!-- For sending message -->
         <string name="error_in_sending_message">संदेश भेजने में त्रुटि, फिर कोशिश करें !</string>
         <string name="message_success">संदेश सफलतापूर्वक भेजा जा चुका है!</string>
 
+
+        <!--My profile-->
+        <string name="name_text">नाम :</string>
+        <string name="user_type_value">स्वयंसेवक</string>
+        <string name="number_text">पंजीकृत नंबर :</string>
+        <string name="age_text">आयु :</string>
+        <string name="location_text">जिला :</string>
+        <string name="Gender_text">लिंग :</string>
+        <string name="User_type_text">उपयोगकर्ता प्रकार :</string>
+        <string name="mainmenu">मेनू खोले</string>
+        <string name="state_text">राज्य :</string>
+        <string name="loading">लोड हो रहा है...</string>
+        <string name="details_displayed">सभी विवरण सफलतापूर्वक प्रदर्शित!</string>
 </resources>
 
 

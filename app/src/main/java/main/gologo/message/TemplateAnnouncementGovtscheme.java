@@ -3,7 +3,6 @@ package main.gologo.message;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,6 +43,8 @@ public class TemplateAnnouncementGovtscheme extends BaseActionbar implements Vie
         et=(EditText) findViewById(R.id.et1);
         sp1=(Spinner)findViewById(R.id.sp1);
         start=(EditText) findViewById(R.id.start);
+        start.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        et.setText("National Women Employment Act");
 
         ib = (ImageButton) findViewById(R.id.calendaricon);
         cal = Calendar.getInstance();
@@ -62,51 +62,31 @@ public class TemplateAnnouncementGovtscheme extends BaseActionbar implements Vie
                 date = start.getText().toString();
                 ben=sp1.getSelectedItem().toString();
                 scheme=et.getText().toString();
-
-
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                String format = sdf.format(date);
-
-
                 Date dNow = new Date();
                 String cur_date=sdf.format(dNow);
 
-                Date date1=new Date();
-                Date date2=new Date();
+                Date st=new Date();
+                Date end=new Date();
+                int invalid=0;
 
                 try {
-                    date1 = sdf.parse(format);
-                    date2 = sdf.parse(cur_date);
-
-
+                    end = sdf.parse(date);
+                    st = sdf.parse(cur_date);
                 } catch (ParseException p) {
-                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG)
-                            .setActionTextColor(Color.RED)
-                            .show();
-                }
-
-                if(date1.before(date2)){ //then false
-                    Snackbar.make(findViewById(android.R.id.content), R.string.date_less_current, Snackbar.LENGTH_LONG)
-                            .setActionTextColor(Color.RED)
-                            .show();
+                    invalid=1;
                 }
 
                 if(ben.equals("") || ben.equals(null))
-                {
-                    Toast.makeText(getApplicationContext(), R.string.govtschemebeneficiarytoast, Toast.LENGTH_LONG).show();
-                }
+                    Snackbar.make(findViewById(android.R.id.content), R.string.govtschemebeneficiarytoast, Snackbar.LENGTH_LONG).show();
                 else if (scheme.equals("")||scheme.equals(null))
-                {
-                    Toast.makeText(getApplicationContext(), R.string.govtschemenametoast, Toast.LENGTH_LONG).show();
-                }
+                    Snackbar.make(findViewById(android.R.id.content), R.string.govtschemenametoast, Snackbar.LENGTH_LONG).show();
                 else if (date.equals(null) || date.trim().equals("") || date.equals("") || date.equalsIgnoreCase(" "))
-                {
-                    Toast.makeText(getApplicationContext(), R.string.govtschemestartdatetoast, Toast.LENGTH_LONG).show();
-                }
-                else if(date1.before(date2)){ //then false
-                    Snackbar.make(findViewById(android.R.id.content), R.string.date_less_current, Snackbar.LENGTH_LONG)
-                            .setActionTextColor(Color.RED)
-                            .show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.govtschemestartdatetoast, Snackbar.LENGTH_LONG).show();
+                else if (invalid==1)
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG).show();
+                else if(st.after(end)){ //then false
+                    Snackbar.make(findViewById(android.R.id.content), R.string.date_less_current, Snackbar.LENGTH_LONG).show();
                 }
                 else {
                     Intent i = new Intent(getApplicationContext(), ContactOptions.class);
@@ -134,8 +114,8 @@ public class TemplateAnnouncementGovtscheme extends BaseActionbar implements Vie
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
-            start.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
-                    + selectedYear);
+            start.setText(selectedYear + "-" + (selectedMonth + 1) + "-"
+                    + selectedDay);
         }
     };
 }

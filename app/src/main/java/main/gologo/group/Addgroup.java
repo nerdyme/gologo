@@ -7,13 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -50,6 +50,7 @@ public class Addgroup extends BaseActionbar {
         setContentView(R.layout.activity_addgroup);
 
         msgvalue= (EditText)findViewById(R.id.group_editText);
+        msgvalue.setText("Village Resident");
         b1 = (Button) findViewById(R.id.creategroup_button);
         btnSpeak = (ImageButton) findViewById(R.id.btnSpeak1);
 
@@ -72,7 +73,7 @@ public class Addgroup extends BaseActionbar {
                 System.out.println("value of message" + contactgroupname);
 
                 if (contactgroupname.equals(null) || contactgroupname.trim().equalsIgnoreCase("")) {
-                    Toast.makeText(getApplicationContext(), R.string.Please_enter_groupname_before_creating, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_groupname_before_creating, Snackbar.LENGTH_LONG).show();
                 } else {
                     progress = ProgressDialog.show(Addgroup.this, "Please Wait ... ", "Adding new group", true);
                     createvolleyrequest();
@@ -122,11 +123,10 @@ public class Addgroup extends BaseActionbar {
                                 });
                         dlgAlert.setCancelable(true);
                         dlgAlert.create().show();
-                        Toast.makeText(getApplicationContext(),R.string.Error_in_creating_Contact_Group,Toast.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(android.R.id.content), R.string.Error_in_creating_Contact_Group, Snackbar.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),R.string.Error_in_creating_Contact_Group,Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -170,14 +170,11 @@ public class Addgroup extends BaseActionbar {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
-                getString(R.string.speech_prompt));
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.speech_prompt));
         try {
             startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
         } catch (ActivityNotFoundException a) {
-            Toast.makeText(getApplicationContext(),
-                    getString(R.string.speech_not_supported),
-                    Toast.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(android.R.id.content), R.string.speech_not_supported, Snackbar.LENGTH_LONG).show();
         }
     }
 

@@ -4,6 +4,8 @@ package main.gologo.audio;
  * Created by surbhi on 5/13/16.
  */
 
+import android.os.RecoverySystem;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,7 +33,9 @@ public class MultipartUtility {
     private String charset;
     private OutputStream outputStream;
     private PrintWriter writer;
+    private long transferred;
 
+    private RecoverySystem.ProgressListener listener=null;
     /**
      * This constructor initializes a new HTTP POST request with content type
      * is set to multipart/form-data
@@ -42,7 +46,13 @@ public class MultipartUtility {
     public MultipartUtility(String requestURL, String charset)
             throws IOException {
         this.charset = charset;
+        this.listener = new RecoverySystem.ProgressListener() {
+            @Override
+            public void onProgress(int progress) {
 
+            }
+        };
+        this.transferred = 0;
         // creates a unique boundary based on time stamp
         boundary = "===" + System.currentTimeMillis() + "===";
 
@@ -82,6 +92,7 @@ public class MultipartUtility {
      * @param uploadFile a File to be uploaded
      * @throws IOException
      */
+
     public void addFilePart(String fieldName, File uploadFile)
             throws IOException {
         String fileName = uploadFile.getName();
@@ -99,10 +110,18 @@ public class MultipartUtility {
         writer.flush();
 
         FileInputStream inputStream = new FileInputStream(uploadFile);
-        byte[] buffer = new byte[4096];
+        long total=uploadFile.length();
+        int buf_size=1024;
+
+
+        byte[] buffer = new byte[buf_size];
         int bytesRead = -1;
         while ((bytesRead = inputStream.read(buffer)) != -1) {
             outputStream.write(buffer, 0, bytesRead);
+            transferred=transferred +buf_size;
+           // this.listener.transferred(this.transferred);
+            //   up/total*100
+
         }
         outputStream.flush();
         inputStream.close();
@@ -151,4 +170,5 @@ public class MultipartUtility {
 
         return response;
     }
+
 }

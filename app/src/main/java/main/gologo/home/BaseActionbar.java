@@ -76,6 +76,16 @@ public class BaseActionbar extends AppCompatActivity {
             startActivity(i);
             return true;
         }
+        else if(id==R.id.my_profile)
+        {
+            Intent i=new Intent(getApplicationContext(),Myprofile.class);
+            startActivity(i);
+            return true;
+        }
+        else
+        {
+           // return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 }

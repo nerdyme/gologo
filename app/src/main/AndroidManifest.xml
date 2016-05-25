@@ -59,20 +59,20 @@
         <activity android:name=".sendoptions.ContactOptions" />
         <activity android:name=".message.TemplateAnnouncementCamp" />
         <activity android:name=".message.TemplateAnnouncementGovtscheme" />
-
-        <activity android:name=".sendoptions.Phonecontacts"
-                  android:windowSoftInputMode="stateHidden"></activity>
-
-        <activity android:name=".sendoptions.GVGroups"
-            android:windowSoftInputMode="stateHidden"></activity>
-
+        <activity
+            android:name=".sendoptions.Phonecontacts"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".sendoptions.GVGroups"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".sendoptions.MVCallers" />
         <activity android:name=".audio.Recordaudio" />
         <activity android:name=".contact.Createcontact" />
         <activity android:name=".survey.Surveys" />
         <activity android:name=".survey.Viewsurveys" />
         <activity android:name=".home.BaseActionbar" />
-        <activity android:name=".home.AppInfo"></activity>
+        <activity android:name=".home.AppInfo" />
+        <activity android:name=".home.Myprofile"></activity>
     </application>
 
 </manifest>
