@@ -67,7 +67,7 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
         bundle=getIntent().getExtras();
         actname=bundle.getString("ActivityName");
 
-
+        Log.d("goup list size","Size :: " +Constants.grouplist.size());
         Collections.sort(Constants.grouplist, new Groupcomparator());
 
         ListView lv= (ListView) findViewById(R.id.lv2);
@@ -197,8 +197,6 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                                 });
                             }
                         }).start();
-                        //Toast.makeText(getApplicationContext(),"Message is successfully delivered",Toast.LENGTH_LONG).show();
-                        //finish();
                     }
                     else if (actname.equalsIgnoreCase("LaunchSurvey")==true)
                     {
@@ -427,7 +425,7 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                     params.put("message_id", Integer.toString(msg_id));
                     params.put("caller_ids", "");
                     params.put("group_ids", contactlist);
-
+                    params.put("mv_caller","false");
                     /*JSONObject jsonObject = new JSONObject();
                     jsonObject.put("club", "Hello all");
                     jsonObject.put("date", "15.07.2015");

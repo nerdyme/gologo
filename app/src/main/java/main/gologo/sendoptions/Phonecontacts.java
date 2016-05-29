@@ -64,10 +64,9 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
     String survey_name = "";
     Button select;
     int msg_id = 24;
-    // Progress Dialog
+
     private ProgressDialog pDialog;
-    // Progress dialog type (0 - for Horizontal progress bar)
-    public static final int progress_bar_type = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +81,11 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
         Collections.sort(phonelist, new Phonecomparator());
 
         ListView lv = (ListView) findViewById(R.id.lv1);
+        lv.setDivider(null);
+        lv.setDividerHeight(0);
         searchbar = (EditText) findViewById(R.id.search_editText);
         ma = new Phonecontactlistadapter(phonelist, Phonecontacts.this);
+
         lv.setAdapter(ma);
         lv.setOnItemClickListener(this);
         lv.setItemsCanFocus(false);
@@ -96,7 +98,7 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                 // When user changed the Text
-                Log.d("error","Text changed called");
+                Log.d("***","Text changed called");
                 Phonecontacts.this.ma.getFilter().filter(cs.toString());
             }
 

@@ -17,10 +17,11 @@
             android:layout_height="match_parent"
             android:text="@string/appinfo"
             android:id="@+id/txview"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:layout_margin="5dp"
             android:gravity="center"
             android:typeface="serif"
+            android:textColor="#bf360c"
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -145,6 +146,7 @@
             android:layout_margin="5dp"
             android:gravity="center"
             android:typeface="serif"
+            android:textColor="#bf360c"
             />
     </LinearLayout>
 </ScrollView>

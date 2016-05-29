@@ -61,10 +61,10 @@
         <activity android:name=".message.TemplateAnnouncementGovtscheme" />
         <activity
             android:name=".sendoptions.Phonecontacts"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".sendoptions.GVGroups"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".sendoptions.MVCallers" />
         <activity android:name=".audio.Recordaudio" />
         <activity android:name=".contact.Createcontact" />

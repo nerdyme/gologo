@@ -41,10 +41,10 @@ public class Constants {
     public static String creategroup=baseurl+"contactlist"; //done
     public static String launch_survey=baseurl+"launchsurvey"; //done
     public static String createcontact=baseurl+"contact";//done
-    public static String launchmessage=baseurl+"message";//done partial
+    public static String launchmessage=baseurl+"message";//done 
     public static String recording=baseurl+"recording"; //done
     public static String get_survey=baseurl+"getsurveys"; //done
-    public static String location=baseurl+"getlocations";
+    public static String location=baseurl+"getlocations"; //done
     public static String get_survey_questions=baseurl+"getquestions"; //done
     public static String getadmininfo=baseurl+"getadmininfo";
 

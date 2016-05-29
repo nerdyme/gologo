@@ -42,7 +42,7 @@ public class Addgroup extends BaseActionbar {
 
     Button b1 =null;
     String contactgroupname=null;
-    ProgressDialog progress=null;
+    ProgressDialog myDialog=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,13 +75,22 @@ public class Addgroup extends BaseActionbar {
                 if (contactgroupname.equals(null) || contactgroupname.trim().equalsIgnoreCase("")) {
                     Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_groupname_before_creating, Snackbar.LENGTH_LONG).show();
                 } else {
-                    progress = ProgressDialog.show(Addgroup.this, "Please Wait ... ", "Adding new group", true);
+                    myDialog = new ProgressDialog(Addgroup.this);
+                    myDialog.setTitle("Adding new group");
+                    myDialog.setMessage("Please Wait... ");
+                    myDialog.setCancelable(false);
+                    myDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    });
+                    myDialog.show();
                     createvolleyrequest();
-
                 }
             }
         });
-
     }
 
     void createvolleyrequest()
@@ -89,7 +98,7 @@ public class Addgroup extends BaseActionbar {
         StringRequest sr = new StringRequest(Request.Method.POST,Constants.creategroup, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                    progress.dismiss();
+                    myDialog.dismiss();
                 Log.d("TAG", "Create Group Response: " + response.toString());
                 try {
                     JSONObject js=new JSONObject(response.toString());
@@ -132,7 +141,7 @@ public class Addgroup extends BaseActionbar {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progress.dismiss();
+                myDialog.dismiss();
                 Log.d("Error","Inside error in create group");
                 AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(Addgroup.this);
                 dlgAlert.setMessage(R.string.Error_in_creating_Contact_Group);

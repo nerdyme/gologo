@@ -111,13 +111,13 @@ public class Phonecontactlistadapter  extends BaseAdapter implements CompoundBut
         protected FilterResults performFiltering(CharSequence constraint) {
             // TODO Auto-generated method stub
 
-
             FilterResults Result = new FilterResults();
             // if constraint is empty return the original names
-            if(constraint.length() == 0 ){
+            if(constraint.length() == 0 || constraint.equals("") || constraint==null){
 
                Result.values = Original_Names;
                Result.count = Original_Names.size();
+                Log.d(" empty","when constraint is length =0 in case"+ Original_Names.size() );
                 return Result;
             }
 
@@ -140,8 +140,12 @@ public class Phonecontactlistadapter  extends BaseAdapter implements CompoundBut
         @Override
         protected void publishResults(CharSequence constraint,Filter.FilterResults results) {
             // TODO Auto-generated method stub
+            if (results.count == 0)
+                notifyDataSetInvalidated();
+            else
+            {
             Names = (ArrayList<String>) results.values;
-            notifyDataSetChanged();
+            notifyDataSetChanged();}
         }
     }
 
