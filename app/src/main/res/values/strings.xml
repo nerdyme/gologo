@@ -122,9 +122,9 @@
     <!--  For menu options -->
     <string name="Add_a_contact">Add contact</string>
     <string name="Create_New_Contact_Group">Create Contact Group</string>
-    <string name="Record_Audio">Launch Audio</string>
+    <string name="Record_Audio">Broadcast Audio</string>
     <string name="Send_Message">Send Message</string>
-    <string name="Pick_Survey">Survey</string>
+    <string name="Pick_Survey">Launch Survey</string>
     <string name="error_in_fetching_groups">Error in fetching groups</string>
 
     <!--For contact group -->
@@ -270,4 +270,5 @@
 
     <!-- Survey Responses -->
     <string name="surveyresponses">View Survey Responses</string>
+    <string name="no_response">No responses are recorded</string>
 </resources>

@@ -41,8 +41,8 @@ public class Viewsurveys extends BaseActionbar {
         setContentView(R.layout.activity_viewsurveys);
 
         Bundle bundle = getIntent().getExtras();
-        String form_id = bundle.getString("form_id");
-        String survey_id=bundle.getString("survey_id");
+        final String form_id = bundle.getString("form_id");
+        final String survey_id=bundle.getString("survey_id");
 
         view_survey_url = Constants.get_survey_questions + "/?form_id="+form_id;
 
@@ -67,7 +67,11 @@ public class Viewsurveys extends BaseActionbar {
             public void onClick(View v) {
 
                 Intent i= new Intent(getApplicationContext(),Surveyresponses.class);
-               // i.putExtra("formid",form_id);
+                Bundle b=new Bundle();
+                b.putString("survey_id",survey_id);
+                b.putString("form_id",form_id);
+                b.putParcelableArrayList("question_list",list);
+                i.putExtras(b);
                 startActivity(i);
             }
         });
@@ -107,8 +111,9 @@ public class Viewsurveys extends BaseActionbar {
                                 JSONObject info = (JSONObject) ar1.get(i);
                                 JSONObject js1= (JSONObject) info.get("question");
                                 String s1= js1.get("text").toString();
+                                int a1=(int)js1.get("id");
 
-                                Viewsurveydata ob=new Viewsurveydata(s1,i+1);
+                                Viewsurveydata ob=new Viewsurveydata(s1,i+1,a1,0);
                                 list.add(ob);
                                 rvAdapter.notifyDataSetChanged();
                             }

@@ -52,6 +52,7 @@ public class Constants {
     public static String view_survey1="http://internal.gramvaani.org:8080/vapp/api/v1/form_question/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json&form_id=";
     public static String location1="http://internal.gramvaani.org:8080/vapp/api/v1/location_location/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json&ai_id=10";
     public static String contact_groups1="http://internal.gramvaani.org:8080/vapp/api/v1/callerinfo_contact_list/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json";
+    public static String responses1="http://internal.gramvaani.org:8081/vapp/api/v1/survey_record/cdr_records/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json&ai_id=60&limit=20&page=1&survey_id=";
 
     public static ArrayList<Locationdata> locationlist=new ArrayList<Locationdata>();;
     public static ArrayList<Groupcontactdata> grouplist=new ArrayList<Groupcontactdata>();;
@@ -78,3 +79,5 @@ GcmIntentService: Received: Bundle[{from=731395736136, message=Server Down!,
 
 
 /// For app on number 9891127941 ----Pin -- 333997
+
+//survey dial out

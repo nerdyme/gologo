@@ -277,6 +277,8 @@
 
     <!-- Survey Responses -->
     <string name="surveyresponses">View Survey Responses</string>
+    <string name="no_response">No responses are recorded</string>
+
 </resources>
 
 
