@@ -2,63 +2,105 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="20dip"
+    android:layout_height="wrap_content"
     android:background="#E0F7FA">
-
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/audio"
-        android:scaleType="fitCenter"
-        android:scaleX="0.9"
-        android:scaleY="0.9"
-        android:id="@+id/audi"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/audio"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="15dp"
+        android:id="@+id/audi"/>
 
-        <Button
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Select_format"
-            android:id="@+id/btnFormat"
-            android:ems="10"
+            android:text="00:00:00"
+            android:id="@+id/timer"
+            android:scaleType="fitCenter"
             android:layout_marginTop="30dp"
-            android:textColor="#ffffff"
+            android:background="@android:color/transparent"
             android:layout_below="@+id/audi"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp"
-            android:background="#e68652" />
+            android:textAllCaps="true"
+            android:textSize="@dimen/fab_size_normal"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textAlignment="center" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:weightSum="1"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="50dp"
+        android:background="#e68652"
+        android:id="@+id/start1">
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="70dp"
             android:text="@string/Start_Recording"
             android:id="@+id/btnStart"
             android:ems="10"
             android:textColor="#ffffff"
             android:layout_below="@+id/btnFormat"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15dp"
-            android:background="#e68652" />
+            android:background="#e68652"
+             />
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_weight="0.3"
+        android:layout_height="70dp"
+        android:src="@mipmap/startrecord"
+        android:scaleType="fitCenter"
+        android:id="@+id/record1"/>
+</LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:weightSum="1"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"
+        android:background="#e68652"
+        android:id="@+id/stop1">
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="70dp"
             android:text="@string/Stop_Recording"
             android:id="@+id/btnStop"
             android:ems="10"
             android:textColor="#ffffff"
-            android:layout_below="@+id/btnStart"
+            android:layout_below="@+id/btnFormat"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
-            android:background="#e68652" />
+            android:background="#e68652"
+            />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="70dp"
+            android:src="@mipmap/stoprecord"
+            android:scaleType="fitCenter"
+            android:id="@+id/record2"/>
     </LinearLayout>
+
 </LinearLayout>
 

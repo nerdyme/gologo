@@ -1,6 +1,8 @@
 package main.gologo.contact;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -8,12 +10,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.Snackbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -30,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
@@ -52,30 +57,25 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
     Spinner gender = null;
     Spinner dis = null;
     EditText contactgroup = null;
+    ImageButton calicon1;
     ImageButton btnSpeak;
     ProgressDialog progress;
+    private Calendar cal;
+    private int day;
+    private int month;
+    private int year;
 
     String clist_ids="";
     ArrayList<String> locations = new ArrayList<String>();
     ArrayAdapter<String> adapter = null;
 
-    protected CharSequence[] groups ;
+    protected CharSequence[] groups;
     protected ArrayList<CharSequence> selectedGroups = new ArrayList<CharSequence>();
 
     String nv = null, pv = null, av = null, gv = null, dv = null, sv = null, bv = null,disvalue=null, cgv = "",resource_uri="";
     private final int REQ_CODE_SPEECH_INPUT = 100;
 
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()) {
-            case R.id.group_value:
-                showSelectGroupsDialog();
-                break;
 
-            default:
-                break;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,15 +84,14 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
         setContentView(R.layout.activity_createcontact);
         dis = (Spinner) findViewById(R.id.district_value);
 
-        if (Constants.grouplist == null) {
+        if (Constants.grouplist.size()==0) {
             Log.d("Calling","Volley for fetching contact groups");
-            Constants.grouplist = new ArrayList<Groupcontactdata>();
             volleyrequest1();
         }
           //For location :: ***************************
         adapter =new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, locations);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        locations.add("Choose Location :");
+        locations.add("Choose Location");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -105,16 +104,22 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                 });
             }
         }).start();
-        volleyrequest2();
-        dis.setAdapter(adapter);
 
+        if(Constants.locationlist.size()==0) {
+            Log.d("Calling","Volley for fetching locations");
+            volleyrequest2();
+        }
+
+        dis.setAdapter(adapter);
         dis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {}
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            }
 
             @Override
-            public void onNothingSelected(AdapterView<?> arg0) {}
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
         });
 
         /*************************************************************************Location end***********************/
@@ -125,12 +130,21 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
         phone = (EditText) findViewById(R.id.phone_value);
         gender = (Spinner) findViewById(R.id.gender_value);
         contactgroup=(EditText)findViewById(R.id.group_value);
+        calicon1=(ImageButton)findViewById(R.id.calendaricon1);
+        cal = Calendar.getInstance();
+        day = cal.get(Calendar.DAY_OF_MONTH);
+        month = cal.get(Calendar.MONTH);
+        year = cal.get(Calendar.YEAR);
+        calicon1.setOnClickListener(this);
+
+        contactgroup.setInputType(InputType.TYPE_NULL);
+        contactgroup.setTextIsSelectable(true);
 
         name.setText("Palak Jain");
-        age.setText("23");
+        age.setText("1992-05-15");
         phone.setText("8800244743");
-        contactgroup.setText("Delhi,Foodies");
-        clist_ids="Delhi,Foodies,";
+        contactgroup.setText("Delhi,Children");
+        clist_ids="Delhi,Children";
 
         btnSpeak=(ImageButton)findViewById(R.id.mic);
         contactgroup.setOnClickListener(this);
@@ -167,7 +181,7 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                 cgv = contactgroup.toString();
 
                 int ct=dis.getAdapter().getCount();
-                Log.d("Size of locations","Size :: " +ct);
+                Log.d("Size of locations", "Size :: " + ct);
 
                 if (nv.equals("") || nv.equals(null))
                     Snackbar.make(findViewById(android.R.id.content), R.string.Name_cant_be_empty, Snackbar.LENGTH_LONG).show();
@@ -177,13 +191,17 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                     Snackbar.make(findViewById(android.R.id.content), R.string.Phone_Number_cant_be_empty, Snackbar.LENGTH_LONG).show();
                 else if (pv.contains("[0-9]+") == false && pv.length() != 10)
                     Snackbar.make(findViewById(android.R.id.content), R.string.Enter_valid_phone_number1, Snackbar.LENGTH_LONG).show();
-                else if (Integer.parseInt(av) < 0 || Integer.parseInt(av) > 150)
-                    Snackbar.make(findViewById(android.R.id.content), R.string.Enter_valid_age, Snackbar.LENGTH_LONG).show();
+                else if(age.equals("")|| age.equals(null))
+                    Snackbar.make(findViewById(android.R.id.content), R.string.enter_valid_dob, Snackbar.LENGTH_LONG).show();
+                //else if (Integer.parseInt(av) < 0 || Integer.parseInt(av) > 150)
+                 //   Snackbar.make(findViewById(android.R.id.content), R.string.Enter_valid_age, Snackbar.LENGTH_LONG).show();
                 else if (ct==1)
                     Snackbar.make(findViewById(android.R.id.content), R.string.error_in_fetching_locatiosn, Snackbar.LENGTH_LONG).show();
+                else if(dis.getSelectedItemPosition()==0)
+                Snackbar.make(findViewById(android.R.id.content), R.string.select_valid_location, Snackbar.LENGTH_LONG).show();
                 else
                 {
-                    if(dis!=null || dis.equals(null))
+                    if(dis!=null)
                     {
                         dv = dis.getSelectedItem().toString();
                         int pos = dis.getSelectedItemPosition();
@@ -243,20 +261,14 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
 
         for(CharSequence group : selectedGroups)
             stringBuilder.append(group + ",");
-        contactgroup.setText(stringBuilder.toString());
+
+       String st=stringBuilder.toString();
+
+        st=st.substring(0,st.length()-1);
+        contactgroup.setText(st);
     }
 
     protected void showSelectGroupsDialog() {
-
-        int l=Constants.grouplist.size();
-        boolean[] checkedGroups = new boolean[l];
-
-        Log.d("length of groups", "length" + l);
-        if(l>0)
-        for(int i = 0; i < l; i++)
-            checkedGroups[i] = selectedGroups.contains(groups[i]);
-        else
-            Snackbar.make(findViewById(android.R.id.content), R.string.error_in_fetching_groups, Snackbar.LENGTH_LONG).show();
 
         DialogInterface.OnMultiChoiceClickListener groupsDialogListener = new DialogInterface.OnMultiChoiceClickListener() {
             @Override
@@ -274,11 +286,29 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
             }
         };
 
+        int l=Constants.grouplist.size();
+        boolean[] checkedGroups = new boolean[l];
+        Log.d("length of groups", "length  " + l);
+
+        if(l>0)
+        for(int i = 0; i < l; i++)
+            checkedGroups[i] = selectedGroups.contains(groups[i]);   //Exception comes here
+       // else
+            //Snackbar.make(findViewById(android.R.id.content), R.string.error_in_fetching_groups, Snackbar.LENGTH_LONG).show();
+
+
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.Select_Contact_Groups);
         builder.setMultiChoiceItems(groups, checkedGroups, groupsDialogListener);
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        builder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert11 = builder.create();
+        alert11.show();
     }
 
 
@@ -403,7 +433,7 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
             public void onErrorResponse(VolleyError error) {
 
                 VolleyLog.d("Tag", "Error: " + error.getMessage());
-                Snackbar.make(findViewById(android.R.id.content), R.string.error_in_fetching_groups +"\n" +error.toString(), Snackbar.LENGTH_LONG).show();
+                //Snackbar.make(findViewById(android.R.id.content), R.string.error_in_fetching_groups +"\n" +error.toString(), Snackbar.LENGTH_LONG).show();
             }
         });
         VolleyApplication.getInstance().getRequestQueue().add(jsonObjReq);
@@ -417,7 +447,10 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
 
                     @Override
                     public void onResponse(JSONObject response) {
+
+                        if(Constants.locationlist!=null)
                         Constants.locationlist.clear();
+
                         Log.d("locationresponse",response.toString());
                         try {
                             JSONObject js1 = (JSONObject) response.get("message");
@@ -443,10 +476,37 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Log.d("error","Error in fetching locations ::" + error.toString());
                     }
                 }
         );
         VolleyApplication.getInstance().getRequestQueue().add(request1);
+    }
+
+    @Override
+    @Deprecated
+    protected Dialog onCreateDialog(int id) {
+        return new DatePickerDialog(this, datePickerListener, year, month, day);
+    }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+            age.setText(selectedYear + "-" + (selectedMonth + 1) + "-"
+                    + selectedDay);
+        }
+    };
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()) {
+            case R.id.group_value:
+                showSelectGroupsDialog();
+                break;
+            case R.id.calendaricon1 : showDialog(0);
+
+            default:
+                break;
+        }
     }
 }

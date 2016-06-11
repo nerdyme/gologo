@@ -45,6 +45,7 @@ public class Phonecontactlistadapter  extends BaseAdapter implements CompoundBut
         {
             Original_Names.add(phonelist.get(i).getname());
         }
+        Names=Original_Names;
         filter = new filter_here();
         this.cnt=cnt;
         mInflater = (LayoutInflater)cnt.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

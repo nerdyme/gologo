@@ -15,16 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -213,50 +206,4 @@ public class Splashscreen extends Activity {
             return prefs;
         }
 
-    void volleyrequest()
-    {
-        JsonObjectRequest request1 = new JsonObjectRequest(Constants.location, null,
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Constants.locationlist.clear();
-
-                        Log.d("locationresponse",response.toString());
-                        try {
-                            JSONObject js1 = (JSONObject) response.get("message");
-                            JSONArray ar1 = js1.getJSONArray("objects");
-                            Locationdata ob1=new Locationdata(" Choose Location :: ","");
-                            Constants.locationlist.add(ob1);
-                            int len=ar1.length();
-
-                            for(int i=0;i<len;++i)
-                            {
-                                JSONObject info = (JSONObject) ar1.get(i);
-                                String s1 = info.get("desc").toString();
-                                String s2 = info.get("resource_uri").toString();
-
-                                Log.d("Data", s2 + '\n');
-                                Locationdata ob=new Locationdata(s1,s2);
-                                Constants.locationlist.add(ob);
-                            }
-
-                        }
-
-                        catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }
-        );
-        VolleyApplication.getInstance().getRequestQueue().add(request1);
-    }
-    }
+}

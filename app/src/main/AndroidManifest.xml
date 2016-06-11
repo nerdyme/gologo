@@ -72,7 +72,8 @@
         <activity android:name=".survey.Viewsurveys" />
         <activity android:name=".home.BaseActionbar" />
         <activity android:name=".home.AppInfo" />
-        <activity android:name=".home.Myprofile"></activity>
+        <activity android:name=".home.Myprofile" />
+        <activity android:name=".survey.Surveyresponses"></activity>
     </application>
 
 </manifest>

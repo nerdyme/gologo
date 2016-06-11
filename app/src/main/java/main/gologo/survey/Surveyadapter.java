@@ -52,6 +52,7 @@ public class Surveyadapter extends RecyclerView.Adapter<Surveyadapter.PersonView
                 Bundle bundle=new Bundle();
                 bundle.putString("ActivityName","ViewSurvey");
                 bundle.putString("form_id",al.get(position).getformid());
+                bundle.putString("survey_id",al.get(position).getsurveyid());
 
                 i.putExtras(bundle);
                 ct.startActivity(i);

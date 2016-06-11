@@ -28,7 +28,7 @@ public class Constants {
 
     //To run logs on the rails :: tail -f log/development.log
 
-    //public static String baseurl="http://10.237.27.182:3000/";
+   //public static String baseurl="http://10.192.41.179:3000/";
     //public static String baseurl="http://10.237.27.166:3000/";
     public static String baseurl="http://52.25.169.219:3000/";
    // public static String baseurl="http://10.192.15.52:3000/";
@@ -53,8 +53,8 @@ public class Constants {
     public static String location1="http://internal.gramvaani.org:8080/vapp/api/v1/location_location/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json&ai_id=10";
     public static String contact_groups1="http://internal.gramvaani.org:8080/vapp/api/v1/callerinfo_contact_list/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json";
 
-    public static ArrayList<Locationdata> locationlist=null;
-    public static ArrayList<Groupcontactdata> grouplist=null;
+    public static ArrayList<Locationdata> locationlist=new ArrayList<Locationdata>();;
+    public static ArrayList<Groupcontactdata> grouplist=new ArrayList<Groupcontactdata>();;
 
     public static String capitalizeString(String string) {
         char[] chars = string.toLowerCase().toCharArray();
@@ -71,6 +71,10 @@ public class Constants {
     }
 
 
-}
+}/* GCM Message
+GcmIntentService: Received: Bundle[{from=731395736136, message=Server Down!,
+ android.support.content.wakelockid=4, collapse_key=updated_score}] */
 
 
+
+/// For app on number 9891127941 ----Pin -- 333997

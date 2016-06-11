@@ -8,19 +8,33 @@ android:gravity="center">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:weightSum="1"
+    android:layout_marginTop="40dp">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="0.30"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:hint="@string/beneficiary"
+        android:id="@+id/Us"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="#E0F7FA"
+        android:textColorHint="#3F51B5"
+        android:textAlignment="center" />
 
     <Spinner
         android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="70dp"
+        android:layout_weight="0.70"
+        android:layout_height="50dp"
         android:inputType="textAutoComplete"
         android:ems="10"
         android:hint="@string/govtschemebeneficiary"
         android:id="@+id/sp1"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"
         android:background="#E0F7FA"
         android:textColorHint="#3F51B5"
@@ -33,43 +47,70 @@ android:gravity="center">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.30"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/schemename"
+            android:id="@+id/Us1"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="#E0F7FA"
+            android:textColorHint="#3F51B5"
+            android:textAlignment="center" />
 
         <EditText
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="70dp"
+            android:layout_weight="0.70"
+            android:layout_height="50dp"
             android:inputType="textAutoComplete"
             android:ems="10"
             android:hint="@string/govtschemename"
             android:id="@+id/et1"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
             android:background="#E0F7FA"
             android:textColorHint="#3F51B5"
             android:textAlignment="center" />
-
-
-
     </LinearLayout>
+
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginTop="20dp"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="0.25"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:hint="@string/startscheme"
+        android:id="@+id/Us2"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="#E0F7FA"
+        android:textColorHint="#3F51B5"
+        android:textAlignment="center" />
 
     <EditText
         android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="70dp"
+        android:layout_weight="0.6"
+        android:layout_height="50dp"
         android:inputType="textAutoComplete"
         android:ems="10"
         android:hint="@string/govtschemestartdate"
         android:id="@+id/start"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:background="#E0F7FA"
         android:textColorHint="#3F51B5"
@@ -79,9 +120,8 @@ android:gravity="center">
     <ImageButton
         android:id="@+id/calendaricon"
         android:layout_width="0dp"
-        android:layout_weight="0.25"
-        android:layout_height="70dp"
-        android:layout_marginTop="20dp"
+        android:layout_weight="0.15"
+        android:layout_height="50dp"
         android:src="@drawable/calendar"
         android:scaleType="fitXY"
         android:layout_gravity="center"/>
@@ -96,9 +136,8 @@ android:gravity="center">
     android:text="@string/pick_contacts"
     android:id="@+id/pick11"
     android:ems="10"
-    android:layout_marginTop="80dp"
+    android:layout_marginTop="50dp"
     android:textColor="#ffffff"
-    android:layout_marginBottom="10dp"
     android:background="#e68652" />
 
 </LinearLayout>

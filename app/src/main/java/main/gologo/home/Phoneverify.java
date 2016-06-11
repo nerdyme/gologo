@@ -1,5 +1,6 @@
 package main.gologo.home;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,7 @@ import java.util.Map;
 import main.gologo.R;
 import main.gologo.constants.Constants;
 
-public class Phoneverify extends BaseActionbar {
+public class Phoneverify extends Activity {
 
     Button b1 = null;
     EditText e1 =null;

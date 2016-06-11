@@ -1,11 +1,14 @@
 package main.gologo.survey;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -30,6 +33,7 @@ public class Viewsurveys extends BaseActionbar {
     String view_survey_url="";
     Viewsurveyadapter rvAdapter;
     ProgressDialog progress;
+    Button b1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +42,13 @@ public class Viewsurveys extends BaseActionbar {
 
         Bundle bundle = getIntent().getExtras();
         String form_id = bundle.getString("form_id");
+        String survey_id=bundle.getString("survey_id");
 
         view_survey_url = Constants.get_survey_questions + "/?form_id="+form_id;
 
         list = new ArrayList<Viewsurveydata>();
 
-
+        Log.d("View Survey","form id :: "+form_id + "  Survey_id :: " + survey_id);
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv1);
         rv.setHasFixedSize(true);
 
@@ -56,6 +61,16 @@ public class Viewsurveys extends BaseActionbar {
         rvAdapter = new Viewsurveyadapter(list, Viewsurveys.this);
         rv.setAdapter(rvAdapter);
 
+        b1=(Button) findViewById(R.id.responseb);
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i= new Intent(getApplicationContext(),Surveyresponses.class);
+               // i.putExtra("formid",form_id);
+                startActivity(i);
+            }
+        });
         progress = ProgressDialog.show(Viewsurveys.this, "Please Wait ... ", "Fetching Questions", true);
         new Thread(new Runnable() {
             @Override

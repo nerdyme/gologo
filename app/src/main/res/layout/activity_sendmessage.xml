@@ -13,7 +13,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:src="@drawable/mess"
+            android:src="@drawable/survey1"
             android:layout_margin="10dp"/>
 
         <TextView
@@ -35,7 +35,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:src="@drawable/mess"
+            android:src="@drawable/camp2"
             android:layout_margin="10dp"/>
 
         <TextView
@@ -58,7 +58,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:src="@drawable/mess"
+            android:src="@drawable/scheme"
             android:layout_margin="10dp"/>
         <TextView
             android:layout_width="wrap_content"

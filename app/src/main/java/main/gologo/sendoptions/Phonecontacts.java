@@ -88,6 +88,7 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
 
         lv.setAdapter(ma);
         lv.setOnItemClickListener(this);
+        ma.notifyDataSetChanged();
         lv.setItemsCanFocus(false);
         lv.setTextFilterEnabled(true);
 

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
@@ -18,8 +17,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 import main.gologo.R;
 import main.gologo.adapter.Groupcontactdata;
 import main.gologo.constants.Constants;
@@ -28,8 +25,8 @@ import main.gologo.home.VolleyApplication;
 
 public class ContactOptions extends BaseActionbar {
 
-    Button b1, b2, b3;
     Bundle bundle;
+    int leng=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +34,7 @@ public class ContactOptions extends BaseActionbar {
         setContentView(R.layout.activity_contact_options);
         bundle = getIntent().getExtras();
 
-        if (Constants.grouplist == null) {
-            Constants.grouplist = new ArrayList<Groupcontactdata>();
+        if (Constants.grouplist.size()==0) {
             volleyrequest1();
         }
     }
@@ -56,8 +52,10 @@ public class ContactOptions extends BaseActionbar {
         // TODO Auto-generated method stub
         Intent i = new Intent(getApplicationContext(), GVGroups.class);
         i.putExtras(bundle);
-        startActivity(i);
-
+        if(leng!=0)
+            startActivity(i);
+        else
+        Snackbar.make(findViewById(android.R.id.content), R.string.error_in_fetching_groups, Snackbar.LENGTH_LONG).show();
     }
 
 
@@ -66,7 +64,6 @@ public class ContactOptions extends BaseActionbar {
         Intent i = new Intent(getApplicationContext(), MVCallers.class);
         i.putExtras(bundle);
         startActivity(i);
-        finish();
     }
 
 
@@ -82,6 +79,7 @@ public class ContactOptions extends BaseActionbar {
                             JSONObject js1 = (JSONObject) response.get("message");
                             JSONArray cast = js1.getJSONArray("objects");
                             int len = cast.length();
+                            leng=len;
                             for (int i = 0; i < len; i++) {
                                 JSONObject actor = cast.getJSONObject(i);
                                 String name = actor.getString("name");
@@ -110,7 +108,7 @@ public class ContactOptions extends BaseActionbar {
         });
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
                 10000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                1,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyApplication.getInstance().getRequestQueue().add(jsonObjReq);
 

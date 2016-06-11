@@ -9,11 +9,26 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginTop="40dp"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="0.25"
+        android:layout_height="70dp"
+        android:hint="@string/groupname"
+        android:paddingTop="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:paddingBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:background="#E0F7FA"
+        android:textColorHint="#3F51B5"
+        android:textAlignment="center" />
 
     <EditText
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.60"
         android:layout_height="70dp"
         android:inputType="textAutoComplete"
         android:ems="10"
@@ -21,7 +36,6 @@
         android:id="@+id/group_editText"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"
         android:background="#E0F7FA"
         android:textColorHint="#3F51B5"
@@ -31,9 +45,8 @@
     <ImageButton
         android:id="@+id/btnSpeak1"
         android:layout_width="0dp"
-        android:layout_weight="0.25"
-        android:layout_height="75dp"
-        android:layout_marginTop="20dp"
+        android:layout_weight="0.15"
+        android:layout_height="70dp"
         android:src="@drawable/mic"
         android:scaleType="fitXY"
         android:layout_gravity="center"/>
@@ -45,9 +58,8 @@
         android:text="@string/create_group"
         android:id="@+id/creategroup_button"
         android:ems="10"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="70dp"
         android:textColor="#ffffff"
-        android:layout_marginBottom="10dp"
-        android:background="#e68652" />
+        android:background="#e68652"/>
 
 </LinearLayout>

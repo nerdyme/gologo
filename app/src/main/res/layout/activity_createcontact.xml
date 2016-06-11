@@ -7,19 +7,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/name"
+            android:id="@+id/User_type_text"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="#E0F7FA"
+            android:textColorHint="#3F51B5"
+            android:textAlignment="center" />
+
 
         <EditText
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:layout_height="50dp"
             android:inputType="textAutoComplete"
             android:ems="10"
             android:hint="@string/contactname"
             android:id="@+id/name_value"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:layout_marginTop="40dp"
             android:layout_centerHorizontal="true"
             android:background="#E0F7FA"
             android:textColorHint="#3F51B5"
@@ -30,9 +45,8 @@
         <ImageButton
             android:id="@+id/mic"
             android:layout_width="0dp"
-            android:layout_weight="0.25"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
+            android:layout_weight="0.15"
+            android:layout_height="50dp"
             android:src="@drawable/mic"
             android:scaleType="fitXY"
             android:layout_gravity="center"/>
@@ -41,12 +55,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/number"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="#E0F7FA"
+            android:textColorHint="#3F51B5"
+            android:textAlignment="center" />
 
         <EditText
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_weight="0.75"
+            android:layout_height="50dp"
             android:inputType="phone"
             android:ems="10"
             android:hint="@string/enterphone"
@@ -64,13 +93,28 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/gender1"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="#E0F7FA"
+            android:textColorHint="#3F51B5"
+            android:textAlignment="center" />
 
         <Spinner
             android:id="@+id/gender_value"
             android:layout_width="0dp"
             android:layout_height="35dp"
-            android:layout_weight="1"
+            android:layout_weight="0.75"
             android:ems="10"
             android:hint="@string/gender"
             android:entries="@array/gender"
@@ -84,13 +128,27 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/DOB"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="#E0F7FA"
+            android:textColorHint="#3F51B5"
+            android:textAlignment="center" />
 
         <EditText
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:layout_height="wrap_content"
-            android:inputType="phone"
             android:ems="10"
             android:hint="@string/enterage"
             android:id="@+id/age_value"
@@ -101,18 +159,44 @@
             android:background="#E0F7FA"
             android:textColorHint="#3F51B5"
             android:textAlignment="center" />
+
+        <ImageButton
+            android:id="@+id/calendaricon1"
+            android:layout_width="0dp"
+            android:layout_weight="0.15"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/calendar"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:hint="@string/contactgroup"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="#E0F7FA"
+            android:textColorHint="#3F51B5"
+            android:textAlignment="center" />
 
         <EditText
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:inputType="phone"
+            android:layout_weight="0.75"
+            android:layout_height="60dp"
             android:ems="10"
             android:hint="@string/entergroups"
             android:id="@+id/group_value"
@@ -128,19 +212,34 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/location"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_centerHorizontal="true"
+
+            android:background="#E0F7FA"
+            android:textColorHint="#3F51B5"
+            android:textAlignment="center" />
 
         <Spinner
             android:id="@+id/district_value"
             android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_weight="0.75"
             android:ems="10"
             android:hint="@string/enterdistrict"
             android:background="#E0F7FA"
             android:textColorHint="#3F51B5"
             android:textAlignment="center"
-            android:layout_marginTop="20dp"
             />
     </LinearLayout>
 
@@ -184,7 +283,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
 
         <Button
             android:layout_width="wrap_content"

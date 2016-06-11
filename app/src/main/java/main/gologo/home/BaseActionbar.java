@@ -45,6 +45,12 @@ public class BaseActionbar extends AppCompatActivity {
             startActivity(i);
             return true;
         }
+        else if(id == R.id.home1)
+        {
+            Intent i = new Intent(getApplicationContext(),MenuOptions.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+        }
         else if (id == R.id.open_windows_explorer)
         {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);

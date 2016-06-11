@@ -13,7 +13,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:src="@drawable/contact"
+            android:src="@drawable/cgroup"
             android:layout_margin="10dp"/>
         <TextView
             android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:src="@drawable/contact"
+            android:src="@drawable/phonecontact"
             android:layout_margin="10dp"/>
 
         <TextView
@@ -57,7 +57,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:src="@drawable/contact"
+            android:src="@drawable/mv"
             android:layout_margin="10dp"/>
         <TextView
             android:layout_width="wrap_content"

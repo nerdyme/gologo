@@ -44,7 +44,6 @@
     </string-array>
 
     <string-array name="campnames">
-
         <item>Health Camps</item>
         <item>Agriculture</item>
         <item>Government Campaign</item>
@@ -54,15 +53,17 @@
         <item>Political Campaign</item>
         <item>Awareness Camp</item>
         <item>Social campaign</item>
-
     </string-array>
 
     <!-- Action bar Menu -->
     <string name="gramvaani"> Gramvaani Website</string>
-    <string name="open_windows_explorer">Listen Recordings</string>
+    <string name="open_windows_explorer">View Recordings</string>
     <string name="app_info">App Info</string>
     <string name="app_share">App Share</string>
     <string name="my_profile">My Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="home">Home</string>
+
     <string name="appinfo"> \'Gologo\' is used to broadcast the news in the community. A registered volunteer
          performs one time login for the authentication. He can broadcast any recorded announcements, can launch ongoing surveys
         and can circulate information through text messages. The volunteer can address the information either to all or to the relevant audience
@@ -123,7 +124,7 @@
     <string name="Create_New_Contact_Group">Create Contact Group</string>
     <string name="Record_Audio">Launch Audio</string>
     <string name="Send_Message">Send Message</string>
-    <string name="Pick_Survey">Launch Survey</string>
+    <string name="Pick_Survey">Survey</string>
     <string name="error_in_fetching_groups">Error in fetching groups</string>
 
     <!--For contact group -->
@@ -132,6 +133,7 @@
     <string name="Please_enter_groupname_before_creating">Please enter groupname before creating</string>
     <string name="Error_in_creating_Contact_Group">Error in creating Contact Group, Try Again</string>
     <string name="Contact_Group_Created">Contact Group Created</string>
+    <string name="groupname">Group</string>
 
     <!--Sending Text Message -->
     <string name="announcement_of_surveys">Announcement of Surveys</string>
@@ -142,7 +144,7 @@
     <string name="selectdate">Select Survey Date</string>
     <string name="Please_enter_valid_date_before_sending">Please enter valid date (YYYY-MM-DD) before sending</string>
     <string name="date_less_current">Date entered is less than current date.</string>
-
+    <string name="surveydate">Survey Date</string>
 
     <!--Template for Camp Announcement -->
     <string name="campname">Enter the Camp Name </string>
@@ -153,6 +155,10 @@
     <string name="startdatetoast">Start date can\'t be empty.</string>
     <string name="enddatetoast"> End date can\'t be empty.</string>
     <string name="venuenametoast">Venue name can\'t be empty.</string>
+    <string name="campname1">Camp Name</string>
+    <string name="startdate"> Start Date</string>
+    <string name="enddate">End Date</string>
+    <string name="venue">Venue</string>
 
     <!--Template for Govt Scheme Announcement -->
     <string name="govtschemename"> Enter the Scheme Name  </string>
@@ -161,12 +167,15 @@
     <string name="govtschemenametoast"> Scheme Name can\'t be empty. </string>
     <string name="govtschemestartdatetoast"> Start Date can\'t be empty.</string>
     <string name="govtschemebeneficiarytoast"> Beneficiary can\'t be empty </string>
+    <string name="schemename">Scheme </string>
+    <string name="beneficiary">Beneficiaries </string>
+    <string name="startscheme">Start Date</string>
 
 
     <!--Send Options -->
     <string name="Phonecontacts">Phone Contacts</string>
     <string name="GVGroups">Gramvaani Groups</string>
-    <string name="MVCallers">MobileVaali Callers</string>
+    <string name="MVCallers">Mobile Vaani Callers</string>
 
     <!--pick contacts -->
     <string name="pick_contacts">Pick Contacts</string>
@@ -180,14 +189,22 @@
     <string name="StartRecording">Start Recording</string>
     <string name="StopRecording">Stop Recording</string>
     <string name="Error_in_Loading_Recorder">Error in Loading Recorder</string>
+    <string name="audio_recorded">Audio Recorded</string>
 
     <!-- Create New Contact -->
+    <string name="name">Name </string>
+    <string name="DOB">DOB</string>
+    <string name="number">Phone</string>
+    <string name="gender1">Gender</string>
+    <string name="contactgroup">Contact Groups</string>
+    <string name="location">Location</string>
+
     <string name="contactname">Enter the contact name</string>
     <string name="enterphone">Enter the phone number</string>
     <string name="gender">Select Gender</string>
     <string name="city">Select City</string>
     <string name="state">Select State</string>
-    <string name="enterage">Enter Age</string>
+    <string name="enterage">Enter Date of Birth</string>
     <string name="enterdistrict">Enter District</string>
     <string name="enterstate">Enter State</string>
     <string name="createcontact">Create</string>
@@ -196,13 +213,16 @@
     <string name="Select_Contact_Groups">Select Contact Groups</string>
     <string name="Press_Confirm">Press Confirm to send, Press edit to change</string>
     <string name="Add_Contact_Details">Add Contact Details"</string>
+
     <!--Toast-->
     <string name="Name_cant_be_empty">Name can\'t be empty</string>
     <string name="Name_must_have_atleast_4_characters">Name must have atleast 4 characters</string>
     <string name="Enter_valid_phone_number1">Enter valid phone number</string>
+    <string name="enter_valid_dob">Date of Birth can\'t be empty</string>
     <string name="Enter_valid_age">Enter valid age(0-150)</string>
     <string name="Contact_created_successfully"> New Contact added successfully</string>
     <string name="error_in_fetching_locatiosn">Error in fetching locations from GV Server</string>
+    <string name="select_valid_location">Select location for the new contact</string>
 
 
     <!-- Displaying Phone Contacts -->
@@ -225,12 +245,11 @@
     <string name="error_in_sending_message">Error in sending message, Try Again</string>
     <string name="message_success">Message sent successfully!</string>
 
-
     <!--My profile-->
     <string name="name_text">Name :</string>
     <string name="user_type_value">Admin</string>
-    <string name="number_text">Registered Number :</string>
-    <string name="age_text">Age :</string>
+    <string name="number_text">Number :</string>
+    <string name="age_text">Date of Birth :</string>
     <string name="location_text">District :</string>
     <string name="Gender_text">Gender :</string>
     <string name="User_type_text">User Type :</string>
@@ -239,4 +258,16 @@
     <string name="loading">Loading...</string>
     <string name="details_displayed">All Details displayed successfully</string>
 
+
+    <!-- All possible Errors -->
+    <string name="error_network_timeout">Server Time Out Error </string>
+    <string name="auth_failure">Authentication Failure Error</string>
+    <string name="noconnection">No Connection Error</string>
+    <string name="server_error">Server Error</string>
+    <string name="network_error">Network Error</string>
+    <string name="parse_error">Parse Error</string>
+
+
+    <!-- Survey Responses -->
+    <string name="surveyresponses">View Survey Responses</string>
 </resources>

@@ -45,6 +45,7 @@ public class Groupcontactlistadapter extends BaseAdapter implements CompoundButt
         {
             Original_Names.add(phonelist.get(i).getgroupname());
         }
+        Names=Original_Names;
         filter = new filter_here();
     }
 

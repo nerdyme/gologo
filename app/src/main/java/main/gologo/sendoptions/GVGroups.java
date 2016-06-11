@@ -67,11 +67,12 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
         bundle=getIntent().getExtras();
         actname=bundle.getString("ActivityName");
 
-        Log.d("goup list size","Size :: " +Constants.grouplist.size());
+        Log.d("group list size", "Size :: " + Constants.grouplist.size());
         Collections.sort(Constants.grouplist, new Groupcomparator());
 
         ListView lv= (ListView) findViewById(R.id.lv2);
         ma = new Groupcontactlistadapter(Constants.grouplist,GVGroups.this);
+        //Log.d("Error", Constants.grouplist.)
         lv.setAdapter(ma);
         lv.setOnItemClickListener(this);
         lv.setItemsCanFocus(false);

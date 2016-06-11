@@ -86,7 +86,7 @@ public class Surveys extends BaseActionbar {
                                 JSONObject info = (JSONObject) ar1.get(i);
 
                                 String s1 = info.get("id").toString();
-                                String s2 = info.get("name").toString();
+                                String s2 = info.get("name").toString().toUpperCase();
                                 JSONObject js1= (JSONObject) info.get("form");
                                 String s3= js1.get("id").toString();
                                 Log.d("Data",s2+'\n');

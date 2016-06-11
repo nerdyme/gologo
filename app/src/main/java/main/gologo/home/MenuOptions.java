@@ -21,8 +21,6 @@ public class MenuOptions extends BaseActionbar {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_options);
-
-
     }
 
     public void group(View v) {

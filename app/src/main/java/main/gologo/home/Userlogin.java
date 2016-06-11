@@ -1,5 +1,6 @@
 package main.gologo.home;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -28,7 +29,7 @@ import java.util.Map;
 import main.gologo.R;
 import main.gologo.constants.Constants;
 
-public class Userlogin extends BaseActionbar {
+public class Userlogin extends Activity {
 
     EditText e1, e2;
     TextView tv1;
@@ -70,9 +71,10 @@ public class Userlogin extends BaseActionbar {
                                         .setActionTextColor(Color.RED)
                                         .show();
                                 Intent i= new Intent(getApplicationContext(),MenuOptions.class);
-                                finish();
 
+                                finish();
                                 startActivity(i);
+
                             }
                             else
                                 Snackbar.make(findViewById(android.R.id.content), s1, Snackbar.LENGTH_LONG)

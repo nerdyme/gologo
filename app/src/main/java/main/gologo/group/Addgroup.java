@@ -15,8 +15,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
@@ -142,6 +148,22 @@ public class Addgroup extends BaseActionbar {
             @Override
             public void onErrorResponse(VolleyError error) {
                 myDialog.dismiss();
+
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    Snackbar.make(findViewById(android.R.id.content), R.string.error_network_timeout, Snackbar.LENGTH_LONG).show();
+                } else if (error instanceof AuthFailureError) {
+                    Snackbar.make(findViewById(android.R.id.content), R.string.auth_failure, Snackbar.LENGTH_LONG).show();
+                } else if (error instanceof ServerError) {
+                    Snackbar.make(findViewById(android.R.id.content), R.string.server_error, Snackbar.LENGTH_LONG).show();
+                } else if (error instanceof NetworkError) {
+                    Snackbar.make(findViewById(android.R.id.content), R.string.network_error, Snackbar.LENGTH_LONG).show();
+                } else if (error instanceof ParseError) {
+                    Snackbar.make(findViewById(android.R.id.content), R.string.parse_error, Snackbar.LENGTH_LONG).show();
+                }else
+                {
+
+                }
+
                 Log.d("Error","Inside error in create group");
                 AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(Addgroup.this);
                 dlgAlert.setMessage(R.string.Error_in_creating_Contact_Group);

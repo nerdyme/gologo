@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     android:gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_marginTop="50dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/campname1"
+            android:id="@+id/User_type_text"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="#E0F7FA"
+            android:textColorHint="#3F51B5"
+            android:textAlignment="center" />
 
         <Spinner
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_weight="0.75"
+            android:layout_height="50dp"
             android:inputType="textAutoComplete"
             android:ems="10"
             android:hint="@string/campname"
             android:id="@+id/camp_value"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:layout_marginTop="40dp"
             android:layout_centerHorizontal="true"
             android:background="#E0F7FA"
             android:textColorHint="#3F51B5"
@@ -33,20 +46,34 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_marginTop="20dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/startdate"
+            android:id="@+id/User"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="#E0F7FA"
+            android:textColorHint="#3F51B5"
+            android:textAlignment="center" />
+
         <EditText
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:layout_height="50dp"
             android:inputType="textAutoComplete"
             android:ems="10"
             android:hint="@string/campstartdate"
             android:id="@+id/selectstartdateforcamp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:background="#E0F7FA"
             android:textColorHint="#3F51B5"
@@ -56,33 +83,47 @@
         <ImageButton
             android:id="@+id/calendaricon"
             android:layout_width="0dp"
-            android:layout_weight="0.25"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_weight="0.15"
+            android:layout_height="50dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:src="@drawable/calendar"
             android:scaleType="fitXY"
             android:layout_gravity="center"/>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="1">
+        android:weightSum="1"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/enddate"
+            android:id="@+id/Use"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="#E0F7FA"
+            android:textColorHint="#3F51B5"
+            android:textAlignment="center" />
 
         <EditText
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:layout_height="50dp"
             android:inputType="textAutoComplete"
             android:ems="10"
             android:hint="@string/campenddate"
             android:id="@+id/selectenddateforcamp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:layout_marginTop="20dp"
+
             android:layout_centerHorizontal="true"
             android:background="#E0F7FA"
             android:textColorHint="#3F51B5"
@@ -92,9 +133,8 @@
         <ImageButton
             android:id="@+id/calendaricon1"
             android:layout_width="0dp"
-            android:layout_weight="0.25"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_weight="0.15"
+            android:layout_height="50dp"
             android:src="@drawable/calendar"
             android:scaleType="fitXY"
             android:layout_gravity="center"/>
@@ -102,21 +142,35 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="1">
+        android:weightSum="1"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/venue"
+            android:id="@+id/Us"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="#E0F7FA"
+            android:textColorHint="#3F51B5"
+            android:textAlignment="center" />
 
         <EditText
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_weight="0.75"
+            android:layout_height="50dp"
             android:inputType="textAutoComplete"
             android:ems="10"
             android:hint="@string/campvenue"
             android:id="@+id/campvenue_value"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:layout_marginTop="20dp"
+
             android:layout_centerHorizontal="true"
             android:background="#E0F7FA"
             android:textColorHint="#3F51B5"
@@ -132,9 +186,8 @@
         android:text="@string/pick_contacts"
         android:id="@+id/pick10"
         android:ems="10"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:textColor="#ffffff"
-        android:layout_marginBottom="10dp"
         android:background="#e68652" />
 
 </LinearLayout>

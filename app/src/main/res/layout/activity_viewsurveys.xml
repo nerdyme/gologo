@@ -13,4 +13,15 @@
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
 
+    <Button
+        android:id="@+id/responseb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:text="@string/surveyresponses"
+        android:background="#e68652"
+        android:layout_alignParentBottom="true"/>
+
+
 </RelativeLayout>
