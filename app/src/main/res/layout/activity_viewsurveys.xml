@@ -7,10 +7,23 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/surveyname"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="8dp"
+        android:textColor="#ffffff"
+        android:textSize="15dp"
+        android:maxLines="3"
+        android:background="#e68652"
+        android:paddingBottom="2dp"
+        />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/surveyname"
         android:scrollbars="vertical" />
 
     <Button

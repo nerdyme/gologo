@@ -40,7 +40,7 @@ public class Surveyresponseadapter extends RecyclerView.Adapter<Surveyresponsead
     public void onBindViewHolder(PersonViewHolder2 holder, final int position) {
         holder.surveyquestionno.setText(Integer.toString(al.get(position).getquestionno()));
         holder.surveyquestion.setText(al.get(position).getquestion());
-        holder.surveyresponse.setText(Integer.toString(al.get(position).getresponses()));
+        holder.surveyresponse.setText("Number of Responses Recorded : " +Integer.toString(al.get(position).getresponses()));
     }
 
     @Override

@@ -153,22 +153,26 @@ public class Userlogin extends Activity {
                     Toast.makeText(getBaseContext(), R.string.Enter_valid_PIN_Number, Toast.LENGTH_LONG).show();
                 } else {
 
-                    // progress = ProgressDialog.show(this, R.string.Pleasewait,R.string.Validating_credentials, true);
-                    progress = ProgressDialog.show(Userlogin.this, "Please Wait ... ", "Validating credentials", true);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // do the thing that takes a long time
-                            makerequest();
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
+                    if(AppStatus.getInstance(getApplicationContext()).isOnline())
+                    {
+                        Snackbar.make(findViewById(android.R.id.content), R.string.check_your_network, Snackbar.LENGTH_LONG).show();
+                    }
+                      else {// progress = ProgressDialog.show(this, R.string.Pleasewait,R.string.Validating_credentials, true);
+                        progress = ProgressDialog.show(Userlogin.this, "Please Wait ... ", "Validating credentials", true);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // do the thing that takes a long time
+                                makerequest();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
 
-                                }
-                            });
-                        }
-                    }).start();
-
+                                    }
+                                });
+                            }
+                        }).start();
+                    }
                 }
             }
         });

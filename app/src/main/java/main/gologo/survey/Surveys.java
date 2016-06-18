@@ -1,7 +1,6 @@
 package main.gologo.survey;
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -108,9 +107,7 @@ public class Surveys extends BaseActionbar {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progress.dismiss();
-                        Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
-                                .setActionTextColor(Color.RED)
-                                .show();
+                        Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG).show();
                         finish();
                     }
                 }

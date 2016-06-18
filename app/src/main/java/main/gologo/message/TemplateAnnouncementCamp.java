@@ -54,7 +54,7 @@ public class TemplateAnnouncementCamp extends BaseActionbar implements View.OnCl
         img2.setOnClickListener(this);
         et1.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         et2.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-        et3.setText("Block-2, Munirka, Delhi");
+        et3.setText(R.string.addressofcamp);
 
 
         b1.setOnClickListener(new View.OnClickListener() {

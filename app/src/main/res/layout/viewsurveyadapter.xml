@@ -22,20 +22,20 @@
             android:id="@+id/surveyquestionno"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.1"
+            android:layout_weight="0.15"
             android:padding="8dp"
             android:textColor="#e68652"
-            android:textSize="17dp"
+            android:textSize="15dp"
             />
 
         <TextView
             android:id="@+id/surveyquestion"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.9"
+            android:layout_weight="0.85"
             android:padding="8dp"
             android:textColor="#e68652"
-            android:textSize="17dp"
+            android:textSize="15dp"
             />
     </LinearLayout>
 </android.support.v7.widget.CardView>

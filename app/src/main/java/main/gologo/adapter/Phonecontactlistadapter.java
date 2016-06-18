@@ -41,7 +41,8 @@ public class Phonecontactlistadapter  extends BaseAdapter implements CompoundBut
 
         Original_Names = new ArrayList<>();
         Names=new ArrayList<>();
-        for (int i=0;i<phonelist.size();++i)
+        int l=phonelist.size();
+        for (int i=0;i<l;++i)
         {
             Original_Names.add(phonelist.get(i).getname());
         }
@@ -118,7 +119,7 @@ public class Phonecontactlistadapter  extends BaseAdapter implements CompoundBut
 
                Result.values = Original_Names;
                Result.count = Original_Names.size();
-                Log.d(" empty","when constraint is length =0 in case"+ Original_Names.size() );
+                //Log.d(" empty","when constraint is length =0 in case"+ Original_Names.size() );
                 return Result;
             }
 
@@ -134,7 +135,7 @@ public class Phonecontactlistadapter  extends BaseAdapter implements CompoundBut
             }
             Result.values = Filtered_Names;
             Result.count = Filtered_Names.size();
-            Log.d("size of filtered","Size is :: " + Filtered_Names.size());
+            //Log.d("size of filtered","Size is :: " + Filtered_Names.size());
             return Result;
         }
 

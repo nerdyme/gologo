@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import main.gologo.R;
 import main.gologo.home.BaseActionbar;
@@ -29,18 +31,18 @@ public class Recordaudio extends BaseActionbar {
     private int currentFormat = 0;
     //private int output_formats[] = { MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.OutputFormat.THREE_GPP };
     //private String file_exts[] = { AUDIO_RECORDER_FILE_EXT_MP4, AUDIO_RECORDER_FILE_EXT_3GP };
-    private String myfile="";
+    private String myfile = "";
     EditText txtcount;
 
     CountDownTimer t;
-    int cnt=0;
+    int cnt = 0;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recordaudio);
-        txtcount=(EditText)findViewById(R.id.timer);
+        txtcount = (EditText) findViewById(R.id.timer);
         txtcount.setInputType(InputType.TYPE_NULL);
         txtcount.setTextIsSelectable(true);
 
@@ -48,7 +50,7 @@ public class Recordaudio extends BaseActionbar {
 
         enableButtons(false);
 
-        t = new CountDownTimer( Long.MAX_VALUE , 1000) {
+        t = new CountDownTimer(Long.MAX_VALUE, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -59,14 +61,14 @@ public class Recordaudio extends BaseActionbar {
                 long millis = cnt;
                 int seconds = (int) (millis / 60);
                 int minutes = seconds / 60;
-                seconds     = seconds % 60;
+                seconds = seconds % 60;
 
                 txtcount.setText(String.format("%d:%02d:%02d", minutes, seconds, millis));
             }
 
             @Override
             public void onFinish() {
-                    txtcount.setText(R.string.audio_recorded);
+                txtcount.setText(R.string.audio_recorded);
             }
         };
 
@@ -79,8 +81,8 @@ public class Recordaudio extends BaseActionbar {
 
     private void enableButton(int id, boolean isEnable) {
 
-        if(isEnable)
-        ((LinearLayout) findViewById(id)).setVisibility(View.VISIBLE);
+        if (isEnable)
+            ((LinearLayout) findViewById(id)).setVisibility(View.VISIBLE);
         else
             ((LinearLayout) findViewById(id)).setVisibility(View.GONE);
     }
@@ -96,6 +98,10 @@ public class Recordaudio extends BaseActionbar {
         if (!file.exists()) {
             file.mkdirs();
         }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd_hh:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        System.out.println(sdf.format(cal.getTime()));
+
         return (file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".mp3");
     }
 
@@ -119,31 +125,28 @@ public class Recordaudio extends BaseActionbar {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void stopRecording() {
-        if ( recorder!=null) {
+        if (recorder != null) {
             recorder.stop();
             recorder.reset();
             recorder.release();
             recorder = null;
 
             //new MyAsyncTask().execute(myfile);
-            Intent i = new Intent(getApplicationContext(),ContactOptions.class);
-            Bundle b1=new Bundle();
+            Intent i = new Intent(getApplicationContext(), ContactOptions.class);
+            Bundle b1 = new Bundle();
             b1.putString("ActivityName", "Recordaudio");
-            b1.putString("FileName",myfile);
+            b1.putString("FileName", myfile);
 
             //Add the bundle to the intent
             i.putExtras(b1);
             startActivity(i);
-        }
-        else
-        {
+        } else {
             Snackbar.make(findViewById(android.R.id.content), R.string.Error_in_Loading_Recorder, Snackbar.LENGTH_LONG)
                     .setActionTextColor(Color.RED)
                     .show();
@@ -183,12 +186,11 @@ public class Recordaudio extends BaseActionbar {
                     t.cancel();
                     txtcount.setText("00:00:00");
                     stopRecording();
+                    finish();
                     break;
                 }
             }
         }
     };
-
-
 
 }

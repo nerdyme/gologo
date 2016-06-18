@@ -2,7 +2,6 @@ package main.gologo.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
 import main.gologo.R;
 
 /**
@@ -28,7 +26,7 @@ public class Groupcontactlistadapter extends BaseAdapter implements CompoundButt
     TextView tv1;
     CheckBox cb;
     Activity cnt;
-    ArrayList<String> Filtered_Names,Names,Original_Names;
+    ArrayList<String> Filtered_Names=new ArrayList<String>(),Names,Original_Names;
     ArrayList<Groupcontactdata> phonelist;
     filter_here filter;
 
@@ -36,17 +34,19 @@ public class Groupcontactlistadapter extends BaseAdapter implements CompoundButt
     {
         mCheckStates = new SparseBooleanArray(phonelist.size());
         this.phonelist=phonelist;
-        this.cnt=cnt;
-        mInflater = (LayoutInflater)cnt.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        Original_Names=new ArrayList<>();
+
+        Original_Names = new ArrayList<>();
         Names=new ArrayList<>();
-        Filtered_Names=new ArrayList<>();
-        for (int i=0;i<phonelist.size();++i)
+        int l=phonelist.size();
+        for (int i=0;i<l;++i)
         {
             Original_Names.add(phonelist.get(i).getgroupname());
         }
         Names=Original_Names;
         filter = new filter_here();
+        this.cnt=cnt;
+        mInflater = (LayoutInflater)cnt.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //Log.d("size of original","Size is :: " + Original_Names.size());
     }
 
     @Override
@@ -131,15 +131,19 @@ public class Groupcontactlistadapter extends BaseAdapter implements CompoundButt
             }
             Result.values = Filtered_Names;
             Result.count = Filtered_Names.size();
-            Log.d("size of filtered", "Size is :: " + Filtered_Names.size());
+            //Log.d("size of filtered", "Size is :: " + Filtered_Names.size());
             return Result;
         }
 
         @Override
         protected void publishResults(CharSequence constraint,Filter.FilterResults results) {
             // TODO Auto-generated method stub
-            Names = (ArrayList<String>) results.values;
-            notifyDataSetChanged();
+            if (results.count == 0)
+                notifyDataSetInvalidated();
+            else {
+                Names = (ArrayList<String>) results.values;
+                notifyDataSetChanged();
+            }
         }
     }
 

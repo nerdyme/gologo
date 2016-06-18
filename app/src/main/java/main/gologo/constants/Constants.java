@@ -1,10 +1,5 @@
 package main.gologo.constants;
 
-import java.util.ArrayList;
-
-import main.gologo.adapter.Groupcontactdata;
-import main.gologo.contact.Locationdata;
-
 /**
  * Created by surbhi on 4/1/16.
  */
@@ -54,8 +49,9 @@ public class Constants {
     public static String contact_groups1="http://internal.gramvaani.org:8080/vapp/api/v1/callerinfo_contact_list/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json";
     public static String responses1="http://internal.gramvaani.org:8081/vapp/api/v1/survey_record/cdr_records/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json&ai_id=60&limit=20&page=1&survey_id=";
 
-    public static ArrayList<Locationdata> locationlist=new ArrayList<Locationdata>();;
-    public static ArrayList<Groupcontactdata> grouplist=new ArrayList<Groupcontactdata>();;
+    public static String contact_grp1= "http://internal.gramvaani.org:8081/vapp/api/v1/callerinfo_contact_list/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json";
+    //public static ArrayList<Locationdata> locationlist=new ArrayList<Locationdata>();;
+    //public static ArrayList<Groupcontactdata> grouplist=new ArrayList<Groupcontactdata>();;
 
     public static String capitalizeString(String string) {
         char[] chars = string.toLowerCase().toCharArray();
@@ -79,5 +75,7 @@ GcmIntentService: Received: Bundle[{from=731395736136, message=Server Down!,
 
 
 /// For app on number 9891127941 ----Pin -- 333997
+/*Pin : 555913
+Kapil Thakkar*/
 
 //survey dial out

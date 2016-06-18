@@ -52,12 +52,31 @@ public class Surveyresponses extends BaseActionbar{
         final String survey_id = bundle.getString("survey_id");
         list=bundle.getParcelableArrayList("question_list");
 
+       /* int id=list.get(0).getquestionid();
+        hm.put(id, 0);
+        Log.d("id is ", "ID" + id);
+        id = list.get(1).getquestionid();
+        hm.put(id,0);
+
+        Log.d("id is ", "ID" + id);*/
         total_questions=list.size();
-        for(int i=0;i<total_questions;++i)
+        Log.d("list Size", "Total questions are : " + total_questions);
+
+
+        //for(int i=0;i<total_questions;++i)
+        int i=0;
+       /* do
         {
-            int id=list.get(i).getquestionid();
-            hm.put(id,0);
-        }
+            Log.d("\nquestion id in map", "id is ::");
+            int id1=list.get(i).getquestionid();
+            hm.put(id1,0);
+            Log.d("\nquestion id in map", "id is ::" +id1);
+            i++;
+
+        }while(i<total_questions);*/
+        hm.put(243,0);
+        hm.put(216,0);
+
             // list.get(i).setresponses(0);
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv1);
         rv.setHasFixedSize(true);
@@ -112,6 +131,7 @@ public class Surveyresponses extends BaseActionbar{
                                     String ph=info2.get("callerid").toString();
                                     int ques_id=info2.getInt("question_id");
                                     unique_response.add(ph);
+                                        Log.d("question id", "id is ::" +ques_id);
 
                                     int cur_Res=hm.get(ques_id);
                                     hm.put(ques_id,cur_Res+1);
@@ -124,12 +144,19 @@ public class Surveyresponses extends BaseActionbar{
                         catch (JSONException e) {
                             e.printStackTrace();
                         }
-                                if(count!=0)
-                        for(int i=0;i<total_questions;++i)
+
+                        for(int key : hm.keySet())
+                        {
+                            Log.d("\nResponses", "key " + key + "value ::" + hm.get(key));
+                        }
+                        Log.d("People responded", "People" + total_res);
+                               // if(count!=0)
+                       /* for(int i=0;i<total_questions;++i)
                         {
                             int res=hm.get(list.get(i).getquestionid());
                             list.get(i).setresponses(res);
-                        }
+
+                        }*/
                     }
                 },
 

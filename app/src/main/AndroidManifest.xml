@@ -50,30 +50,90 @@
 
         <service android:name=".gcm.GcmIntentService" />
 
-        <activity android:name=".home.Userlogin" />
-        <activity android:name=".home.MenuOptions" />
-        <activity android:name=".group.Addgroup" />
-        <activity android:name=".home.Phoneverify" />
-        <activity android:name=".message.Sendmessage" />
-        <activity android:name=".message.TemplateAnnouncementSurvey" />
-        <activity android:name=".sendoptions.ContactOptions" />
-        <activity android:name=".message.TemplateAnnouncementCamp" />
-        <activity android:name=".message.TemplateAnnouncementGovtscheme" />
+        <activity android:name=".home.Userlogin"
+            android:label="@string/Login"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".home.MenuOptions"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".group.Addgroup"
+            android:label="@string/create_group1"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".home.Phoneverify"
+            android:label="@string/PinRecovery"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".message.Sendmessage"
+            android:label="@string/message_templates"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".message.TemplateAnnouncementSurvey"
+            android:label="@string/surveys"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".sendoptions.ContactOptions"
+            android:label="@string/select_people"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".message.TemplateAnnouncementCamp"
+            android:label="@string/camps"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".message.TemplateAnnouncementGovtscheme"
+            android:label="@string/schemes"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".sendoptions.Phonecontacts"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:label="@string/contact_list"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".sendoptions.GVGroups"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".sendoptions.MVCallers" />
-        <activity android:name=".audio.Recordaudio" />
-        <activity android:name=".contact.Createcontact" />
-        <activity android:name=".survey.Surveys" />
-        <activity android:name=".survey.Viewsurveys" />
-        <activity android:name=".home.BaseActionbar" />
-        <activity android:name=".home.AppInfo" />
-        <activity android:name=".home.Myprofile" />
-        <activity android:name=".survey.Surveyresponses"></activity>
+            android:windowSoftInputMode="adjustResize"
+            android:label="@string/gv_groups"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".sendoptions.MVCallers"
+            android:label="@string/mv_callers"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".audio.Recordaudio"
+            android:label="@string/record_audio"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".contact.Createcontact"
+            android:label="@string/create_contact"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".survey.Surveys"
+            android:label="@string/launch_survey"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".survey.Viewsurveys"
+            android:label="@string/survey_ques"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".home.BaseActionbar"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".home.AppInfo"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".home.Myprofile"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".survey.Surveyresponses"
+            android:label="@string/surveyresponses"
+            android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>

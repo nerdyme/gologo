@@ -44,7 +44,7 @@ public class TemplateAnnouncementGovtscheme extends BaseActionbar implements Vie
         sp1=(Spinner)findViewById(R.id.sp1);
         start=(EditText) findViewById(R.id.start);
         start.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-        et.setText("National Women Employment Act");
+        et.setText(R.string.National_Employment_Act);
 
         ib = (ImageButton) findViewById(R.id.calendaricon);
         cal = Calendar.getInstance();

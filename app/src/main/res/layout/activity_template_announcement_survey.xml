@@ -13,10 +13,10 @@
         android:weightSum="1"
         android:layout_marginTop="40dp">
 
-        <TextView
+        <EditText
             android:layout_width="0dp"
-            android:layout_weight="0.25"
-            android:layout_height="70dp"
+            android:layout_weight="0.27"
+            android:layout_height="67dp"
             android:ems="10"
             android:hint="@string/surveydate"
             android:id="@+id/Us2"
@@ -24,12 +24,14 @@
             android:paddingBottom="10dp"
             android:background="#E0F7FA"
             android:textColorHint="#3F51B5"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:editable="false"
+            android:textStyle="bold"/>
 
         <EditText
             android:layout_width="0dp"
-            android:layout_weight="0.6"
-            android:layout_height="70dp"
+            android:layout_weight="0.56"
+            android:layout_height="67dp"
             android:inputType="textAutoComplete"
             android:ems="10"
             android:hint="@string/selectdate"
@@ -45,8 +47,8 @@
         <ImageButton
             android:id="@+id/calendaricon"
             android:layout_width="0dp"
-            android:layout_weight="0.15"
-            android:layout_height="70dp"
+            android:layout_weight="0.17"
+            android:layout_height="67dp"
             android:src="@drawable/calendar"
             android:scaleType="fitXY"
             android:layout_gravity="center"/>

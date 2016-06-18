@@ -3,6 +3,7 @@ package main.gologo.home;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,23 +54,28 @@ public class Phoneverify extends Activity {
                             Toast.makeText(getBaseContext(), R.string.Enter_valid_phone_number, Toast.LENGTH_LONG).show();
 
                         } else {
-                            //Do a volley request
-                            progress = ProgressDialog.show(Phoneverify.this, "Please Wait ... ", "You will receive message shortly", true);
-                            progress.setCancelable(true);
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    // do the thing that takes a long time
-                                    makerequest();
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
 
-                                        }
-                                    });
-                                }
-                            }).start();
+                            if(AppStatus.getInstance(getApplicationContext()).isOnline())
+                            {
+                                Snackbar.make(findViewById(android.R.id.content), R.string.check_your_network, Snackbar.LENGTH_LONG).show();
+                            }
+                            else { //Do a volley request
+                                progress = ProgressDialog.show(Phoneverify.this, "Please Wait ... ", "You will receive message shortly", true);
+                                progress.setCancelable(true);
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // do the thing that takes a long time
+                                        makerequest();
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
 
+                                            }
+                                        });
+                                    }
+                                }).start();
+                            }
                         }
                     }
                 });

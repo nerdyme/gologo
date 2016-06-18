@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:fillViewport="false"
+    android:background="#E0F7FA"
     android:id="@+id/scroll">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,11 +18,12 @@
             android:layout_height="match_parent"
             android:text="@string/appinfo"
             android:id="@+id/txview"
-            android:textSize="17sp"
+            android:textSize="15sp"
             android:layout_margin="5dp"
             android:gravity="center"
             android:typeface="serif"
-            android:textColor="#bf360c"
+            android:textColor= "#000000"
+
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -142,13 +144,13 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/gramvaaniinfo"
-            android:textSize="30sp"
+            android:textSize="15sp"
             android:layout_margin="5dp"
             android:gravity="center"
             android:typeface="serif"
-            android:textColor="#bf360c"
-            />
+            android:textColor="#000000" />
+
     </LinearLayout>
 </ScrollView>
 
-
+    <!--  for color "#bf360c"-->

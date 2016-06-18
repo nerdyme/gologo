@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -34,6 +35,7 @@ public class Viewsurveys extends BaseActionbar {
     Viewsurveyadapter rvAdapter;
     ProgressDialog progress;
     Button b1;
+    TextView surveyname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +45,13 @@ public class Viewsurveys extends BaseActionbar {
         Bundle bundle = getIntent().getExtras();
         final String form_id = bundle.getString("form_id");
         final String survey_id=bundle.getString("survey_id");
+        final String survey_name=bundle.getString("survey_name");
 
         view_survey_url = Constants.get_survey_questions + "/?form_id="+form_id;
 
         list = new ArrayList<Viewsurveydata>();
 
-        Log.d("View Survey","form id :: "+form_id + "  Survey_id :: " + survey_id);
+        Log.d("View Survey", "form id :: " + form_id + "  Survey_id :: " + survey_id);
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv1);
         rv.setHasFixedSize(true);
 
@@ -62,6 +65,9 @@ public class Viewsurveys extends BaseActionbar {
         rv.setAdapter(rvAdapter);
 
         b1=(Button) findViewById(R.id.responseb);
+        surveyname=(TextView) findViewById(R.id.surveyname);
+        surveyname.setText("Survey Name - " + survey_name);
+
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,8 +75,9 @@ public class Viewsurveys extends BaseActionbar {
                 Intent i= new Intent(getApplicationContext(),Surveyresponses.class);
                 Bundle b=new Bundle();
                 b.putString("survey_id",survey_id);
-                b.putString("form_id",form_id);
-                b.putParcelableArrayList("question_list",list);
+                b.putString("form_id", form_id);
+                b.putString("survey_name",survey_name);
+                b.putParcelableArrayList("question_list", list);
                 i.putExtras(b);
                 startActivity(i);
             }

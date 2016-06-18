@@ -3,7 +3,7 @@
 
     <string-array name="gender">
         <item>महिला</item>
-        <item>नर</item>
+        <item>पुरुष</item>
     </string-array>
     
     <string-array name="state">
@@ -44,10 +44,10 @@
 
    <!-- Action bar Menu -->
     <string name="gramvaani">ग्राम वाणी वेबसाइट</string>
-    <string name="open_windows_explorer"> विन्डो एक्सप्लोरर खोलें </string>
+    <string name="open_windows_explorer"> रिकॉर्डिंग देखें</string>
     <string name="app_info">ऐप जानकारी</string>
     <string name="app_share">शेयर ऐप</string>
-    <string name="home">Home</string>
+    <string name="home">होम</string>
     <string name="my_profile">मेरी प्रोफाइल</string>
     <string name="appinfo">गोलोगो  समुदाय में खबर प्रसारित करने के लिए प्रयोग किया जाता है। एक पंजीकृत स्वयंसेवक
           प्रमाणीकरण के लिए एक बार लॉग इन करता है और विभिन्न कार्य कर सकता हैं! स्वयंसेवक या तो सभी के लिए या प्रासंगिक दर्शकों को जानकारी दे सकते
@@ -60,7 +60,7 @@
     <string name="creategroupinfo">इस आइकन पर क्लिक करके, व्यवस्थापक नया संपर्क समूह बना सकते हैं।</string>
     <string name="createcontactinfo">इस आइकन पर क्लिक करके,व्यवस्थापक अनुप्रयोग में सभी विवरण भर कर  ग्राम वाणी सर्वर पर एक नया संपर्क जोड़ सकते हैं।</string>
     <string name="surveyinfo">इस आइकन पर क्लिक करके, एप्लिकेशन नवीन सर्वेक्षण की एक सूची प्रदर्शित करता ह जहाँ व्यवस्था का चयन करें, देखें और उन का एक निर्धारित सेट के लिए एक सर्वेक्षण शुरू कर सकते हैं।ै </string>
-    <string name="gramvaaniinfo">www.gramvaani.org पर संपर्क करें!</string>
+    <string name="gramvaaniinfo">कॉपीराइट \u00a9 2016 गोलोगो। सर्वाधिकार सुरक्षित।</string>
 
     <string-array name="campnames">
 
@@ -171,6 +171,7 @@
         <string name="startdate"> आरंभ तिथि </string>
         <string name="enddate">अंतिम तिथि</string>
         <string name="venue">स्थान</string>
+        <string name="addressofcamp">ब्लॉक -2, मुनिरका, दिल्ली</string>
 
         <!--Template for Govt Scheme Announcement -->
         <string name="govtschemename"> योजना का नाम दर्ज करें  </string>
@@ -182,6 +183,7 @@
         <string name="schemename">योजना </string>
         <string name="beneficiary">लाभार्थी </string>
         <string name="startscheme">आरंभ तिथि</string>
+        <string name="National_Employment_Act">राष्ट्रीय रोजगार अधिनियम</string>
 
 
 
@@ -209,6 +211,13 @@
         <string name="audio_recorded">Audio Recorded</string>
 
         <!-- Create New Contact -->
+        <string name="name">नाम </string>
+        <string name="DOB">जन्मतारीख</string>
+        <string name="number">फ़ोन</string>
+        <string name="gender1">लिंग</string>
+        <string name="contactgroup">संपर्क समूह</string>
+        <string name="location">स्थान</string>
+
         <string name="contactname">संपर्क नाम दर्ज करें</string>
         <string name="enterphone">फोन नंबर दर्ज करें</string>
         <string name="gender">लिंग चुनें</string>
@@ -223,6 +232,7 @@
         <string name="Select_Contact_Groups">संपर्क समूह का चयन करें </string>
         <string name="Press_Confirm"> पुष्टि के लिए बनाएं प्रेस करें,संपादित करने के लिए रद प्रेस करें </string>
         <string name="Add_Contact_Details">सम्पर्क करने का विवरण जोड़े</string>
+        <string name="error_in_adding_contact">Error in adding contact</string>
         <!--Toast-->
         <string name="Name_cant_be_empty">नाम ख़ाली नहीं हो सकता</string>
         <string name="Name_must_have_atleast_4_characters">नाम में कम से कम 4 वर्ण होने चाहिए</string>
@@ -276,8 +286,35 @@
     <string name="parse_error">पार्स त्रुटि</string>
 
     <!-- Survey Responses -->
-    <string name="surveyresponses">View Survey Responses</string>
-    <string name="no_response">No responses are recorded</string>
+    <string name="surveyresponses">सर्वेक्षण पर प्रतिक्रियाएं देखें</string>
+    <string name="no_response">कोई प्रतिक्रिया दर्ज  नहीं की गई हैं</string>
+
+    <!-- Activity Names-->
+    <string name="create_contact">संपर्क बनाएं</string>
+    <string name="create_group1">समूह बनाएं</string>
+    <string name="select_people">संपर्क चयन </string>
+    <string name="record_audio">रिकार्ड ऑडियो</string>
+    <string name="contact_list">फोन संपर्क</string>
+    <string name="mv_callers">मोबाइल वाणी कॉलर्स</string>
+    <string name="gv_groups">समूह चयन</string>
+    <string name="message_templates">संदेश भेजें</string>
+    <string name="surveys">सर्वेक्षण</string>
+    <string name="camps">शिविर</string>
+    <string name="schemes">योजनाएं</string>
+    <string name="launch_survey">सर्वेक्षण डायल आउट</string>
+    <string name="survey_ques">सर्वेक्षण संबंधी प्रश्न</string>
+    <string name="survey_response">सर्वेक्षण की प्रतिक्रिया</string>
+    <string name="Login">लॉग इन </string>
+    <string name="PinRecovery">पिन प्राप्ति</string>
+
+
+    <string name="error">त्रुटि</string>
+    <string name="error_in">त्रुटि</string>
+
+    <!--- Surveys List -->
+    <string name="View">देखें</string>
+    <string name="Launch">लॉन्च</string>
+
 
 </resources>
 

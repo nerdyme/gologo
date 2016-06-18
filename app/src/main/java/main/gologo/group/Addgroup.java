@@ -56,7 +56,6 @@ public class Addgroup extends BaseActionbar {
         setContentView(R.layout.activity_addgroup);
 
         msgvalue= (EditText)findViewById(R.id.group_editText);
-        msgvalue.setText("Village Resident");
         b1 = (Button) findViewById(R.id.creategroup_button);
         btnSpeak = (ImageButton) findViewById(R.id.btnSpeak1);
 

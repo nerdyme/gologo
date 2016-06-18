@@ -75,7 +75,7 @@
     <string name="creategroupinfo">Tapping on this icon will ask for the new group name to create in Gram Vaani groups.</string>
     <string name="createcontactinfo">Tapping on this icon will ask for all the details of the user to be added on the server.</string>
     <string name="surveyinfo">Tapping on this icon will display a list of recent surveys where the admin can select, view and launch a survey to a specified set of users. </string>
-    <string name="gramvaaniinfo">Contact at www.gramvaani.org</string>
+    <string name="gramvaaniinfo">Copyright \u00a9 2016 Gologo. All rights reserved.</string>
 
     <string-array name="beneficiaries">
         <item>Women</item>
@@ -159,6 +159,7 @@
     <string name="startdate"> Start Date</string>
     <string name="enddate">End Date</string>
     <string name="venue">Venue</string>
+    <string name="addressofcamp">Block-2, Munirka, Delhi</string>
 
     <!--Template for Govt Scheme Announcement -->
     <string name="govtschemename"> Enter the Scheme Name  </string>
@@ -170,6 +171,7 @@
     <string name="schemename">Scheme </string>
     <string name="beneficiary">Beneficiaries </string>
     <string name="startscheme">Start Date</string>
+    <string name="National_Employment_Act">National Employment Act</string>
 
 
     <!--Send Options -->
@@ -213,6 +215,7 @@
     <string name="Select_Contact_Groups">Select Contact Groups</string>
     <string name="Press_Confirm">Press Confirm to send, Press edit to change</string>
     <string name="Add_Contact_Details">Add Contact Details"</string>
+    <string name="error_in_adding_contact">Error in adding new contact</string>
 
     <!--Toast-->
     <string name="Name_cant_be_empty">Name can\'t be empty</string>
@@ -223,6 +226,7 @@
     <string name="Contact_created_successfully"> New Contact added successfully</string>
     <string name="error_in_fetching_locatiosn">Error in fetching locations from GV Server</string>
     <string name="select_valid_location">Select location for the new contact</string>
+
 
 
     <!-- Displaying Phone Contacts -->
@@ -271,4 +275,30 @@
     <!-- Survey Responses -->
     <string name="surveyresponses">View Survey Responses</string>
     <string name="no_response">No responses are recorded</string>
+
+    <!-- Activity Names-->
+    <string name="create_contact">Add Contact</string>
+    <string name="create_group1">Add Group</string>
+    <string name="select_people">Select Contacts</string>
+    <string name="record_audio">Record Audio</string>
+    <string name="contact_list">Phone Contacts</string>
+    <string name="mv_callers">Mobile Vaani Callers</string>
+    <string name="gv_groups">Select Groups</string>
+    <string name="message_templates">Send Message</string>
+    <string name="surveys">Surveys</string>
+    <string name="camps">Camps</string>
+    <string name="schemes">Schemes</string>
+    <string name="launch_survey">Survey Dialouts</string>
+    <string name="survey_ques">Survey Questions</string>
+    <string name="survey_response">Survey Responses</string>
+    <string name="Login">Login</string>
+    <string name="PinRecovery">Pin Recovery</string>
+
+    <string name="error_in">Error</string>
+    <string name="error">Error</string>
+
+    <!--- Surveys List -->
+    <string name="View">View</string>
+    <string name="Launch">Launch</string>
+
 </resources>

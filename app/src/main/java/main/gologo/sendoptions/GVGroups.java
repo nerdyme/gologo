@@ -6,32 +6,30 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +37,7 @@ import java.util.Map;
 
 import main.gologo.R;
 import main.gologo.adapter.Groupcomparator;
+import main.gologo.adapter.Groupcontactdata;
 import main.gologo.adapter.Groupcontactlistadapter;
 import main.gologo.audio.MultipartUtility;
 import main.gologo.constants.Constants;
@@ -56,30 +55,84 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
     JSONObject jsonObject=null;
     String survey_name="";
     Button select;
+    EditText searchbar;
     int msg_id=24;
     Groupcontactlistadapter ma;
+    ProgressDialog progress1;
+    ArrayList<Groupcontactdata> grouplist=new ArrayList<Groupcontactdata>();
+    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gvgroups);
-
         bundle=getIntent().getExtras();
         actname=bundle.getString("ActivityName");
+        lv= (ListView) findViewById(R.id.lv21);
+        lv.setDivider(null);
+        lv.setDividerHeight(0);
 
-        Log.d("group list size", "Size :: " + Constants.grouplist.size());
-        Collections.sort(Constants.grouplist, new Groupcomparator());
-
-        ListView lv= (ListView) findViewById(R.id.lv2);
-        ma = new Groupcontactlistadapter(Constants.grouplist,GVGroups.this);
-        //Log.d("Error", Constants.grouplist.)
-        lv.setAdapter(ma);
-        lv.setOnItemClickListener(this);
-        lv.setItemsCanFocus(false);
-        lv.setTextFilterEnabled(true);
-
-        // adding
         select = (Button) findViewById(R.id.button2);
+        searchbar = (EditText) findViewById(R.id.search_editText);
+
+        progress1 = new ProgressDialog(GVGroups.this);
+        progress1.setTitle("Please Wait ...");
+        progress1.setMessage("Fetching Groups");
+        progress1.show();
+
+        //progress1 = ProgressDialog.show(GVGroups.this, "Please Wait ... ", "Fetching Groups", true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // do the thing
+                volleyrequest1();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                    }
+                });
+            }
+        }).start();
+
+       /* new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // do the thing
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ma.notifyDataSetChanged();
+                    }
+                });
+            }
+        }).start();*/
+
+    }
+
+    void fun()
+    {
+        searchbar.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                Log.d("***","Text changed called");
+                GVGroups.this.ma.getFilter().filter(cs.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
         select.setOnClickListener(new View.OnClickListener()
         {
 
@@ -87,14 +140,14 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
             public void onClick(View v) {
                 checkedcontacts= new StringBuilder();
                 int set=0;
-                int l=Constants.grouplist.size();
+                int l=grouplist.size();
                 for(int i = 0; i < l; i++)
 
                 {
                     if(ma.mCheckStates.get(i)==true)
                     {
                         set=1;
-                        checkedcontacts.append(Constants.grouplist.get(i).getgroupid());
+                        checkedcontacts.append(grouplist.get(i).getgroupid());
                         checkedcontacts.append(",");
                     }
                     else
@@ -144,10 +197,6 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                     {
                         msg_id=42; ///Set as gramvaani gives
                         jsonObject = new JSONObject();
-                        /*i.putExtra("ActivityName", "TemplateAnnouncementGovtscheme");
-                        i.putExtra("scheme",scheme);
-                        i.putExtra("beneficiary",ben);
-                        i.putExtra("date", date);*/
                         try {
                             jsonObject.put("scheme_name",Constants.capitalizeString(bundle.getString("scheme")));
                             jsonObject.put("beneficiaries",bundle.getString("beneficiary"));
@@ -170,8 +219,6 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                                 });
                             }
                         }).start();
-                        //Toast.makeText(getApplicationContext(),"Message is successfully delivered",Toast.LENGTH_LONG).show();
-                        //finish();
                     }
                     else if(actname.equalsIgnoreCase("TemplateAnnouncementSurvey")==true)
                     {
@@ -217,12 +264,9 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                                 });
                             }
                         }).start();
-                        //Toast.makeText(getApplicationContext(),"Survey is successfully launched",Toast.LENGTH_LONG).show();
-                        //finish();
                     }
                     else if (actname.equalsIgnoreCase("Recordaudio")==true)
                     {
-
                         filepath=bundle.getString("FileName"); //complete file path is fetched./*/storage/emulated/0/AudioRecorder/1462830570992.mp4*/
                         Log.d("filepath","Inside send audio function" + filepath);
                         progress = ProgressDialog.show(GVGroups.this, "Please Wait ... ", "Your audio is being uploaded", true);
@@ -239,9 +283,6 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                                 });
                             }
                         }).start();
-
-                        // Toast.makeText(getApplicationContext(),"Audio is successfully delivered",Toast.LENGTH_LONG).show();
-                        // finish();
                     }
                     else
                     {
@@ -249,85 +290,11 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                     }
                 }
                 else
-                    Snackbar.make(findViewById(android.R.id.content), R.string.Select_atleast_one_contact, Snackbar.LENGTH_LONG)
-                            .setActionTextColor(Color.RED)
-                            .show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Select_atleast_one_contact, Snackbar.LENGTH_LONG).show();
 
             }
         });
-
-
     }
-
-    public  String photoUpload(String url, String imageFilePath) {
-        if (url == null) {
-            return null;
-        }
-
-        String response="";
-        //return NetworkUtils.syncPOSTFile(url, "picture", imageFilePath, null);
-
-        try {
-            MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
-            entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-            File imageFile = new File(imageFilePath);
-            audiofile=imageFile.getName();
-
-            FileBody fileBody = new FileBody(imageFile);
-            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-            builder.addPart("uploadedfile", fileBody);
-            builder.addPart("gcmid", new StringBody(Constants.gcmRegId));
-            builder.addPart("group_ids",new StringBody(contactlist));
-            builder.addPart("caller_ids", new StringBody(""));
-            builder.addPart("filename", new StringBody(audiofile));
-            builder.addPart("mv_caller", new StringBody("false"));
-            HttpEntity entity = builder.build();
-            response = multiPost(url, entity);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        return response;
-    }
-
-    private  String multiPost(String urlString, HttpEntity reqEntity) {
-        try {
-
-            URL url = new URL(urlString);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            // conn.setConnectTimeout(getTimeOut(UniversalHttpClient.RequestTimePreferences.Minimal, 1));
-            //conn.setReadTimeout(getTimeOut(UniversalHttpClient.RequestTimePreferences.Minimal, 0));
-            conn.setRequestMethod("POST");
-            conn.setUseCaches(false);
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Accept-Encoding", "gzip");
-            conn.setRequestProperty("Connection", "Keep-Alive");
-            conn.addRequestProperty("Content-length", reqEntity.getContentLength() + "");
-            conn.addRequestProperty(reqEntity.getContentType().getName(), reqEntity.getContentType().getValue());
-
-            OutputStream os = conn.getOutputStream();
-            InputStream is = conn.getInputStream();
-
-            reqEntity.writeTo(os);
-            os.close();
-            conn.connect();
-
-            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                return conn.toString();
-            } else if (conn.getResponseCode() == HttpURLConnection.HTTP_ENTITY_TOO_LARGE) {
-                JSONObject response = new JSONObject();
-                return  response.put("gsc","600").put("message","File too large to upload, Try smaller file.").toString();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     void sendaudio() {
         String charset = "UTF-8";
         File uploadFile1 = new File(filepath);
@@ -379,7 +346,6 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
     {
         StringRequest request1 = new StringRequest(Request.Method.POST, Constants.launchmessage,
                 new Response.Listener<String>() {
-
 
                     @Override
                     public void onResponse(String response) {
@@ -494,11 +460,8 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                 params.put("mv_caller","false");
                 return params;
             }
-
         };
-
         VolleyApplication.getInstance().getRequestQueue().add(request1);
-
     }
 
     @Override
@@ -507,6 +470,10 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
         if ((progress != null) && progress.isShowing())
             progress.dismiss();
         progress = null;
+
+        if ((progress1 != null) && progress1.isShowing())
+            progress1.dismiss();
+        progress1 = null;
     }
 
     @Override
@@ -514,8 +481,66 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
         // TODO Auto-generated method stub
         ma.toggle(arg2);
     }
+
+    void volleyrequest1() {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Constants.contact_groups1, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        progress1.dismiss();
+                        Log.d("groupresponse", response.toString());
+                        try {
+                            //JSONObject js1 = (JSONObject) response.get("message");  //Change it when route changes
+                            JSONArray cast = response.getJSONArray("objects");
+                            int len = cast.length();
+                            for (int i = 0; i < len; i++) {
+                                JSONObject actor = cast.getJSONObject(i);
+                                String name = actor.getString("name");
+                                int id = actor.getInt("id");
+                                Groupcontactdata cgd = new Groupcontactdata(name, id);
+                                grouplist.add(cgd);
+                               }
+                            Log.d("Size of grouplist","Size is :: " + grouplist.size());
+                            Collections.sort(grouplist, new Groupcomparator());
+                            ma = new Groupcontactlistadapter(grouplist,GVGroups.this);
+                            lv.setAdapter(ma);
+                            lv.setOnItemClickListener(GVGroups.this);
+                            lv.setItemsCanFocus(false);
+                            lv.setTextFilterEnabled(true);
+                            ma.notifyDataSetChanged();
+                            fun();
+
+                        } catch (JSONException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progress1.dismiss();
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(GVGroups.this);
+                builder1.setMessage(R.string.error_in_fetching_groups);
+                builder1.setCancelable(false);
+                builder1.setTitle(R.string.error_in);
+                builder1.setNegativeButton( "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                finish();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+                VolleyLog.d("Tag", "Error: " + error.getMessage());
+                //Snackbar.make(findViewById(android.R.id.content), R.string.error_in_fetching_groups +"\n" +error.toString(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+        VolleyApplication.getInstance().getRequestQueue().add(jsonObjReq);
+    }
+
 }
-
-
-
-

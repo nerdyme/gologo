@@ -340,7 +340,7 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                     public void onErrorResponse(VolleyError error) {
                         progress.dismiss();
                         Log.d("Launch Survey Error",error.toString());
-                        Snackbar.make(findViewById(android.R.id.content),  R.string.check_your_server + "\n" + error.toString(), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server , Snackbar.LENGTH_LONG).show();
                     }
                 }){
             @Override

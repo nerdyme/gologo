@@ -20,11 +20,9 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import main.gologo.R;
 import main.gologo.constants.Constants;
-import main.gologo.contact.Locationdata;
 
 public class Splashscreen extends Activity {
 
@@ -95,12 +93,6 @@ public class Splashscreen extends Activity {
             }
         };
         timerThread.start();
-
-        if(Constants.locationlist==null) {
-            Constants.locationlist = new ArrayList<Locationdata>();
-
-            //volleyrequest();
-        }
     }
 
     @Override

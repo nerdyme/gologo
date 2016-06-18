@@ -59,10 +59,13 @@ public class Viewsurveydata implements Parcelable{
         question = in.readString();
 
     }
+
+    @Override
     public int describeContents() {
         return 0;
     }
 
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(no);
         dest.writeInt(ques_id);
