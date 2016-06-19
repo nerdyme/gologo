@@ -2,6 +2,7 @@ package main.gologo.message;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -28,14 +29,16 @@ public class TemplateAnnouncementSurvey extends BaseActionbar implements View.On
     private int day;
     private int month;
     private int year;
-    private EditText et;
+    static private EditText et;
     Button b1;
     String date;
+    private DatePickerDialogFragment mDatePickerDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_template_announcement_survey);
+        mDatePickerDialogFragment = new DatePickerDialogFragment();
 
         ib = (ImageButton) findViewById(R.id.calendaricon);
         cal = Calendar.getInstance();
@@ -91,21 +94,33 @@ public class TemplateAnnouncementSurvey extends BaseActionbar implements View.On
 
     @Override
     public void onClick(View v) {
-        showDialog(0);
-    }
-
-    @Override
-    @Deprecated
-    protected Dialog onCreateDialog(int id) {
-        return new DatePickerDialog(this, datePickerListener, year, month, day);
-    }
-
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int selectedYear,
-                              int selectedMonth, int selectedDay) {
-            et.setText(selectedYear + "-" + (selectedMonth + 1) + "-"
-                    + selectedDay);
+        int id = v.getId();
+        if (id == R.id.calendaricon) {
+            mDatePickerDialogFragment.show(this.getFragmentManager(), "datePicker");
         }
-    };
+    }
+
+
+    static public class DatePickerDialogFragment extends DialogFragment implements
+            DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, monthOfYear, dayOfMonth);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            et.setText(format.format(calendar.getTime()));
+        }
+    }
 
 }

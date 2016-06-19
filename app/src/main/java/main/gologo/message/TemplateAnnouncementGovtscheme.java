@@ -2,6 +2,7 @@ package main.gologo.message;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -29,11 +30,12 @@ public class TemplateAnnouncementGovtscheme extends BaseActionbar implements Vie
     private int day;
     private int month;
     private int year;
-    private EditText et,start;
+   static  private EditText et,start;
     Spinner sp1;
 
     Button b1;
     String date,ben,scheme;
+    private DatePickerDialogFragment mDatePickerDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class TemplateAnnouncementGovtscheme extends BaseActionbar implements Vie
         b1=(Button)findViewById(R.id.pick11);
         et=(EditText) findViewById(R.id.et1);
         sp1=(Spinner)findViewById(R.id.sp1);
+        mDatePickerDialogFragment = new DatePickerDialogFragment();
         start=(EditText) findViewById(R.id.start);
         start.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         et.setText(R.string.National_Employment_Act);
@@ -103,22 +106,35 @@ public class TemplateAnnouncementGovtscheme extends BaseActionbar implements Vie
         });
     }
 
+
     @Override
     public void onClick(View v) {
-        showDialog(0);
-    }
-
-    @Override
-    @Deprecated
-    protected Dialog onCreateDialog(int id) {
-        return new DatePickerDialog(this, datePickerListener, year, month, day);
-    }
-
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int selectedYear,
-                              int selectedMonth, int selectedDay) {
-            start.setText(selectedYear + "-" + (selectedMonth + 1) + "-"
-                    + selectedDay);
+        int id = v.getId();
+        if (id == R.id.calendaricon) {
+            mDatePickerDialogFragment.show(this.getFragmentManager(), "datePicker");
         }
-    };
+    }
+
+
+    static public class DatePickerDialogFragment extends DialogFragment implements
+            DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, monthOfYear, dayOfMonth);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            start.setText(format.format(calendar.getTime()));
+        }
+    }
 }

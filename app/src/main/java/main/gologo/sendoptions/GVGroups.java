@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -397,7 +398,8 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                 return params;
             }
         };
-
+        request1.setRetryPolicy(new DefaultRetryPolicy(Constants.timeout, Constants.retrypolicy,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyApplication.getInstance().getRequestQueue().add(request1);
     }
 
@@ -438,6 +440,8 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                 return params;
             }
         };
+        request1.setRetryPolicy(new DefaultRetryPolicy(Constants.timeout, Constants.retrypolicy,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyApplication.getInstance().getRequestQueue().add(request1);
     }
 
@@ -504,6 +508,8 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                 VolleyLog.d("Tag", "Error: " + error.getMessage());
             }
         });
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(Constants.timeout, Constants.retrypolicy,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyApplication.getInstance().getRequestQueue().add(jsonObjReq);
     }
 

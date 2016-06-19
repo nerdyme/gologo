@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -374,6 +375,8 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                 return params;
             }
         };
+        request1.setRetryPolicy(new DefaultRetryPolicy(Constants.timeout, Constants.retrypolicy,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyApplication.getInstance().getRequestQueue().add(request1);
     }
 
@@ -417,7 +420,8 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                 return params;
             }
         };
-
+        request1 .setRetryPolicy(new DefaultRetryPolicy(Constants.timeout, Constants.retrypolicy,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyApplication.getInstance().getRequestQueue().add(request1);
     }
 

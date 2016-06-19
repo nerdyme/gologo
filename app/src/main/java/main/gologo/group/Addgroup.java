@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -123,6 +124,8 @@ public class Addgroup extends BaseActionbar {
                 return params;
             }
         };
+        sr.setRetryPolicy(new DefaultRetryPolicy(Constants.timeout, Constants.retrypolicy,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyApplication.getInstance().getRequestQueue().add(sr);
 
     }

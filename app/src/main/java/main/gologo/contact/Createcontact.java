@@ -3,6 +3,7 @@ package main.gologo.contact;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -22,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -33,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -53,7 +56,7 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
     Button submit = null;
     Button cancel = null;
     EditText name = null;
-    EditText age = null;
+    static EditText age = null;
     EditText phone = null;
     Spinner gender = null;
     Spinner dis = null;
@@ -78,7 +81,7 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
     private final int REQ_CODE_SPEECH_INPUT = 100;
     ArrayList<Locationdata> locationlist=new ArrayList<Locationdata>();
     ArrayList<Groupcontactdata> grouplist=new ArrayList<Groupcontactdata>();
-
+    private DatePickerDialogFragment mDatePickerDialogFragment;
 
 
     @Override
@@ -87,6 +90,7 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createcontact);
         dis = (Spinner) findViewById(R.id.district_value);
+        mDatePickerDialogFragment = new DatePickerDialogFragment();
 
         progress1 = ProgressDialog.show(Createcontact.this, "Please Wait ... ", "Fetching Groups & Locations", true);
         new Thread(new Runnable() {
@@ -206,8 +210,8 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                     Snackbar.make(findViewById(android.R.id.content), R.string.Enter_valid_phone_number1, Snackbar.LENGTH_LONG).show();
                 else if(av.equals("")|| av.equals(null))
                     Snackbar.make(findViewById(android.R.id.content), R.string.enter_valid_dob, Snackbar.LENGTH_LONG).show();
-                else if(!Constants.isValidDate(av))
-                Snackbar.make(findViewById(android.R.id.content), R.string.enter_valid_dob, Snackbar.LENGTH_LONG).show();
+                else if (Constants.isValidDate(av)==false)
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG).show();
                 //else if (Integer.parseInt(av) < 0 || Integer.parseInt(av) > 150)
                  //   Snackbar.make(findViewById(android.R.id.content), R.string.Enter_valid_age, Snackbar.LENGTH_LONG).show();
                 else if (ct==1)
@@ -364,6 +368,8 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                 return params;
             }
         };
+        sr.setRetryPolicy(new DefaultRetryPolicy(Constants.timeout, Constants.retrypolicy,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyApplication.getInstance().getRequestQueue().add(sr);
     }
 
@@ -444,6 +450,8 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                 finish();
             }
         });
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(Constants.timeout, Constants.retrypolicy,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyApplication.getInstance().getRequestQueue().add(jsonObjReq);
     }
 
@@ -492,22 +500,10 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                     }
                 }
         );
+        request1.setRetryPolicy(new DefaultRetryPolicy(Constants.timeout, Constants.retrypolicy,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyApplication.getInstance().getRequestQueue().add(request1);
     }
-
-    @Override
-    @Deprecated
-    protected Dialog onCreateDialog(int id) {
-        return new DatePickerDialog(this, datePickerListener, year, month, day);
-    }
-
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int selectedYear,
-                              int selectedMonth, int selectedDay) {
-            age.setText(selectedYear + "-" + (selectedMonth + 1) + "-"
-                    + selectedDay);
-        }
-    };
 
     @Override
     public void onClick(View view) {
@@ -515,7 +511,7 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
             case R.id.group_value:
                 showSelectGroupsDialog();
                 break;
-            case R.id.calendaricon1 : showDialog(0);
+            case R.id.calendaricon1 :  mDatePickerDialogFragment.show(this.getFragmentManager(), "datePicker");
 
             default:
                 break;
@@ -553,5 +549,27 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                 });
         dlgAlert.setCancelable(true);
         dlgAlert.create().show();
+    }
+
+    static public class DatePickerDialogFragment extends DialogFragment implements
+            DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, monthOfYear, dayOfMonth);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            age.setText(format.format(calendar.getTime()));
+        }
     }
 }
