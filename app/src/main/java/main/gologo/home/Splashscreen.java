@@ -58,7 +58,6 @@ public class Splashscreen extends Activity {
                     e.printStackTrace();
                 }finally{
 
-
                     SharedPreferences sharedpreferences = getSharedPreferences("Gologo", Context.MODE_PRIVATE);
                     Constants.gcmRegId = sharedpreferences.getString("gcmid", "");
                     Constants.phone=sharedpreferences.getString("phoneno","");

@@ -4,6 +4,7 @@
     <string-array name="gender">
         <item>F</item>
         <item> M</item>
+        <item>Other</item>
     </string-array>
 
     <string-array name="district">
@@ -125,13 +126,13 @@
     <string name="Record_Audio">Broadcast Audio</string>
     <string name="Send_Message">Send Message</string>
     <string name="Pick_Survey">Launch Survey</string>
-    <string name="error_in_fetching_groups">Error in fetching groups</string>
+    <string name="error_in_fetching_groups">Error in fetching contact groups, Please Try Again</string>
 
     <!--For contact group -->
     <string name="enter_group_name">Enter contact group name</string>
     <string name="create_group">Create Group</string>
     <string name="Please_enter_groupname_before_creating">Please enter groupname before creating</string>
-    <string name="Error_in_creating_Contact_Group">Error in creating Contact Group, Try Again</string>
+    <string name="Error_in_creating_Contact_Group">Error in creating Contact Group, Please Try Again</string>
     <string name="Contact_Group_Created">Contact Group Created</string>
     <string name="groupname">Group</string>
 
@@ -215,7 +216,7 @@
     <string name="Select_Contact_Groups">Select Contact Groups</string>
     <string name="Press_Confirm">Press Confirm to send, Press edit to change</string>
     <string name="Add_Contact_Details">Add Contact Details"</string>
-    <string name="error_in_adding_contact">Error in adding new contact</string>
+
 
     <!--Toast-->
     <string name="Name_cant_be_empty">Name can\'t be empty</string>
@@ -224,7 +225,7 @@
     <string name="enter_valid_dob">Date of Birth can\'t be empty</string>
     <string name="Enter_valid_age">Enter valid age(0-150)</string>
     <string name="Contact_created_successfully"> New Contact added successfully</string>
-    <string name="error_in_fetching_locatiosn">Error in fetching locations from GV Server</string>
+
     <string name="select_valid_location">Select location for the new contact</string>
 
 
@@ -246,8 +247,8 @@
     <string name="end_date_less_then_current_date">End Date is less than start date.</string>
 
     <!-- For sending message -->
-    <string name="error_in_sending_message">Error in sending message, Try Again</string>
-    <string name="message_success">Message sent successfully!</string>
+
+
 
     <!--My profile-->
     <string name="name_text">Name :</string>
@@ -294,11 +295,24 @@
     <string name="Login">Login</string>
     <string name="PinRecovery">Pin Recovery</string>
 
-    <string name="error_in">Error</string>
+
     <string name="error">Error</string>
 
     <!--- Surveys List -->
     <string name="View">View</string>
     <string name="Launch">Launch</string>
+
+    <string name="success">Success</string>
+    <string name="error_in">Error</string>
+    <string name="error_in_sending_survey">Error in calling Survey Dial Outs, Please Try Again</string>
+    <string name="error_in_sending_audio">Error in sending audio announements, Please Try Again</string>
+    <string name="error_in_creating_group">Error in creating new contact group, Please Try Again</string>
+    <string name="error_in_sending_message">Error in sending text message, Please Try Again</string>
+    <string name="error_in_fetching_locatiosn">Error in fetching Gram Vaani locations, Please Try Again</string>
+    <string name="error_in_adding_contact">Error in adding new contact, Please Try Again</string>
+
+
+    <string name="survey_submitted">Survey is submitted for dial outs</string>
+    <string name="message_submitted">Message is sent successfully!</string>
 
 </resources>

@@ -4,6 +4,7 @@
     <string-array name="gender">
         <item>महिला</item>
         <item>पुरुष</item>
+        <item>अन्य</item>
     </string-array>
     
     <string-array name="state">
@@ -122,7 +123,6 @@
         <string name="check_your_network">अपना इंटरनेट संपर्क जांचे</string>
         <string name="check_your_server">सर्वर पर गलती</string>
 
-
         <!--For Pin recovery -->
         <string name="PIN_recovery">पिन प्राप्त</string>
         <string name="Enter_the_registered_Phone">पंजीकृत फोन दर्ज करें</string>
@@ -133,7 +133,7 @@
 
         <!--  For menu options -->
         <string name="error_in_fetching_groups"> संपर्क समूह प्राप्त करने में त्रुटि! </string>
-        <string name="Add_a_contact">संपर्क जोड़ें</string>
+        <string name="Add_a_contact">संपर्क ऐड करें</string>
         <string name ="Create_New_Contact_Group">नया संपर्क समूह बनाएँ</string>
         <string name="Record_Audio">रिकार्ड ऑडियो</string>
         <string name="Send_Message">मेसेज भेजें</string>
@@ -208,7 +208,7 @@
         <string name="StartRecording"> रिकॉर्डिंग प्रारंभ हो गई है</string>
         <string name="StopRecording">रिकॉर्डिंग बंद हो गई है</string>
         <string name="Error_in_Loading_Recorder">रिकॉर्डर लोड करने में त्रुटि</string>
-        <string name="audio_recorded">Audio Recorded</string>
+        <string name="audio_recorded">ऑडियो दर्ज</string>
 
         <!-- Create New Contact -->
         <string name="name">नाम </string>
@@ -232,14 +232,13 @@
         <string name="Select_Contact_Groups">संपर्क समूह का चयन करें </string>
         <string name="Press_Confirm"> पुष्टि के लिए बनाएं प्रेस करें,संपादित करने के लिए रद प्रेस करें </string>
         <string name="Add_Contact_Details">सम्पर्क करने का विवरण जोड़े</string>
-        <string name="error_in_adding_contact">Error in adding contact</string>
+
         <!--Toast-->
         <string name="Name_cant_be_empty">नाम ख़ाली नहीं हो सकता</string>
         <string name="Name_must_have_atleast_4_characters">नाम में कम से कम 4 वर्ण होने चाहिए</string>
         <string name="Enter_valid_phone_number1">वैध फोन नंबर दर्ज करें</string>
         <string name="Enter_valid_age">वैध उम्र (0-150) दर्ज करें</string>
         <string name="Contact_created_successfully">नया संपर्क सफलता पूर्वक जोड़ दिया गया है</string>
-        <string name="error_in_fetching_locatiosn">ग्राम वाणी सर्वर से स्थानं प्राप्त करने में त्रुटि ।</string>
         <string name="enter_valid_dob">जन्म तिथि खाली नहीं हो सकती !</string>
         <string name="select_valid_location">स्थान रिक्त नहीं हो सकता !</string>
 
@@ -260,7 +259,6 @@
         <string name="end_date_less_then_current_date">अंतिम तिथि प्रारंभ तिथि से कम है।</string>
 
         <!-- For sending message -->
-        <string name="error_in_sending_message">संदेश भेजने में त्रुटि, फिर कोशिश करें !</string>
         <string name="message_success">संदेश सफलतापूर्वक भेजा जा चुका है!</string>
 
 
@@ -308,13 +306,24 @@
     <string name="PinRecovery">पिन प्राप्ति</string>
 
 
-    <string name="error">त्रुटि</string>
+
     <string name="error_in">त्रुटि</string>
 
     <!--- Surveys List -->
     <string name="View">देखें</string>
     <string name="Launch">लॉन्च</string>
 
+    <string name="success">सफल</string>
+    <string name="error">त्रुटि</string>
+    <string name="error_in_sending_survey">सर्वेक्षण डायल करने में त्रुटि, कृपया पुनः प्रयास करे !ं</string>
+    <string name="error_in_sending_audio">ऑडियो घोषणाएँ भेजने में त्रुटि, कृपया पुनः प्रयास करें!</string>
+    <string name="error_in_creating_group">नया संपर्क समूह बनाने में त्रुटि, कृपया पुनः प्रयास करे !</string>
+    <string name="error_in_sending_message">संदेश भेजने में त्रुटि, कृपया पुनः प्रयास करे ! </string>
+    <string name="error_in_fetching_locatiosn">ग्राम वाणी सर्वर से स्थानं प्राप्त करने में त्रुटि ।  कृपया पुनः प्रयास करे !</string>
+    <string name="error_in_adding_contact">नया संपर्क जोड़ने में त्रुटि, कृपया पुनः प्रयास करें</string>
+
+    <string name="survey_submitted">सर्वेक्षण डायल आउट के लिए प्रस्तुत किया जाता है</string>
+    <string name="message_submitted">संदेश सफलतापूर्वक भेज दिया गया है!</string>
 
 </resources>
 

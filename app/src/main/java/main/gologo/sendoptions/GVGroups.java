@@ -3,8 +3,9 @@ package main.gologo.sendoptions;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -315,64 +315,53 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
             List<String> response = multipart.finish();
 
             System.out.println("SERVER REPLIED:");
-
+            progress.dismiss();
             for (String line : response) {
-                progress.dismiss();
                 System.out.println(line);
             }
+            Handler h = new Handler(Looper.getMainLooper());
+            h.post(new Runnable() {
+                public void run() {
+                    successmsg(R.string.recording_submitted);
+                }
+            });
         } catch (IOException ex) {
             Log.d("Error", "Inside Audio upload" + ex.toString());
-            System.err.println(ex);
             progress.dismiss();
-            if (ex.toString().contains("403"))
-                Snackbar.make(findViewById(android.R.id.content), R.string.mvcallers_not_present, Snackbar.LENGTH_LONG)
-                        .setActionTextColor(Color.RED)
-                        .show();
-            else
-                Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
-                        .setActionTextColor(Color.RED)
-                        .show();
-            finish();
+            Handler h = new Handler(Looper.getMainLooper());
+            h.post(new Runnable() {
+                public void run() {
+                    errormsg(R.string.error_in_sending_audio);
+                }
+            });
+
         } catch(Exception e)
         {
             Log.d("Error",e.toString());
             progress.dismiss();
-            finish();
+            Handler h = new Handler(Looper.getMainLooper());
+            h.post(new Runnable() {
+                public void run() {
+                    errormsg(R.string.error_in_sending_audio);
+                }
+            });
         }
-
     }
 
     void sendmessage(final JSONObject json)
     {
         StringRequest request1 = new StringRequest(Request.Method.POST, Constants.launchmessage,
                 new Response.Listener<String>() {
-
                     @Override
                     public void onResponse(String response) {
                         progress.dismiss();
-                        Log.d("TAG", response.toString());
-
+                        Log.d("Message Success", response.toString());
                         try {
-
                             JSONObject response1=new JSONObject(response);
-                            Log.d("Launch Message Error", response.toString());
-                            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(GVGroups.this);
-                            dlgAlert.setMessage(R.string.message_success);
-                            //dlgAlert.setTitle("App Title");
-                            dlgAlert.setPositiveButton("Ok",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            //dismiss the dialog
-                                            finish();
-                                        }
-                                    });
-                            dlgAlert.setCancelable(true);
-                            dlgAlert.create().show();
-                            Toast.makeText(getBaseContext(), response1.toString(), Toast.LENGTH_LONG).show();
+                            successmsg(R.string.message_submitted);
                         }
-
                         catch (JSONException e) {
-                            e.printStackTrace();
+                            Log.d("Error",e.toString());
                         }
                     }
                 },
@@ -380,8 +369,8 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progress.dismiss();
-                        Log.d("TAG",error.toString());
-                        Toast.makeText(getApplicationContext(),R.string.check_your_server,Toast.LENGTH_LONG).show();
+                        Log.d("Error", error.toString());
+                        errormsg(R.string.error_in_sending_message);
                     }
                 }){
             @Override
@@ -403,12 +392,10 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
 
                 } catch(Exception e)
                 {
-                    Toast.makeText(getApplicationContext(),R.string.check_your_server,Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG).show();
                 }
-
                 return params;
             }
-
         };
 
         VolleyApplication.getInstance().getRequestQueue().add(request1);
@@ -418,25 +405,15 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
     {
         StringRequest request1 = new StringRequest(Request.Method.POST, Constants.launch_survey,
                 new Response.Listener<String>() {
-
                     @Override
                     public void onResponse(String response) {
                         progress.dismiss();
+                        Log.d("Surveyresponse",response.toString());
                         try {
-
                             JSONObject response1 = new JSONObject(response);
                             String s1 = response1.get("message").toString();
-                            Log.d("Surveyresponse",s1);
-                            Toast.makeText(getBaseContext(), R.string.recording_submitted, Toast.LENGTH_LONG).show();
-                           /* if (s1.equalsIgnoreCase("Recording Schedule created sucessfully!")) {
-                                Toast.makeText(getBaseContext(), R.string.recording_submitted, Toast.LENGTH_LONG).show();
-                                finish();
-                            } else {
-                                Toast.makeText(getBaseContext(), R.string.recording_error, Toast.LENGTH_LONG).show();
-                            }*/
-                            finish();
+                            successmsg(R.string.survey_submitted);
                         } catch (JSONException e) {
-                            e.printStackTrace();
                             Log.d("Error",e.toString());
                         }
                     }
@@ -445,8 +422,8 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progress.dismiss();
-                        Log.d("TAG",error.toString());
-                        Toast.makeText(getApplicationContext(), R.string.check_your_server, Toast.LENGTH_LONG).show();
+                        Log.d("Error", error.toString());
+                        errormsg(R.string.error_in_sending_survey);
                     }
                 }) {
             @Override
@@ -484,7 +461,7 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
 
     void volleyrequest1() {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Constants.contact_groups1, null,
+                Constants.creategroup, null,
                 new Response.Listener<JSONObject>() {
 
                     @Override
@@ -492,8 +469,8 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                         progress1.dismiss();
                         Log.d("groupresponse", response.toString());
                         try {
-                            //JSONObject js1 = (JSONObject) response.get("message");  //Change it when route changes
-                            JSONArray cast = response.getJSONArray("objects");
+                            JSONObject js1 = (JSONObject) response.get("message");  //Change it when route changes
+                            JSONArray cast = js1.getJSONArray("objects");
                             int len = cast.length();
                             for (int i = 0; i < len; i++) {
                                 JSONObject actor = cast.getJSONObject(i);
@@ -522,25 +499,46 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
             @Override
             public void onErrorResponse(VolleyError error) {
                 progress1.dismiss();
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(GVGroups.this);
-                builder1.setMessage(R.string.error_in_fetching_groups);
-                builder1.setCancelable(false);
-                builder1.setTitle(R.string.error_in);
-                builder1.setNegativeButton( "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                finish();
-                            }
-                        });
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
+                errormsg(R.string.error_in_fetching_groups);
+                finish();
                 VolleyLog.d("Tag", "Error: " + error.getMessage());
-                //Snackbar.make(findViewById(android.R.id.content), R.string.error_in_fetching_groups +"\n" +error.toString(), Snackbar.LENGTH_LONG).show();
             }
         });
         VolleyApplication.getInstance().getRequestQueue().add(jsonObjReq);
     }
 
+
+    void errormsg(int msg)
+    {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(GVGroups.this);
+        builder1.setMessage(msg);
+        builder1.setCancelable(false);
+        builder1.setTitle(R.string.error_in);
+        builder1.setNegativeButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        builder1.create().show();
+        Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG).show();
+    }
+
+    void successmsg(int msg)
+    {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(GVGroups.this);
+        dlgAlert.setMessage(msg);
+        dlgAlert.setTitle(R.string.success);
+        dlgAlert.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        finish();
+                    }
+                });
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
+    }
 }
+

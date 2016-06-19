@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -48,14 +48,14 @@ public class Phoneverify extends Activity {
                         phoneno = e1.getText().toString();
 
                         if (phoneno.equals("") || phoneno.equals(null)) {
-                            Toast.makeText(getBaseContext(), R.string.Phone_Number_cant_be_empty, Toast.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(android.R.id.content), R.string.Phone_Number_cant_be_empty, Snackbar.LENGTH_LONG).show();
                             e1.requestFocus(0);
                         } else if (phoneno.contains("[0-9]+") == false && phoneno.length() != 10) {
-                            Toast.makeText(getBaseContext(), R.string.Enter_valid_phone_number, Toast.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(android.R.id.content), R.string.Enter_valid_phone_number, Snackbar.LENGTH_LONG).show();
 
                         } else {
 
-                            if(AppStatus.getInstance(getApplicationContext()).isOnline())
+                           if(!AppStatus.getInstance(getApplicationContext()).isOnline())
                             {
                                 Snackbar.make(findViewById(android.R.id.content), R.string.check_your_network, Snackbar.LENGTH_LONG).show();
                             }
@@ -95,17 +95,15 @@ public class Phoneverify extends Activity {
                                JSONObject response1 = new JSONObject(response);
                                String s1 = response1.get("message").toString();
                                if (s1.equalsIgnoreCase("Pin number is sent on the given phone number.")) {
-                                   Toast.makeText(getBaseContext(), R.string.You_will_receive_pin_shortly, Toast.LENGTH_LONG).show();
+                                   Snackbar.make(findViewById(android.R.id.content), R.string.You_will_receive_pin_shortly, Snackbar.LENGTH_LONG).show();
                                    finish();
                                } else {
-                                   Toast.makeText(getBaseContext(), R.string.Enter_valid_phone_number, Toast.LENGTH_LONG).show();
+                                   Snackbar.make(findViewById(android.R.id.content), R.string.Enter_valid_phone_number, Snackbar.LENGTH_LONG).show();
                                }
                                finish();
                            } catch (JSONException e) {
-                               e.printStackTrace();
+                               Log.d("Error :",e.toString());
                            }
-
-
                        }
                    },
                    new Response.ErrorListener() {
@@ -113,9 +111,9 @@ public class Phoneverify extends Activity {
                        public void onErrorResponse(VolleyError error) {
                                             progress.dismiss();
                            if (error.toString().equalsIgnoreCase("com.android.volley.AuthFailureError"))
-                               Toast.makeText(getApplicationContext(), R.string.no_user_registered, Toast.LENGTH_LONG).show();
+                               Snackbar.make(findViewById(android.R.id.content), R.string.no_user_registered, Snackbar.LENGTH_LONG).show();
                            else
-                               Toast.makeText(getApplicationContext(), R.string.check_your_server, Toast.LENGTH_LONG).show();
+                               Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG).show();
                        }
                    }) {
                @Override
@@ -125,13 +123,9 @@ public class Phoneverify extends Activity {
                    params.put("gcmid", Constants.gcmRegId);
                    return params;
                }
-
            };
 
            VolleyApplication.getInstance().getRequestQueue().add(request1);
-
-
        }
-
-    }
+}
 

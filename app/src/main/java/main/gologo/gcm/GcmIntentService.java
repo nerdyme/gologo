@@ -41,17 +41,16 @@ public class GcmIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-
         String messageType = gcm.getMessageType(intent);
 
+        Log.d("Message",messageType);
         if (!extras.isEmpty()) {
 
             // read extras as sent from server
             String message = extras.getString("message");
-            String serverTime = extras.getString("timestamp");
+            //String serverTime = extras.getString("timestamp");
             int code = extras.getInt("code");
-            sendNotification("Message: " + message + "\n" + "Server Time: "
-                    + serverTime, code);
+            sendNotification("Message: " + message, code);
             Log.d(TAG, "Received: " + extras.toString());
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
@@ -65,8 +64,9 @@ public class GcmIntentService extends IntentService {
         mNotificationManager = (NotificationManager) this
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (code ==1)
+        if (code == 1)
         {
+            Log.d("Survey launch","Surveys");
             contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, ContactOptions.class), 0);
         }
         else

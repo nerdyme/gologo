@@ -5,8 +5,9 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
 import android.text.Editable;
@@ -19,7 +20,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -170,10 +170,6 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                     } else if (actname.equalsIgnoreCase("TemplateAnnouncementGovtscheme") == true) {
                         msg_id = 42; ///Set as gramvaani gives
                         jsonObject = new JSONObject();
-                        /*i.putExtra("ActivityName", "TemplateAnnouncementGovtscheme");
-                        i.putExtra("scheme",scheme);
-                        i.putExtra("beneficiary",ben);
-                        i.putExtra("date", date);*/
                         try {
                             jsonObject.put("scheme_name", bundle.getString("scheme"));
                             jsonObject.put("beneficiaries", bundle.getString("beneficiary"));
@@ -195,8 +191,7 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                                 });
                             }
                         }).start();
-                        //Toast.makeText(getApplicationContext(),"Message is successfully delivered",Toast.LENGTH_LONG).show();
-                        //finish();
+
                     } else if (actname.equalsIgnoreCase("TemplateAnnouncementSurvey") == true) {
                         msg_id = 40; ///Set as gramvaani gives
                         jsonObject = new JSONObject();
@@ -220,8 +215,7 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                                 });
                             }
                         }).start();
-                        //Toast.makeText(getApplicationContext(),"Message is successfully delivered",Toast.LENGTH_LONG).show();
-                        //finish();
+
                     } else if (actname.equalsIgnoreCase("LaunchSurvey") == true) {
                         form_id = bundle.getString("form_id");
                         survey_name = bundle.getString("survey_name");
@@ -241,8 +235,7 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                                 });
                             }
                         }).start();
-                        //Toast.makeText(getApplicationContext(),"Survey is successfully launched",Toast.LENGTH_LONG).show();
-                        //finish();
+
                     } else if (actname.equalsIgnoreCase("Recordaudio") == true) {
 
                         filepath = bundle.getString("FileName"); //complete file path is fetched./*/storage/emulated/0/AudioRecorder/1462830570992.mp4*/
@@ -263,8 +256,6 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                             }
                         }).start();
 
-                        // Toast.makeText(getApplicationContext(),"Audio is successfully delivered",Toast.LENGTH_LONG).show();
-                        // finish();
                     } else {
 
                     }
@@ -285,18 +276,11 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
 
         try {
             MultipartUtility multipart = new MultipartUtility(requestURL, charset);
-            /*new MultipartUtility.ProgressListener() {
-
-                @Override
-                public void transferred(long num) {
-                    publishProgress((int) ((num / (float) totalSize) * 100));
-                }
-            }));*/
 
             multipart.addHeaderField("User-Agent", "CodeJava");
             multipart.addHeaderField("Test-Header", "Header-Value");
-            multipart.addFormField("gcmid",Constants.gcmRegId);
-            multipart.addFormField("group_ids","");
+            multipart.addFormField("gcmid", Constants.gcmRegId);
+            multipart.addFormField("group_ids", "");
             multipart.addFormField("mv_caller", "false");
             multipart.addFormField("caller_ids", contactlist);
             multipart.addFormField("filename", audiofile);
@@ -305,33 +289,36 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
             List<String> response = multipart.finish();
 
             System.out.println("SERVER REPLIED:");
-
+            progress.dismiss();
             for (String line : response) {
-                progress.dismiss();
                 System.out.println(line);
             }
+            Handler h = new Handler(Looper.getMainLooper());
+            h.post(new Runnable() {
+                public void run() {
+                    successmsg(R.string.recording_submitted);
+                }
+            });
+
         } catch (IOException ex) {
             Log.d("Error", "Inside Audio upload" + ex.toString());
-            System.err.println(ex);
             progress.dismiss();
-            if (ex.toString().contains("403"))
-                Snackbar.make(findViewById(android.R.id.content), R.string.mvcallers_not_present, Snackbar.LENGTH_LONG)
-                        .setActionTextColor(Color.RED)
-                        .show();
-            else
-                Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
-                        .setActionTextColor(Color.RED)
-                        .show();
-            finish();
+            Handler h = new Handler(Looper.getMainLooper());
+            h.post(new Runnable() {
+                public void run() {
+                    errormsg(R.string.error_in_sending_audio);
+                }
+            });
         } catch(Exception e)
         {
-
-            Log.d("Error",e.toString());
+            Log.d("Error", e.toString());
             progress.dismiss();
-            Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
-                    .setActionTextColor(Color.RED)
-                    .show();
-            finish();
+            Handler h = new Handler(Looper.getMainLooper());
+            h.post(new Runnable() {
+                public void run() {
+                    errormsg(R.string.error_in_sending_audio);
+                }
+            });
         }
     }
 
@@ -345,26 +332,9 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                             Log.d("TAG", response.toString());
 
                         try {
-
                             JSONObject response1=new JSONObject(response);
-                            Log.d("Launch Message Error", response1.toString());
-                            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(Phonecontacts.this);
-                            dlgAlert.setMessage(R.string.message_success);
-                            //dlgAlert.setTitle("App Title");
-                            dlgAlert.setPositiveButton("Ok",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            //dismiss the dialog
-                                            finish();
-                                        }
-                                    });
-                            dlgAlert.setCancelable(true);
-                            dlgAlert.create().show();
-                            Snackbar.make(findViewById(android.R.id.content), response1.toString(), Snackbar.LENGTH_LONG)
-                                    .setActionTextColor(Color.RED)
-                                    .show();
+                            successmsg(R.string.message_submitted);
                         }
-
                         catch (JSONException e) {
                             e.printStackTrace();
                             finish();
@@ -375,28 +345,8 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progress.dismiss();
-                        NetworkResponse networkResponse = error.networkResponse;
-                        Log.d("Launch Message Error", error.toString());
-                        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(Phonecontacts.this);
-                        dlgAlert.setMessage(R.string.error_in_sending_message);
-                        //dlgAlert.setTitle("App Title");
-                        dlgAlert.setPositiveButton("Ok",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        //dismiss the dialog
-                                        finish();
-                                    }
-                                });
-                        dlgAlert.setCancelable(true);
-                        dlgAlert.create().show();
-
-                       /* if(networkResponse.statusCode == 500)
-                            Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
-                                    .setActionTextColor(Color.RED)
-                                    .show();
-                        else */Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
-                                .setActionTextColor(Color.RED)
-                                .show();
+                        Log.d("Error", error.toString());
+                        errormsg(R.string.error_in_sending_message);
                     }
                 }){
             @Override
@@ -420,14 +370,10 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
 
                 } catch(Exception e)
                 {
-                    Toast.makeText(getApplicationContext(),R.string.check_your_server,Toast.LENGTH_LONG).show();
                 }
-
                 return params;
             }
-
         };
-
         VolleyApplication.getInstance().getRequestQueue().add(request1);
     }
 
@@ -440,38 +386,23 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                     @Override
                     public void onResponse(String response) {
                         progress.dismiss();
+                        Log.d("Surveyresponse", response.toString());
                         try {
-                            Log.d("Calling", "*****Inside Send Survey 1 *****");
                             JSONObject response1 = new JSONObject(response);
                             String s1 = response1.get("message").toString();
-                            Log.d("Surveyresponse", s1);
-                            Toast.makeText(getBaseContext(), R.string.recording_submitted, Toast.LENGTH_LONG).show();
-                            /*if (s1.equalsIgnoreCase("Recording Schedule created sucessfully!")) {
-                                Toast.makeText(getBaseContext(), R.string.recording_submitted, Toast.LENGTH_LONG).show();
-                                finish();
-                            } else {
-                                Toast.makeText(getBaseContext(), R.string.recording_error, Toast.LENGTH_LONG).show();
-                            }*/
-                            finish();
+                            successmsg(R.string.survey_submitted);
                         } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.d("Error", e.toString());
+                            Log.d("Error",e.toString());
+                            errormsg(R.string.error_in_sending_survey);
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                       // progress.dismiss();
-                        Log.d("TAG", error.toString());
-                        NetworkResponse networkResponse = error.networkResponse;
-                        if(networkResponse.statusCode == 500)
-                            Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG)
-                                    .setActionTextColor(Color.RED)
-                                    .show();
-                        else Toast.makeText(getApplicationContext(),R.string.check_your_server,Toast.LENGTH_LONG).show();
-                        finish();
-
+                        progress.dismiss();
+                        Log.d("Error", error.toString());
+                        errormsg(R.string.error_in_sending_survey);
                     }
                 }) {
             @Override
@@ -481,14 +412,13 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
                 params.put("caller_ids",contactlist);
                 params.put("group_ids","");
                 params.put("form_id",form_id);
-                params.put("schedule_name",survey_name);
+                params.put("survey_name",survey_name);
                 params.put("mv_caller","false");
                 return params;
             }
         };
 
         VolleyApplication.getInstance().getRequestQueue().add(request1);
-
     }
 
     @Override
@@ -517,7 +447,38 @@ public class Phonecontacts extends BaseActionbar implements AdapterView.OnItemCl
 
         phones.close();
     }
+    void errormsg(int msg)
+    {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(Phonecontacts.this);
+        builder1.setMessage(msg);
+        builder1.setCancelable(false);
+        builder1.setTitle(R.string.error_in);
+        builder1.setNegativeButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
 
+        builder1.create().show();
+        Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG).show();
+    }
+
+    void successmsg(int msg)
+    {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(Phonecontacts.this);
+        dlgAlert.setMessage(msg);
+        dlgAlert.setTitle(R.string.success);
+        dlgAlert.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        finish();
+                    }
+                });
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
+    }
 
 }
 

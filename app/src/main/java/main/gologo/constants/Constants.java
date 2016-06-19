@@ -15,7 +15,7 @@ public class Constants {
 
     //Gramvaani GUI password : surbhi, surbhi@123 -- URL - http://internal.gramvaani.org:8080/vapp/ang/#/
     //API key preeti :: username=preeti & api_key=38dc9ea2dc8878b8ac674b3baef02d1973de5362
-    //public static String baseurl="http://10.207.165.68/";
+
     // Admin login phone : 9718658816,,,pin :982545
     //phone :: 8826533273  pin :239644
     //ictd username ictdlab--password
@@ -23,25 +23,25 @@ public class Constants {
 
     //To run logs on the rails :: tail -f log/development.log
 
-   //public static String baseurl="http://10.192.41.179:3000/";
+   //public static String baseurl="http://10.192.42.220:3000/";
     //public static String baseurl="http://10.237.27.166:3000/";
     public static String baseurl="http://52.25.169.219:3000/";
-   // public static String baseurl="http://10.192.15.52:3000/";
-    //public static String baseurl="http://10.192.50.143:3000/";
+
     //path to create audio file : /storage/emulated/0/AudioRecorder/1463512098402.mp3
 
 
     public static String login=baseurl+"login"; //done
     public static String pinforget=baseurl+"getpin"; //done
-    public static String creategroup=baseurl+"contactlist"; //done
+    public static String creategroup=baseurl+"contactlist"; //done  /// for creating and getting both
     public static String launch_survey=baseurl+"launchsurvey"; //done
     public static String createcontact=baseurl+"contact";//done
     public static String launchmessage=baseurl+"message";//done 
     public static String recording=baseurl+"recording"; //done
-    public static String get_survey=baseurl+"getsurveys"; //done
+    public static String get_survey=baseurl+"getsurveys/?ai_id=60"; //done
     public static String location=baseurl+"getlocations"; //done
     public static String get_survey_questions=baseurl+"getquestions"; //done
     public static String getadmininfo=baseurl+"getadmininfo";
+    public static String get_survey_responses=baseurl + "/getsurveyresponses?ai_id=60&survey_id=";
 
 
     public static String view_survey1="http://internal.gramvaani.org:8080/vapp/api/v1/form_question/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json&form_id=";
@@ -50,8 +50,6 @@ public class Constants {
     public static String responses1="http://internal.gramvaani.org:8081/vapp/api/v1/survey_record/cdr_records/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json&ai_id=60&limit=20&page=1&survey_id=";
 
     public static String contact_grp1= "http://internal.gramvaani.org:8081/vapp/api/v1/callerinfo_contact_list/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json";
-    //public static ArrayList<Locationdata> locationlist=new ArrayList<Locationdata>();;
-    //public static ArrayList<Groupcontactdata> grouplist=new ArrayList<Groupcontactdata>();;
 
     public static String capitalizeString(String string) {
         char[] chars = string.toLowerCase().toCharArray();
@@ -67,7 +65,55 @@ public class Constants {
         return String.valueOf(chars).trim();
     }
 
+    public static boolean isValidDate(String dateString) {
+        if (dateString == null || dateString.length() != "yyyy-MM-dd".length()) {
+            return false;
+        }
 
+        int date;
+        try {
+            date = Integer.parseInt(dateString);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        int year = date / 10000;
+        int month = (date % 10000) / 100;
+        int day = date % 100;
+
+        // leap years calculation not valid before 1581
+        boolean yearOk = (year >= 1581) && (year <= 2500);
+        boolean monthOk = (month >= 1) && (month <= 12);
+        boolean dayOk = (day >= 1) && (day <= daysInMonth(year, month));
+
+        return (yearOk && monthOk && dayOk);
+    }
+
+    private static int daysInMonth(int year, int month) {
+        int daysInMonth;
+        switch (month) {
+            case 1: // fall through
+            case 3: // fall through
+            case 5: // fall through
+            case 7: // fall through
+            case 8: // fall through
+            case 10: // fall through
+            case 12:
+                daysInMonth = 31;
+                break;
+            case 2:
+                if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) {
+                    daysInMonth = 29;
+                } else {
+                    daysInMonth = 28;
+                }
+                break;
+            default:
+                // returns 30 even for nonexistant months
+                daysInMonth = 30;
+        }
+        return daysInMonth;
+    }
 }/* GCM Message
 GcmIntentService: Received: Bundle[{from=731395736136, message=Server Down!,
  android.support.content.wakelockid=4, collapse_key=updated_score}] */
@@ -79,3 +125,8 @@ GcmIntentService: Received: Bundle[{from=731395736136, message=Server Down!,
 Kapil Thakkar*/
 
 //survey dial out
+
+
+//828132 -- pin for 9891127941
+//814434 -- pin kapil
+//368866 --- pin megha

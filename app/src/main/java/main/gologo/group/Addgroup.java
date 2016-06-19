@@ -15,14 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
@@ -58,7 +52,6 @@ public class Addgroup extends BaseActionbar {
         msgvalue= (EditText)findViewById(R.id.group_editText);
         b1 = (Button) findViewById(R.id.creategroup_button);
         btnSpeak = (ImageButton) findViewById(R.id.btnSpeak1);
-
         btnSpeak.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -67,6 +60,7 @@ public class Addgroup extends BaseActionbar {
             }
         });
 
+        Log.d("GCM ID :::: ",Constants.gcmRegId);
         b1.setOnClickListener(new OnClickListener() {
 
 
@@ -104,79 +98,21 @@ public class Addgroup extends BaseActionbar {
             @Override
             public void onResponse(String response) {
                     myDialog.dismiss();
-                Log.d("TAG", "Create Group Response: " + response.toString());
-                try {
+                    Log.d("TAG", "Create Group Response: " + response.toString());
+                    try {
                     JSONObject js=new JSONObject(response.toString());
                     String msg=js.getString("message");
-                    if (msg.equalsIgnoreCase("Contact List Created!")==true)
-                    {
-                        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(Addgroup.this);
-                        dlgAlert.setMessage(R.string.Contact_Group_Created);
-                        //dlgAlert.setTitle("App Title");
-                        dlgAlert.setPositiveButton("Ok",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        //dismiss the dialog
-                                        finish();
-                                    }
-                                });
-                        dlgAlert.setCancelable(true);
-                        dlgAlert.create().show();
-
-                    }
-                    else
-                    {AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(Addgroup.this);
-                        dlgAlert.setMessage(R.string.Error_in_creating_Contact_Group);
-                        //dlgAlert.setTitle("App Title");
-                        dlgAlert.setPositiveButton("Ok",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        //dismiss the dialog
-                                        finish();
-                                    }
-                                });
-                        dlgAlert.setCancelable(true);
-                        dlgAlert.create().show();
-                        Snackbar.make(findViewById(android.R.id.content), R.string.Error_in_creating_Contact_Group, Snackbar.LENGTH_LONG).show();
-                    }
+                    successmsg(R.string.Contact_Group_Created);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.d("Error",e.toString());
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 myDialog.dismiss();
-
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Snackbar.make(findViewById(android.R.id.content), R.string.error_network_timeout, Snackbar.LENGTH_LONG).show();
-                } else if (error instanceof AuthFailureError) {
-                    Snackbar.make(findViewById(android.R.id.content), R.string.auth_failure, Snackbar.LENGTH_LONG).show();
-                } else if (error instanceof ServerError) {
-                    Snackbar.make(findViewById(android.R.id.content), R.string.server_error, Snackbar.LENGTH_LONG).show();
-                } else if (error instanceof NetworkError) {
-                    Snackbar.make(findViewById(android.R.id.content), R.string.network_error, Snackbar.LENGTH_LONG).show();
-                } else if (error instanceof ParseError) {
-                    Snackbar.make(findViewById(android.R.id.content), R.string.parse_error, Snackbar.LENGTH_LONG).show();
-                }else
-                {
-
-                }
-
-                Log.d("Error","Inside error in create group");
-                AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(Addgroup.this);
-                dlgAlert.setMessage(R.string.Error_in_creating_Contact_Group);
-                //dlgAlert.setTitle("App Title");
-                dlgAlert.setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                //dismiss the dialog
-                                finish();
-                            }
-                        });
-                dlgAlert.setCancelable(true);
-                dlgAlert.create().show();
-                Log.d("TAG", "Not created Group Response: " + error.toString());
+                Log.d("Error", "Not created Group Response: " + error.toString());
+                errormsg(R.string.Error_in_creating_Contact_Group);
             }
         })  {
             @Override
@@ -190,7 +126,6 @@ public class Addgroup extends BaseActionbar {
         VolleyApplication.getInstance().getRequestQueue().add(sr);
 
     }
-
 
     /**
      * Showing google speech input dialog
@@ -218,17 +153,46 @@ public class Addgroup extends BaseActionbar {
         switch (requestCode) {
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
-
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     msgvalue.setText(result.get(0));
                 }
                 break;
             }
-
         }
     }
+    void errormsg(int msg)
+    {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(Addgroup.this);
+        builder1.setMessage(msg);
+        builder1.setCancelable(false);
+        builder1.setTitle(R.string.error_in);
+        builder1.setNegativeButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
 
+        builder1.create().show();
+        Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG).show();
+    }
+
+    void successmsg(int msg)
+    {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(Addgroup.this);
+        dlgAlert.setMessage(msg);
+        dlgAlert.setTitle(R.string.success);
+        dlgAlert.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        finish();
+                    }
+                });
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
+    }
 }
 
 

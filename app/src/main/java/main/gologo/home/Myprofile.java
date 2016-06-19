@@ -1,6 +1,8 @@
 package main.gologo.home;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -72,18 +74,34 @@ public class Myprofile extends Activity {
                     av.setText(av1);
                     cv.setText(cv1);
                     sv.setText(sv1);
-                    Snackbar.make(findViewById(android.R.id.content), R.string.details_displayed+"\n"+response.toString(), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.details_displayed, Snackbar.LENGTH_LONG).show();
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                   Log.d("Error", e.toString());
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("Error",error.toString());
-                Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server + "\n" + error.toString(), Snackbar.LENGTH_LONG).show();
+                errormsg(R.string.check_your_server);
+                finish();
             }
         });
         VolleyApplication.getInstance().getRequestQueue().add(sr);
+    }
+
+    void errormsg(int msg)
+    {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(Myprofile.this);
+        builder1.setMessage(msg);
+        builder1.setCancelable(false);
+        builder1.setTitle(R.string.error_in);
+        builder1.setNegativeButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        builder1.create().show();
     }
 }

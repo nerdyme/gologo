@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import main.gologo.R;
+import main.gologo.constants.Constants;
 import main.gologo.home.BaseActionbar;
 import main.gologo.sendoptions.ContactOptions;
 
@@ -84,6 +85,8 @@ public class TemplateAnnouncementCamp extends BaseActionbar implements View.OnCl
                 else if (end.equals("") || end.equals(null))
                     Snackbar.make(findViewById(android.R.id.content), R.string.enddatetoast, Snackbar.LENGTH_LONG).show();
                 else if (invalid==1)
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG).show();
+                else if(!Constants.isValidDate(start)|| !Constants.isValidDate(end))
                     Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG).show();
                 else if (date2.before(date1)) { //then false
                     Snackbar.make(findViewById(android.R.id.content), R.string.end_date_less_then_current_date, Snackbar.LENGTH_LONG).show();

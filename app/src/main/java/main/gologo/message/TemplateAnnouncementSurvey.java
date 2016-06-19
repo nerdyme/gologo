@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import main.gologo.R;
+import main.gologo.constants.Constants;
 import main.gologo.home.BaseActionbar;
 import main.gologo.sendoptions.ContactOptions;
 
@@ -72,6 +73,8 @@ public class TemplateAnnouncementSurvey extends BaseActionbar implements View.On
                 if (date.equals(null) || date.trim().equals("") || date.equals("") || date.equalsIgnoreCase(" "))
                     Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG).show();
                 else if (invalid==1)
+                    Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG).show();
+                else if (Constants.isValidDate(date)==false)
                     Snackbar.make(findViewById(android.R.id.content), R.string.Please_enter_valid_date_before_sending, Snackbar.LENGTH_LONG).show();
                 else if(st.after(end)){ //then false
                     Snackbar.make(findViewById(android.R.id.content), R.string.date_less_current, Snackbar.LENGTH_LONG).show();

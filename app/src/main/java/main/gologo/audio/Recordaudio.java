@@ -98,11 +98,11 @@ public class Recordaudio extends BaseActionbar {
         if (!file.exists()) {
             file.mkdirs();
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd_hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_hh:mm:ss");
         Calendar cal = Calendar.getInstance();
         System.out.println(sdf.format(cal.getTime()));
 
-        return (file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".mp3");
+        return (file.getAbsolutePath() + "/" + sdf.format(cal.getTime()) + ".mp3");
     }
 
     private void startRecording() {

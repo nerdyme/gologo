@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -203,10 +204,10 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                     Snackbar.make(findViewById(android.R.id.content), R.string.Phone_Number_cant_be_empty, Snackbar.LENGTH_LONG).show();
                 else if (pv.contains("[0-9]+") == false && pv.length() != 10)
                     Snackbar.make(findViewById(android.R.id.content), R.string.Enter_valid_phone_number1, Snackbar.LENGTH_LONG).show();
-                else if(age.equals("")|| age.equals(null))
+                else if(av.equals("")|| av.equals(null))
                     Snackbar.make(findViewById(android.R.id.content), R.string.enter_valid_dob, Snackbar.LENGTH_LONG).show();
-                //else if()
-                //  Snackbar.make(findViewById(android.R.id.content), R.string.enter_valid_dob, Snackbar.LENGTH_LONG).show();
+                else if(!Constants.isValidDate(av))
+                Snackbar.make(findViewById(android.R.id.content), R.string.enter_valid_dob, Snackbar.LENGTH_LONG).show();
                 //else if (Integer.parseInt(av) < 0 || Integer.parseInt(av) > 150)
                  //   Snackbar.make(findViewById(android.R.id.content), R.string.Enter_valid_age, Snackbar.LENGTH_LONG).show();
                 else if (ct==1)
@@ -333,14 +334,7 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                 try {
                     JSONObject ob1 = new JSONObject(response);
                     String msg = ob1.get("message").toString();
-
-                    if (msg.equalsIgnoreCase("Contact Created!"))
-                    {
-                        Snackbar.make(findViewById(android.R.id.content), R.string.Contact_created_successfully, Snackbar.LENGTH_LONG).show();
-                        finish();
-                    }
-                    else
-                        Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server +"\n"+msg, Snackbar.LENGTH_LONG).show();
+                    successmsg(R.string.Contact_created_successfully);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -348,42 +342,28 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Error",error.toString());
+                Log.d("Error", error.toString());
                 progress.dismiss();
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(Createcontact.this);
-                builder1.setMessage(R.string.error_in_adding_contact);
-                builder1.setCancelable(false);
-                builder1.setTitle(R.string.error_in);
-                builder1.setNegativeButton( "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                finish();
-                            }
-                        });
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-                Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG).show();
+                errormsg(R.string.error_in_adding_contact);
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("name", Constants.capitalizeString(nv));
-                params.put("number", pv);
+                params.put("name", Constants.capitalizeString(nv).trim());
+                params.put("number", pv.trim());
                 params.put("gender", gv);
                 params.put("gcmid", Constants.gcmRegId);
                 params.put("clist_ids", clist_ids);
                 params.put("resource_uri",resource_uri);
-                params.put("age",av);
-                params.put("district",disvalue);
-                params.put("block",bv);
-                params.put("state",sv);
+                params.put("dob",av);
+                params.put("city",sv.trim());
+                params.put("district",disvalue.trim());
+                params.put("block",bv.trim());
+                params.put("state",sv.trim());
                 return params;
             }
         };
-
         VolleyApplication.getInstance().getRequestQueue().add(sr);
     }
 
@@ -425,7 +405,7 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
 
     void volleyrequest1() {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Constants.contact_groups1, null,
+                Constants.creategroup, null,
                 new Response.Listener<JSONObject>() {
 
                     @Override
@@ -436,8 +416,8 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                         { progress1.dismiss(); count=0;}
                         Log.d("groupresponse", response.toString());
                         try {
-                            //JSONObject js1 = (JSONObject) response.get("message");  //unchange it when route changes
-                            JSONArray cast = response.getJSONArray("objects");
+                            JSONObject js1 = (JSONObject) response.get("message");  //unchange it when route changes
+                            JSONArray cast = js1.getJSONArray("objects");
                             int len = cast.length();
                             groups=new CharSequence[len];
                             for (int i = 0; i < len; i++) {
@@ -447,36 +427,21 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                                 Groupcontactdata cgd = new Groupcontactdata(name, id);
                                 grouplist.add(cgd);
                                 groups[i]=name;
-                                //Log.d("Contactgroups", name);
                             }
                             Collections.sort(grouplist, new Groupcomparator());
-
+                            Arrays.sort(groups);
                         } catch (JSONException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
                 progress1.dismiss();
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(Createcontact.this);
-                builder1.setMessage(R.string.error_in_fetching_groups);
-                builder1.setCancelable(false);
-                builder1.setTitle(R.string.error_in);
-                builder1.setNegativeButton( "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                finish();
-                            }
-                        });
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-                VolleyLog.d("Tag", "Error: " + error.getMessage());
-                //Snackbar.make(findViewById(android.R.id.content), R.string.error_in_fetching_groups +"\n" +error.toString(), Snackbar.LENGTH_LONG).show();
+                VolleyLog.d("Error", "Error: " + error.getMessage());
+                errormsg(R.string.error_in_fetching_groups);
+                finish();
             }
         });
         VolleyApplication.getInstance().getRequestQueue().add(jsonObjReq);
@@ -506,7 +471,6 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                                 JSONObject info = (JSONObject) ar1.get(i);
                                 String s1 = info.get("desc").toString();
                                 String s2 = info.get("resource_uri").toString();
-                                //Log.d("Data", s2 + '\n');
                                 Locationdata ob=new Locationdata(s1,s2);
                                 locationlist.add(ob);
                                 locations.add(s1);
@@ -522,21 +486,9 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progress1.dismiss();
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(Createcontact.this);
-                        builder1.setMessage(R.string.error_in_fetching_locatiosn);
-                        builder1.setCancelable(false);
-                        builder1.setTitle(R.string.error_in);
-                        builder1.setNegativeButton( "OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                        finish();
-                                    }
-                                });
-
-                        AlertDialog alert11 = builder1.create();
-                        alert11.show();
-                        Log.d("error","Error in fetching locations ::" + error.toString());
+                        Log.d("error", "Error in fetching locations ::" + error.toString());
+                        errormsg(R.string.error_in_fetching_locatiosn);
+                        finish();
                     }
                 }
         );
@@ -568,5 +520,38 @@ public class Createcontact extends BaseActionbar implements View.OnClickListener
             default:
                 break;
         }
+    }
+
+    void errormsg(int msg)
+    {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(Createcontact.this);
+        builder1.setMessage(msg);
+        builder1.setCancelable(false);
+        builder1.setTitle(R.string.error_in);
+        builder1.setNegativeButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        builder1.create().show();
+        Snackbar.make(findViewById(android.R.id.content), R.string.check_your_server, Snackbar.LENGTH_LONG).show();
+    }
+
+    void successmsg(int msg)
+    {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(Createcontact.this);
+        dlgAlert.setMessage(msg);
+        dlgAlert.setTitle(R.string.success);
+        dlgAlert.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        finish();
+                    }
+                });
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
     }
 }

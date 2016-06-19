@@ -40,7 +40,7 @@ public class Surveyresponses extends BaseActionbar{
     TextView total_responses;
 
     String tempurl = "http://internal.gramvaani.org:8081/vapp/api/v1/survey_record/cdr_records/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json&ai_id=60&survey_id=195&limit=20&page=1";
-
+    String surveyurl=Constants.get_survey_responses;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +52,7 @@ public class Surveyresponses extends BaseActionbar{
         final String survey_id = bundle.getString("survey_id");
         list=bundle.getParcelableArrayList("question_list");
 
+        surveyurl = surveyurl+survey_id;
        /* int id=list.get(0).getquestionid();
         hm.put(id, 0);
         Log.d("id is ", "ID" + id);
@@ -104,7 +105,7 @@ public class Surveyresponses extends BaseActionbar{
     }
     void volleyrequest()
     {
-        JsonObjectRequest request1 = new JsonObjectRequest(tempurl, null,
+        JsonObjectRequest request1 = new JsonObjectRequest(surveyurl, null,
                 new Response.Listener<JSONObject>() {
 
                     @Override
