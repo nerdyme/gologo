@@ -2,10 +2,20 @@
     <string name="app_name">Gologo</string>
 
     <string-array name="gender">
-        <item>F</item>
-        <item> M</item>
+        <item>Female</item>
+        <item> Male</item>
         <item>Other</item>
     </string-array>
+
+    <string-array name="App_instance">
+        <item>10</item>
+        <item>60</item>
+    </string-array>
+
+    <!-- App instance -->
+    <string name="app_inst">Choose App Instance</string>
+    <string name="clickappinst">Click for Surveys</string>
+    <string name="aitoast">App Instance can't be empty.</string>
 
     <string-array name="district">
         <item>Bokaro</item>
@@ -229,7 +239,6 @@
     <string name="select_valid_location">Select location for the new contact</string>
 
 
-
     <!-- Displaying Phone Contacts -->
     <string name="Select_atleast_one_contact">Select atleast one contact</string>
     <string name="recording_submitted">Announcement is submitted for dial outs</string>
@@ -247,7 +256,6 @@
     <string name="end_date_less_then_current_date">End Date is less than start date.</string>
 
     <!-- For sending message -->
-
 
 
     <!--My profile-->

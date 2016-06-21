@@ -43,14 +43,15 @@ public class GcmIntentService extends IntentService {
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         String messageType = gcm.getMessageType(intent);
 
-        Log.d("Message",messageType);
+        Log.d("Message :: ",messageType);   // returned gcm as answer
         if (!extras.isEmpty()) {
-
+            Bundle bundle;
+            bundle=intent.getExtras();
             // read extras as sent from server
-            String message = extras.getString("message");
+           // String message = extras.getString("message");
             //String serverTime = extras.getString("timestamp");
-            int code = extras.getInt("code");
-            sendNotification("Message: " + message, code);
+            int code = bundle.getInt("code");
+            sendNotification(code,bundle);
             Log.d(TAG, "Received: " + extras.toString());
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
@@ -60,24 +61,39 @@ public class GcmIntentService extends IntentService {
     // Put the message into a notification and post it.
     // This is just one simple example of what you might choose to do with
     // a GCM message.
-    private void sendNotification(String msg, int code) {
-        mNotificationManager = (NotificationManager) this
-                .getSystemService(Context.NOTIFICATION_SERVICE);
+    private void sendNotification(int code,Bundle bundle) {
+        NotificationCompat.Builder mBuilder;
+        mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (code == 1)
         {
-            Log.d("Survey launch","Surveys");
-            contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, ContactOptions.class), 0);
+            Log.d("Survey launch",bundle.toString());
+            //PendingIntent.getActivity(context, 0, notificationIntent, Intent.FLAG_ACTIVITY_NEW_TASK);`
+            contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, ContactOptions.class), Intent.FLAG_ACTIVITY_NEW_TASK);
+            String msg=bundle.getString("extras");
+            String msg1=bundle.getString("message");
+            String data[]=msg.split("-");
+
+            String survey_name=data[0],survey_id=data[1],form_id=data[2];
+
+            Log.d("Survey_name=", survey_name+".. Form id :: "+ form_id + "" + "Survey_id ::" + survey_id);
+             mBuilder = new NotificationCompat.Builder(
+                    this).setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle("Gologo")
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(msg1))
+                    .setContentText(msg);
         }
         else
         {
+             Log.d("Normal Use case",bundle.toString());
              contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MenuOptions.class), 0);
+            String msg=bundle.getString("message");
+             mBuilder = new NotificationCompat.Builder(
+                    this).setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle("Gologo")
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+                     .setContentText(msg);
         }
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-                this).setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Gologo")
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
-                .setContentText(msg);
 
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         mBuilder.setSound(alarmSound);

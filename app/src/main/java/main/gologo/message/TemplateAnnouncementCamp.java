@@ -3,8 +3,10 @@ package main.gologo.message;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +17,10 @@ import android.widget.Spinner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import main.gologo.R;
 import main.gologo.constants.Constants;
@@ -32,6 +36,8 @@ public class TemplateAnnouncementCamp extends BaseActionbar implements View.OnCl
     ImageButton img1,img2;
     private Calendar cal;
     private DatePickerDialogFragment mDatePickerDialogFragment;
+    private final int REQ_CODE_SPEECH_INPUT = 100;
+    ImageButton btnSpeak;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,13 @@ public class TemplateAnnouncementCamp extends BaseActionbar implements View.OnCl
         setContentView(R.layout.activity_template_announcement_camp);
 
 
+        btnSpeak=(ImageButton)findViewById(R.id.mic14);
+        btnSpeak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                promptSpeechInput();
+            }
+        });
         img1= (ImageButton) findViewById(R.id.calendaricon);
         img2=  (ImageButton) findViewById(R.id.calendaricon1);
         cal = Calendar.getInstance();
@@ -151,6 +164,37 @@ public class TemplateAnnouncementCamp extends BaseActionbar implements View.OnCl
                 et1.setText(format.format(calendar.getTime()));
             } else if (flag == FLAG_END_DATE) {
                 et2.setText(format.format(calendar.getTime()));
+            }
+        }
+    }
+
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.speech_prompt));
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Snackbar.make(findViewById(android.R.id.content), R.string.speech_not_supported, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Receiving speech input
+     * */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    et3.setText(result.get(0));
+                }
+                break;
             }
         }
     }

@@ -11,7 +11,7 @@ import main.gologo.audio.Recordaudio;
 import main.gologo.contact.Createcontact;
 import main.gologo.group.Addgroup;
 import main.gologo.message.Sendmessage;
-import main.gologo.survey.Surveys;
+import main.gologo.survey.Surveyai;
 
 
 public class MenuOptions extends BaseActionbar {
@@ -30,7 +30,7 @@ public class MenuOptions extends BaseActionbar {
 
     public void survey(View v) {
         if(AppStatus.getInstance(this).isOnline()) {
-            Intent i = new Intent(MenuOptions.this, Surveys.class);
+            Intent i = new Intent(MenuOptions.this, Surveyai.class);
             startActivity(i);
         }
         else

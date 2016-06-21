@@ -23,8 +23,8 @@ public class Constants {
 
     //To run logs on the rails :: tail -f log/development.log
 
-   //public static String baseurl="http://10.192.42.220:3000/";
-    public static String baseurl="http://10.237.27.182:3000/";
+   public static String baseurl="http://10.192.42.220:3000/";
+    //public static String baseurl="http://10.237.27.182:3000/";
     //public static String baseurl="http://52.25.169.219:3000/";
 
     //path to create audio file : /storage/emulated/0/AudioRecorder/1463512098402.mp3
@@ -37,12 +37,11 @@ public class Constants {
     public static String createcontact=baseurl+"contact";//done
     public static String launchmessage=baseurl+"message";//done 
     public static String recording=baseurl+"recording"; //done
-    public static String get_survey=baseurl+"getsurveys/?ai_id=60"; //done
+    public static String get_survey=baseurl+"getsurveys/?ai_id="; //done
     public static String location=baseurl+"getlocations"; //done
     public static String get_survey_questions=baseurl+"getquestions"; //done
     public static String getadmininfo=baseurl+"getadmininfo";
-    public static String get_survey_responses=baseurl + "/getsurveyresponses?ai_id=60&survey_id=";
-
+    public static String get_survey_responses=baseurl + "getsurveyresponses?ai_id=60&survey_id=";
 
     public static String view_survey1="http://internal.gramvaani.org:8080/vapp/api/v1/form_question/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json&form_id=";
     public static String location1="http://internal.gramvaani.org:8080/vapp/api/v1/location_location/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json&ai_id=10";
@@ -135,6 +134,18 @@ Kapil Thakkar*/
 //survey dial out
 
 
-//828132 -- pin for 9891127941
-//814434 -- pin kapil
-//368866 --- pin megha
+
+//814434 -- pin kapil  7838168162
+//368866 --- pin megha  9818041994
+
+///Pin for 9718658816 ----  975424
+
+// Pin for 9891127941 --- 123456
+
+// Preeti Pin : 469991 No. 8826533273
+
+//Received: Bundle[{extras=, code=4, from=731395736136, message=Message launched successfully!,
+//android.support.content.wakelockid=1, collapse_key=do_not_collapse}]
+
+//Received: Bundle[{extras=Demo Survey_survey - 27 - 70, code=1, from=731395736136,
+//message=NGO Action India has launched a survey named Demo Survey_survey - 27 - 70 at location JH - Bokaro - Bermo, android.support.content.wakelockid=1, collapse_key=do_not_collapse}]

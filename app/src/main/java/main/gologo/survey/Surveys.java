@@ -36,6 +36,9 @@ public class Surveys extends BaseActionbar {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_surveys);
 
+        Bundle bundle=getIntent().getExtras();
+        String ai_id=bundle.getString("ai_id");
+        String get_survey_url=Constants.get_survey + ai_id;
         RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
         rv.setHasFixedSize(true);
 
@@ -67,7 +70,7 @@ public class Surveys extends BaseActionbar {
 
     void volleyrequest()
     {
-        JsonObjectRequest request1 = new JsonObjectRequest(Constants.get_survey, null,
+        JsonObjectRequest request1 = new JsonObjectRequest(get_survey_url, null,
                 new Response.Listener<JSONObject>() {
 
                     @Override

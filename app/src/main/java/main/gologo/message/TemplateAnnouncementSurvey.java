@@ -100,7 +100,6 @@ public class TemplateAnnouncementSurvey extends BaseActionbar implements View.On
         }
     }
 
-
     static public class DatePickerDialogFragment extends DialogFragment implements
             DatePickerDialog.OnDateSetListener {
 

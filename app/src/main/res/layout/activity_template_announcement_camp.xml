@@ -155,7 +155,7 @@
 
         <EditText
             android:layout_width="0dp"
-            android:layout_weight="0.25"
+            android:layout_weight="0.20"
             android:layout_height="50dp"
             android:ems="10"
             android:hint="@string/venue"
@@ -170,7 +170,7 @@
 
         <EditText
             android:layout_width="0dp"
-            android:layout_weight="0.75"
+            android:layout_weight="0.65"
             android:layout_height="50dp"
             android:inputType="textAutoComplete"
             android:ems="10"
@@ -184,7 +184,14 @@
             android:textColorHint="#3F51B5"
             android:textAlignment="center" />
 
-
+        <ImageButton
+            android:id="@+id/mic14"
+            android:layout_width="0dp"
+            android:layout_weight="0.15"
+            android:layout_height="50dp"
+            android:src="@drawable/mic"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

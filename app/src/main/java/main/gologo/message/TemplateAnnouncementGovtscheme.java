@@ -3,8 +3,10 @@ package main.gologo.message;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +17,10 @@ import android.widget.Spinner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import main.gologo.R;
 import main.gologo.constants.Constants;
@@ -30,7 +34,9 @@ public class TemplateAnnouncementGovtscheme extends BaseActionbar implements Vie
     private int day;
     private int month;
     private int year;
+    private final int REQ_CODE_SPEECH_INPUT = 100;
    static  private EditText et,start;
+    ImageButton btnSpeak;
     Spinner sp1;
 
     Button b1;
@@ -56,6 +62,15 @@ public class TemplateAnnouncementGovtscheme extends BaseActionbar implements Vie
         month = cal.get(Calendar.MONTH);
         year = cal.get(Calendar.YEAR);
         ib.setOnClickListener(this);
+
+
+        btnSpeak=(ImageButton)findViewById(R.id.mic12);
+        btnSpeak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                promptSpeechInput();
+            }
+        });
 
         b1.setOnClickListener(new View.OnClickListener() {
 
@@ -135,6 +150,37 @@ public class TemplateAnnouncementGovtscheme extends BaseActionbar implements Vie
             calendar.set(year, monthOfYear, dayOfMonth);
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             start.setText(format.format(calendar.getTime()));
+        }
+    }
+
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.speech_prompt));
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Snackbar.make(findViewById(android.R.id.content), R.string.speech_not_supported, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Receiving speech input
+     * */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    et.setText(result.get(0));
+                }
+                break;
+            }
         }
     }
 }

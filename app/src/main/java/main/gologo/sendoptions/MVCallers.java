@@ -6,9 +6,11 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.StrictMode;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +42,7 @@ import main.gologo.R;
 import main.gologo.audio.MultipartUtility;
 import main.gologo.constants.Constants;
 import main.gologo.home.BaseActionbar;
+import main.gologo.home.MenuOptions;
 import main.gologo.home.VolleyApplication;
 
 public class MVCallers extends BaseActionbar implements  View.OnClickListener{
@@ -71,6 +74,11 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mvcallers);
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         img1= (ImageButton) findViewById(R.id.calendaricon);
         img2=  (ImageButton) findViewById(R.id.calendaricon1);
@@ -249,8 +257,9 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
         String requestURL = Constants.recording;
 
         try {
+           // Log.d ("step 1", "...");
             MultipartUtility multipart = new MultipartUtility(requestURL, charset);
-
+           // Log.d("step 1.1...", "...");
             multipart.addHeaderField("User-Agent", "CodeJava");
             multipart.addHeaderField("Test-Header", "Header-Value");
             multipart.addFormField("gcmid", Constants.gcmRegId);
@@ -262,25 +271,25 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
             multipart.addFormField("end_date", end);
             multipart.addFormField("ai", "10");
             multipart.addFilePart("uploadedfile", uploadFile1);
-
+           // Log.d("step 2", "...");
             List<String> response = multipart.finish();
-
+          //  Log.d ("step 3", "...");
             System.out.println("SERVER REPLIED:");
             progress.dismiss();
+          //  Log.d("step 4", "...");
             for (String line : response) {
                 System.out.println(line);
             }
-            {
-                Handler h = new Handler(Looper.getMainLooper());
+           // Log.d ("step 5", "...");
+            Handler h = new Handler(Looper.getMainLooper());
                 h.post(new Runnable() {
                     public void run() {
                         successmsg(R.string.recording_submitted);
                     }
                 });
-            }
         }
         catch (IOException ex) {
-            Log.d("Error", "Inside Audio upload" + ex.toString());
+            Log.d("Error", "Inside Audio upload1" + ex.toString());
             progress.dismiss();
             if (ex.toString().contains("403"))
             {
@@ -304,7 +313,7 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
 
         } catch(Exception e)
         {
-            Log.d("Error", "Inside Audio upload" + e.toString());
+            Log.d("Error", "Inside Audio upload2" + e.toString());
             progress.dismiss();
             if (e.toString().contains("403"))
             {
@@ -513,7 +522,9 @@ public class MVCallers extends BaseActionbar implements  View.OnClickListener{
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        finish();
+                        Intent i = new Intent(getApplicationContext(),MenuOptions.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
                     }
                 });
         dlgAlert.setCancelable(true);

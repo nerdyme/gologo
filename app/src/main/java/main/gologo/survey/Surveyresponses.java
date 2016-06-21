@@ -39,7 +39,7 @@ public class Surveyresponses extends BaseActionbar{
     Surveyresponseadapter rvAdapter;
     TextView total_responses;
 
-    String tempurl = "http://internal.gramvaani.org:8081/vapp/api/v1/survey_record/cdr_records/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json&ai_id=60&survey_id=195&limit=20&page=1";
+    //String tempurl = "http://internal.gramvaani.org:8081/vapp/api/v1/survey_record/cdr_records/?api_key=37ddf510e72085ef218b150ad897675faec1f683&username=surbhi&format=json&ai_id=60&survey_id=195&limit=20&page=1";
     String surveyurl=Constants.get_survey_responses;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,25 +58,20 @@ public class Surveyresponses extends BaseActionbar{
         Log.d("id is ", "ID" + id);
         id = list.get(1).getquestionid();
         hm.put(id,0);
-
         Log.d("id is ", "ID" + id);*/
         total_questions=list.size();
         Log.d("list Size", "Total questions are : " + total_questions);
 
 
-        //for(int i=0;i<total_questions;++i)
-        int i=0;
-       /* do
+        for(int i=0;i<total_questions;++i)
         {
             Log.d("\nquestion id in map", "id is ::");
             int id1=list.get(i).getquestionid();
             hm.put(id1,0);
             Log.d("\nquestion id in map", "id is ::" +id1);
-            i++;
-
-        }while(i<total_questions);*/
-        hm.put(243,0);
-        hm.put(216,0);
+        }
+        //hm.put(243,0);
+        //hm.put(216,0);
 
             // list.get(i).setresponses(0);
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv1);
@@ -113,17 +108,17 @@ public class Surveyresponses extends BaseActionbar{
                         int count=0;
                         progress.dismiss();
                         try {
-
-                             count = (int) response.get("count");
+                             JSONObject js1 = (JSONObject) response.get("message");
+                             count = (int) js1.get("count");
                             if (count == 0)
                             {
                                 Snackbar.make(findViewById(android.R.id.content), R.string.no_response, Snackbar.LENGTH_LONG).show();
                             } else
                             {
-                                JSONArray ar1 = (JSONArray)response.getJSONArray("data");
+                                JSONArray ar1 = (JSONArray)js1.getJSONArray("data");
 
                                 int len = ar1.length();
-
+                                    Log.d("length of data","Data length :: " + len);
                                 for (int i = 0; i < len; ++i) {
                                     JSONObject info1 = (JSONObject) ar1.get(i);
                                     JSONArray ar2 = (JSONArray) info1.getJSONArray("detail");
@@ -140,6 +135,11 @@ public class Surveyresponses extends BaseActionbar{
                                 }
                                 total_res=unique_response.size();
                                 total_responses.setText("Total number of people responded :" + total_res);
+                                for(int i=0;i<total_questions;++i)
+                                {
+                                    int res=hm.get(list.get(i).getquestionid());
+                                    list.get(i).setresponses(res);
+                                }
                             }
                         }
                         catch (JSONException e) {
@@ -171,8 +171,6 @@ public class Surveyresponses extends BaseActionbar{
                     }
                 }
         );
-
         VolleyApplication.getInstance().getRequestQueue().add(request1);
-
     }
 }

@@ -3,6 +3,7 @@ package main.gologo.sendoptions;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -43,6 +44,7 @@ import main.gologo.adapter.Groupcontactlistadapter;
 import main.gologo.audio.MultipartUtility;
 import main.gologo.constants.Constants;
 import main.gologo.home.BaseActionbar;
+import main.gologo.home.MenuOptions;
 import main.gologo.home.VolleyApplication;
 
 public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickListener {
@@ -540,7 +542,9 @@ public class GVGroups extends BaseActionbar implements AdapterView.OnItemClickLi
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        finish();
+                        Intent i = new Intent(getApplicationContext(),MenuOptions.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
                     }
                 });
         dlgAlert.setCancelable(true);
